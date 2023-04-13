@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="manomano_productlisting_view" model="ir.ui.view">
+        <field name="name">manomano.productlisting.list.view</field>
+        <field name="model">manomano.productlisting</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="product_sku"/>
+                <field name="price"/>
+                <field name="link"/>
+                <field name="status"/>
+
+                <!-- <field name="manomano_shop_id"/> -->
+
+
+
+            </tree>
+        </field>
+    </record>
+    <record id="manomano_productlisting_form_view" model="ir.ui.view">
+        <field name="name">manomano.productlisting.form.view</field>
+        <field name="model">manomano.productlisting</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+
+                            <field name="product_sku"/>
+                            <field name="price"/>
+                            <field name="link"/>
+                            <field name="status"/>
+                            <field name="manomano_shop_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+
+                    </notebook>
+
+                </sheet>
+
+
+            </form>
+        </field>
+    </record>
+
+    <record id="manomano_productlisting_search_view" model="ir.ui.view">
+        <field name="name">manomano.productlisting.search.view</field>
+        <field name="model">manomano.productlisting</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="product_sku"/>
+                <field name="price"/>
+                <field name="link"/>
+                <field name="status"/>
+                <!-- <group expand="1" string="Group By">
+                    <filter name="group_by_date" string="By date" context="{'group_by': 'create_date:day'}"/>
+                    <filter name="group_by_product" string="By product" context="{'group_by': 'product_name'}"/>
+                </group> -->
+            </search>
+        </field>
+    </record>
+
+    <!-- <record id="manomano_productlisting_action" model="ir.actions.act_window">
+        <field name="name">ManoMano Product Listing</field>
+        <field name="res_model">manomano.productlisting</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="product_pricing.product_pricing_search_view"/>
+        <field name="context">  {
+                                    'search_default_group_by_date': 1,
+                                    'search_default_group_by_product': 1,
+                                }</field>
+    </record> -->
+
+
+
+
+</odoo>

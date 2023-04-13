@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<odoo>
+
+
+    <record id="product_shop_list_view" model="ir.ui.view">
+        <field name="name">product.shop.list.view</field>
+        <field name="model">product.shop</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sku"/>
+                <field name="wayfair_uk"/>
+                <field name="wayfair_de"/>
+                <field name="manomano_shop" position="after"/>
+                <field name="check"/>
+                <field name="amazon_de"/>
+                <field name="amazon_uk"/>
+                <field name="amazon_fr"/>
+                <field name="maison"/>
+                <field name="conforama"/>
+                <field name="bricoprive"/>
+                <field name="home24_de"/>
+                <field name="pccomponentes"/>
+                <field name="rueduco"/>
+                <field name="carrefoures"/>
+                <field name="adeo"/>
+                <field name="leclerc"/>
+                <field name="carrefourfr"/>
+                <field name="but"/>
+                <field name="empik_place"/>
+                <field name="inno"/>
+                <field name="vente_unique"/>
+                <field name="worten"/>
+                <field name="home24_at"/>
+                <field name="home24_fr"/>
+                <field name="darty"/>
+                <field name="vente_unique_es"/>
+                <field name="vente_unique_it"/>
+                <field name="clube_fashion"/>
+                <field name="cdiscount"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="product_shop_form_view" model="ir.ui.view">
+        <field name="name">product.shop.form.view</field>
+        <field name="model">product.shop</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="sku"/>
+                            <field name="wayfair_uk"/>
+                            <field name="wayfair_de"/>
+                            <field name="manomano_shop"/>
+                            <field name="check"/>
+                            <field name="amazon_de"/>
+                            <field name="amazon_uk"/>
+                            <field name="amazon_fr"/>
+                            <field name="maison"/>
+                            <field name="conforama"/>
+                            <field name="bricoprive"/>
+                            <field name="home24_de"/>
+                            <field name="pccomponentes"/>
+                            <field name="rueduco"/>
+                            <field name="carrefoures"/>
+                            <field name="adeo"/>
+                        </group>
+                        <group>
+                            <field name="leclerc"/>
+                            <field name="carrefourfr"/>
+                            <field name="but"/>
+                            <field name="empik_place"/>
+                            <field name="inno"/>
+                            <field name="vente_unique"/>
+                            <field name="worten"/>
+                            <field name="home24_at"/>
+                            <field name="home24_fr"/>
+                            <field name="darty"/>
+                            <field name="vente_unique_es"/>
+                            <field name="vente_unique_it"/>
+                            <field name="clube_fashion"/>
+                            <field name="cdiscount"/>
+                        </group>
+                    </group>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="product_shop_search_view" model="ir.ui.view">
+        <field name="name">product.shop.search.view</field>
+        <field name="model">product.shop</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="sku"/>
+                <field name="wayfair_uk"/>
+                <field name="wayfair_de"/>
+                <field name="manomano_shop"/>
+                <field name="check"/>
+                <field name="amazon_de"/>
+                <field name="amazon_uk"/>
+                <field name="amazon_fr"/>
+                <field name="maison"/>
+                <field name="conforama"/>
+                <field name="bricoprive"/>
+                <field name="home24_de"/>
+                <field name="pccomponentes"/>
+                <field name="rueduco"/>
+                <field name="carrefoures"/>
+                <field name="adeo"/>
+                <field name="leclerc"/>
+                <field name="carrefourfr"/>
+                <field name="but"/>
+                <field name="empik_place"/>
+                <field name="inno"/>
+                <field name="vente_unique"/>
+                <field name="worten"/>
+                <field name="home24_at"/>
+                <field name="home24_fr"/>
+                <field name="darty"/>
+                <field name="vente_unique_es"/>
+                <field name="vente_unique_it"/>
+                <field name="clube_fashion"/>
+                <field name="cdiscount"/>
+                <group expand="1" string="Group By">
+                    <filter name="group_by_date" string="By date" context="{'group_by': 'create_date:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="product_shopp_action" model="ir.actions.act_window">
+        <field name="name">Product Pricing Analysis</field>
+        <field name="res_model">product.shop</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="product_pricing.product_shop_search_view"/>
+        <field name="context">  {
+                                    'search_default_group_by_date': 1,
+                                }</field>
+    </record>
+
+
+    <menuitem id="product_saless_menu" action="product_shopp_action" parent="analysis_submenuu" name="Price Analysis" sequence =  '0'/>
+
+</odoo>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="wayfair_product_list_view" model="ir.ui.view">
+        <field name="name">wayfair.product.list.view</field>
+        <field name="model">wayfair.product</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="supplier_part_number"/>
+                <field name="brand_catalog"/>
+                <field name="retail_price"/>
+                <field name="status"/>
+                <field name="link"/>
+                <field name="wayfair_shop_id"/>
+                <field name="wayfair_uk"/>
+                <field name="wayfair_de"/>
+            </tree>
+        </field>
+    </record>
+    <record id="wayfair_product_form_view" model="ir.ui.view">
+        <field name="name">wayfair.product.form.view</field>
+        <field name="model">wayfair.product</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="supplier_part_number"/>
+                            <field name="brand_catalog"/>
+                            <field name="retail_price"/>
+                            <field name="status"/>
+                            <field name="link"/>
+                            <field name="wayfair_shop_id"/>
+                            <field name="wayfair_uk" />
+                            <field name="wayfair_de"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="wayfair_product_search_view" model="ir.ui.view">
+        <field name="name">wayfair.product.search.view</field>
+        <field name="model">wayfair.product</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="supplier_part_number"/>
+                <field name="brand_catalog"/>
+                <field name="retail_price"/>
+                <field name="status"/>
+                <field name="link"/>
+                <field name="wayfair_uk"/>
+                <field name="wayfair_de"/>
+                <!-- <group expand="1" string="Group By">
+                    <filter string="group_by_date" name="By date" context="{'group_by':'create_date:day'}"/>
+                    <filter string="group_by_status" name="By status" context="{'group_by':'status'}"/>
+                </group> -->
+            </search>
+        </field>
+    </record>
+
+
+</odoo>
