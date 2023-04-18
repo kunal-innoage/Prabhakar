@@ -29,3 +29,5 @@ access_cdiscount_shops,access_cdiscount_shopsabc,model_cdiscount_shops,,1,1,1,1
 access_cdiscount_product,access_cdiscount_productabc,model_cdiscount_product,,1,1,1,1
 
 access_product_shop,access_product_shopabc,model_product_shop,,1,1,1,1
+
+access_standard_pricing,access_standard_pricingabc,model_standard_pricing,,1,1,1,1

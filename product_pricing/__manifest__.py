@@ -25,6 +25,7 @@
                 "views/cdiscount_product_view.xml",
                 "views/cdiscount_shop_view.xml",
                 "views/product_sales_view.xml",
+                "views/standard_price_view.xml",
                 "views/cron.xml"
             ],
     'application': True,

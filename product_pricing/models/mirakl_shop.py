@@ -291,6 +291,47 @@ class MiraklShops(models.Model):
 
 
 
+            # class ProductShops(models.Model):
+            #     _name="product.shop"
+            #     _description="Product Shop analysis"
+            #     _rec_name="sku"
+
+            #     sku=fields.Char("Products/SKU")
+                
+            #     # ... other fields ...
+                
+            #     # New computed field for flagging prices
+            #     flag_color = fields.Selection(
+            #         [('red', 'Red'), ('green', 'Green')],
+            #         string='Flag Color', compute='_compute_flag_color')
+
+            #     # Computed method to set flag color
+            #     @api.depends('wayfair_uk', 'standard_price')
+            #     def _compute_flag_color(self):
+            #         for product_shop in self:
+            #             # Get the retail price from Wayfair UK model
+            #             retail_price = product_shop.wayfair_uk
+            #             if not retail_price:
+            #                 # No retail price available, skip
+            #                 product_shop.flag_color = False
+            #                 continue
+
+            #             # Get the standard price from your new model
+            #             standard_price = product_shop.standard_price
+            #             if not standard_price:
+            #                 # No standard price available, skip
+            #                 product_shop.flag_color = False
+            #                 continue
+
+            #             # Check if the retail price is higher than the standard price
+            #             if float(retail_price) > float(standard_price):
+            #                 product_shop.flag_color = 'red'
+            #             else:
+            #                 product_shop.flag_color = 'green'
+
+
+
+
   
     
 

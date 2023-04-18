@@ -1,4 +1,4 @@
-from odoo import fields, models, _ 
+from odoo import fields, models, _ , api 
 from datetime import datetime
 import logging
 from odoo.fields import Datetime
@@ -12,8 +12,11 @@ class WayfairShop(models.Model):
 
     shop_name=fields.Char("Shop Name")
     url=fields.Char("URL")
+    difference = fields.Float("Difference", invisible = True)
     total_no_of_products=fields.Integer("Total Number of Products" , compute='_compute_wayfair_product_count')
-
+    # total_product_count = fields.Integer("Total Product Count", compute = "_get_shops_product_count")
+    
+        
     ########################
     #PRODUCT PRICING METHOD
     ########################
@@ -30,7 +33,7 @@ class WayfairShop(models.Model):
                 if productShop_object:
                     for product in productShop_object :
                         if shop.shop_name == "Wayfair UK":
-                            productShop_object.wayfair_uk = rec.retail_price
+                            productShop_object.wayfair_uk = round((rec.retail_price),2)
 
                         if shop.shop_name == "Wayfair DE":
                             productShop_object.wayfair_de = rec.retail_price
@@ -43,7 +46,7 @@ class WayfairShop(models.Model):
                         })
                     if product_id:
                         if shop.shop_name == "Wayfair UK":
-                            product_id.wayfair_uk = rec.retail_price
+                            product_id.wayfair_uk = round((rec.retail_price),2)
 
                         if shop.shop_name == "Wayfair DE":
                             product_id.wayfair_de = rec.retail_price
@@ -64,9 +67,18 @@ class WayfairShop(models.Model):
     # PRODUCT lISTING METHOD #
     ##########################
     
-
+    
     def wayfair_product_listing_action(self):
-        self.ensure_one()
+        for shop in self:
+            shop.ensure_one()
+            # recs=self.env['wayfair.product'].search([("wayfair_shop_id","=", shop.id),('is_odoo_product','=', True) ])
+            # for rec in recs:
+            #     standard_id= self.env['standard.pricing'].search([('sku','=',rec.supplier_part_number),('recommended_retail_price','>=',rec.retail_price)])
+            #     if not standard_id:
+            #         shop.color = 'red'
+            #     else:
+            #         shop.color = 'green'
+                     
         return {
             'type': 'ir.actions.act_window',
             'name': _("%s's Products", self.shop_name),
@@ -118,5 +130,85 @@ class WayfairShop(models.Model):
             'domain': [('shop', '=', self.shop_name)],
             'context' : {'search_default_group_by_date': 1,'search_default_group_by_product': 1,}
         }
+
+    ########################
+    # RECOMMENDED RETAIL PRICE   METHOD #
+    ########################
+
+    def map_recommended_retail_price(self):
+        for shop in self:
+            shop.ensure_one()
+            recs = self.env["standard.pricing"].search([])
+
+            for rec in recs:
+                product_id = self.env['wayfair.product'].search([('supplier_part_number','=',rec.sku)])
+                _logger.info("............  %r ,...........",(product_id))
+                if product_id:
+                    for product in product_id:
+                        
+                        product.recommended_retail_price = rec.recommended_retail_price
+                #         break
+                # else:
+                #     product_id= self.env['wayfair.product'].create({
+                #         'recommended_retail_price': rec.recommended_retail_price
+                #     })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    ##########################
+    # CURRENCY CHANGE METHOD #
+    ##########################
+
+    # def convert_pound_to_euro_wayfairuk(self):
+    #     for shop in self :
+    #         shop.ensure_one()
+    #         recs= self.env['wayfair_product'].search([('brand_catalog','=',shop.shop_name)])
+    #         for rec in recs:
+    #             if rec.brand_catalog == "Wayfair UK":
+    #                 rec.retail_price = round((float(rec.retail_price)*shop.difference),2)
+
 
 

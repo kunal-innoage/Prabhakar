@@ -74,9 +74,9 @@ class ProductShops(models.Model):
 
     cdiscount=fields.Char("cdiscount")
 
-    ########################
-    # MAPPING PRICE METHOD #
-    ########################   
+    #############################
+    # MAPPING PRICE METHOD CRON #
+    #############################   
 
     def product_pricing_analysis_cron(self):
         shops=self.env['mirakl.shops'].search([])

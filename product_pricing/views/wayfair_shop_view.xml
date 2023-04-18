@@ -59,14 +59,19 @@
             <form>
                 <header>
                     <button name="product_shop_pricing" type="object" class = 'btn-primary' string="Map Product Pricing"/>
-                    
+
                     <button name="mapping_wayfair_product_stock" type="object" class = 'btn-primary' string="Map Stock"/>
 
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
+                        <!-- <button name="wayfair_product_listing_action" type="object" class="oe_stat_button" icon="fa-cubes">
+                            <field name="total_no_of_products" widget="statinfo" string="Product Listing"/>
+                        </button> -->
+
                         <button name="wayfair_product_listing_action" type="object" class="oe_stat_button" icon="fa-cubes" string="Product Listing"/>
-                        
+                       
+
                         <button name = "product_pricing_action" type = "object" icon="fa-usd" string = "Stock" class = 'oe_stat_button'/>
 
                     </div>
@@ -77,6 +82,9 @@
                             <field name = "shop_name"/>
                             <field name = "url"/>
                             <field name = "total_no_of_products"/>
+                            <field name="difference" attrs="{'invisible': [('shop_name', '!=', 'Wayfair UK')]}"/>
+
+
 
                         </group>
                     </group>
@@ -139,6 +147,19 @@
         <field name="state">code</field>
         <field name="code">
             action = records.mapping_wayfair_product_stock()
+        </field>
+        <field name="binding_model_id" ref="model_wayfair_shops"/>
+        <field name="binding_type">action</field>
+    </record>
+
+    <!-- map_recommended_retail_price -->
+
+    <record id="mapping_recommended_retail_price_server_action" model="ir.actions.server">
+        <field name="name">Mapping Recommended Retail Price</field>
+        <field name="model_id" ref="model_wayfair_shops"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.map_recommended_retail_price()
         </field>
         <field name="binding_model_id" ref="model_wayfair_shops"/>
         <field name="binding_type">action</field>
