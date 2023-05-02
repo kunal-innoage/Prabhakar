@@ -7,18 +7,17 @@
             <tree>
                 <field name="supplier_part_number"/>
                 <field name="brand_catalog"/>
-                <field name="retail_price" decoration-success="1"    attrs="{'invisible': [('retail_price','&gt;','recommended_retail_price')]}"/>
-                <!-- <field name="retail_price" decoration-danger="1"   attrs="{'invisible':[('retail_price', '&lt;=', 'recommended_retail_price')]}"/> -->
+                <field name="retail_price"/>
                 <field name="status"/>
                 <field name="link"/>
                 <field name="wayfair_shop_id"/>
                 <field name="wayfair_uk"/>
                 <field name="wayfair_de"/>
-                <field name="recommended_retail_price"/>
+                <!-- <field name="recommended_retail_price"/> -->
             </tree>
         </field>
     </record>
-    
+
     <record id="wayfair_product_form_view" model="ir.ui.view">
         <field name="name">wayfair.product.form.view</field>
         <field name="model">wayfair.product</field>
@@ -35,8 +34,7 @@
                             <field name="wayfair_shop_id"/>
                             <field name="wayfair_uk" />
                             <field name="wayfair_de"/>
-                            <field name="recommended_retail_price"/>
-                          
+                            <!-- <field name="recommended_retail_price"/> -->
                         </group>
                     </group>
                 </sheet>
@@ -57,19 +55,19 @@
                 <field name="wayfair_uk"/>
                 <field name="wayfair_de"/>
                 <!-- <group expand="1" string="Group By">
-                    <filter string="group_by_date" name="By date" context="{'group_by':'create_date:day'}"/>
-                    <filter string="group_by_status" name="By status" context="{'group_by':'status'}"/>
-                </group> -->
+<filter string="group_by_date" name="By date" context="{'group_by':'create_date:day'}"/>
+<filter string="group_by_status" name="By status" context="{'group_by':'status'}"/>
+</group> -->
             </search>
         </field>
     </record>
 
-        <record id="mapping_wayfair_product_pricing_server_action" model="ir.actions.server">
+    <record id="mapping_wayfair_product_pricing_server_action" model="ir.actions.server">
         <field name="name">Mapping Product Pricing</field>
         <field name="model_id" ref="model_wayfair_shops"/>
         <field name="state">code</field>
         <field name="code">
-            action = records.product_shop_pricing()
+action = records.product_shop_pricing()
         </field>
         <field name="binding_model_id" ref="model_wayfair_shops"/>
         <field name="binding_type">action</field>

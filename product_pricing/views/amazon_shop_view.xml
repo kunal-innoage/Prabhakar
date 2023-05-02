@@ -61,7 +61,7 @@
             <form>
                 <header>
                    
-                    <button name="product_shopp_action" type="object" class = 'btn-primary'  string="Map Product Pricing"/>
+                    <button name="product_shop_pricing" type="object" class = 'btn-primary'  string="Map Product Pricing"/>
                     <button name="mapping_amazon_products_stock" type="object" class = 'btn-primary'  string="Map Stock"/>
                 </header>
                 <sheet>

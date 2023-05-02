@@ -21,10 +21,10 @@ class Check24Product(models.Model):
         if res._context.get('import_file'):
             # _logger.info("............  %r ,...........",res._context)
             for product in res:
-                product_id= self.env['product.product'].search([('default_code','=',product.sku)])
-                if product_id:
-                    product.product_id = product_id
-                    product.is_odoo_product = True
+                # product_id= self.env['product.product'].search([('default_code','=',product.sku)])
+                # if product_id:
+                #     product.product_id = product_id
+                #     product.is_odoo_product = True
                 check_shop_id =self.env['check.shops'].search([('id', '=', res._context.get('active_id'))])
                 product.check_shop_id = check_shop_id.id
         return res

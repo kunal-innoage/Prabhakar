@@ -18,7 +18,13 @@ class CDiscount(models.Model):
     ##########################
 
     def cdiscount_product_action(self):
+        # for rec in self:
         self.ensure_one()
+        
+        # self.cdiscount_shop_id.cdsicount_inventory_offers()
+        # _logger.info(">>POST>.....count.......  %r ,...........", self.cdiscount_shop_id.cdsicount_inventory_offers())
+
+
         offers = self.env['cdiscount.offers'].search([])
         _logger.info("............  %r ,...........",offers)
 
@@ -87,6 +93,7 @@ class CDiscount(models.Model):
             for shop in self :
                 shop.ensure_one()
                 shop.cdiscount_product_action()
+
             
             recs=self.env['cdiscount.product'].search([("cdiscount_shop_id","=", shop.id)])
             for rec in recs:

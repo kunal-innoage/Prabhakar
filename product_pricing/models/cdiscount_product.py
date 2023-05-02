@@ -8,7 +8,7 @@ class CDiscountProduct(models.Model):
     _rec_name="product_sku"
 
     product_sku=fields.Char("Product SKU")
-    price=fields.Char("Price")
+    price=fields.Float("Price")
     # cdiscount_shop_id = fields.Many2one("manomano.productlisting","CDiscount Shop ID")
     link=fields.Char("Product URL")
     status=fields.Char("Status")

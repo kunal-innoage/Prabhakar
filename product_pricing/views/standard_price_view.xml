@@ -46,7 +46,7 @@
     </record>
 
 
-    <menuitem id="standard_submenuu" parent ='product_pricing_menu' action = "standard_pricing_action" name="Standard Price" />
+    <menuitem id="standard_submenuu" parent ='product_pricing_menu' action = "standard_pricing_action" name="Surya Product" />
 
 
 </odoo>

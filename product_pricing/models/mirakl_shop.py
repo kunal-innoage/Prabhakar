@@ -12,6 +12,7 @@ class MiraklShops(models.Model):
 
     shop_name=fields.Char("Shop Name")
     total_no_of_products=fields.Integer("Total Number of Products" , compute ="_compute_mirakl_product_count")
+    shop_code = fields.Char('Shop Code')
     mirakl_shop_id=fields.Many2one("shop.integrator","Shop" , required=True)
 
     ##########################
@@ -24,11 +25,8 @@ class MiraklShops(models.Model):
             if rec.mirakl_shop_id:
 
                            
-                offers = self.env['mirakl.offers'].search([('shop_id','=',rec.id)])
-                # _logger.info(">PRE............  %r ,...........",len(offers))
-
+                offers = self.env['mirakl.offers'].search([('shop_id','=',rec.mirakl_shop_id.id)])
                 for offer in offers:
-                    
                     product_id=self.env['mirakl.product'].search([('product_sku','=',offer.product_id.default_code), ('mirakl_shop_id', '=', rec.id)], limit=1)
                     if not product_id:
                         product_id = rec.env['mirakl.product'].create({
@@ -39,7 +37,7 @@ class MiraklShops(models.Model):
                         })
                     else:
                         product_id.on_shop_quantity = offer.quantity
-                        product_id.price = offer.price 
+                        product_id.price = offer.price
                 count=self.env['mirakl.product'].search([('mirakl_shop_id','=',rec.id)])
             else:
                 pass
@@ -54,7 +52,6 @@ class MiraklShops(models.Model):
                 'view_mode': 'list,form',
                 'res_model': 'mirakl.product',
                 'domain': [('mirakl_shop_id', '=', self.id)],
-                # 'context' : {'search_default_group_by_date': 1,'search_default_group_by_product': 1,}
             }
 
     #############
@@ -78,11 +75,10 @@ class MiraklShops(models.Model):
     def mirakl_product_mapping_action(self):
         for shop in self:
             shop.ensure_one()
-            shop.mirakl_product_action()
+            # shop.mirakl_product_action()
                         
             offers = self.env['mirakl.product'].search([("mirakl_shop_id","=", shop.id)])
             # _logger.info("Product Pricing Updated ~~~~~~~~~~~~~~ %r ",offers)
-
             for offer in offers:
                 product_id=self.env['product.pricing'].search([('product_name','=',offer.product_sku),('create_date', '>=', Datetime.to_string(Datetime.now().replace(hour=0, minute=0, second=0, microsecond=0))), ('mirakl_id', '=', shop.id)])
                 if product_id:
@@ -90,7 +86,6 @@ class MiraklShops(models.Model):
                             product.price = offer.price
                             product.on_shop_quantity = offer.on_shop_quantity
                             _logger.info("Product Pricing Updated ~~~~~~~~~~~~~~ %r ",product_id)
-                    
                 else:
                     product_id = self.env['product.pricing'].create({
                                 'product_name': offer.product_sku,
@@ -100,9 +95,6 @@ class MiraklShops(models.Model):
                                 'mirakl_id': shop.id,
                             })        
                     _logger.info("Product Pricing Created ~~~~~~~~~~~~~~ %r~~~~~~",product_id)
-
-
-    
     def product_priciing_action(self):
         self.ensure_one()
         return{
@@ -136,7 +128,7 @@ class MiraklShops(models.Model):
                 
                 recs=self.env['mirakl.product'].search([("mirakl_shop_id","=", shop.id)])
                 for rec in recs:
-                    productShop_object=self.env['product.shop'].search([('sku','=',rec.product_sku),('create_date', '>=', Datetime.to_string(Datetime.now().replace(hour=0, minute=0, second=0, microsecond=0))) ])
+                    productShop_object=self.env['product.shop'].search([('sku','=',rec.product_sku),('create_date', '>=', Datetime.to_string(Datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)))])
                     _logger.info("~~~~~~PRO~~~~~~~%r~~~~~~~~~~~",productShop_object)
                     found = False
                     if productShop_object:
@@ -288,53 +280,7 @@ class MiraklShops(models.Model):
         shops = self.env['cdiscount.shops'].search([ ])
         for shop in shops:
             shop.cdiscount_product_action()
-
-
-
-            # class ProductShops(models.Model):
-            #     _name="product.shop"
-            #     _description="Product Shop analysis"
-            #     _rec_name="sku"
-
-            #     sku=fields.Char("Products/SKU")
-                
-            #     # ... other fields ...
-                
-            #     # New computed field for flagging prices
-            #     flag_color = fields.Selection(
-            #         [('red', 'Red'), ('green', 'Green')],
-            #         string='Flag Color', compute='_compute_flag_color')
-
-            #     # Computed method to set flag color
-            #     @api.depends('wayfair_uk', 'standard_price')
-            #     def _compute_flag_color(self):
-            #         for product_shop in self:
-            #             # Get the retail price from Wayfair UK model
-            #             retail_price = product_shop.wayfair_uk
-            #             if not retail_price:
-            #                 # No retail price available, skip
-            #                 product_shop.flag_color = False
-            #                 continue
-
-            #             # Get the standard price from your new model
-            #             standard_price = product_shop.standard_price
-            #             if not standard_price:
-            #                 # No standard price available, skip
-            #                 product_shop.flag_color = False
-            #                 continue
-
-            #             # Check if the retail price is higher than the standard price
-            #             if float(retail_price) > float(standard_price):
-            #                 product_shop.flag_color = 'red'
-            #             else:
-            #                 product_shop.flag_color = 'green'
-
-
-
-
-  
-    
-
-
-
-
+        
+        shops = self.env['manomano.shops'].search([ ])
+        for shop in shops:
+            shop.manomano_product_listing()

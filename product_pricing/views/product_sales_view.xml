@@ -1,44 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <odoo>
-
-
     <record id="product_shop_list_view" model="ir.ui.view">
         <field name="name">product.shop.list.view</field>
         <field name="model">product.shop</field>
         <field name="arch" type="xml">
             <tree>
                 <field name="sku"/>
-                <field name="wayfair_uk"/>
-                <field name="wayfair_de"/>
-                <field name="manomano_shop" position="after"/>
-                <field name="check"/>
-                <field name="amazon_de"/>
-                <field name="amazon_uk"/>
-                <field name="amazon_fr"/>
-                <field name="maison"/>
-                <field name="conforama"/>
-                <field name="bricoprive"/>
-                <field name="home24_de"/>
-                <field name="pccomponentes"/>
-                <field name="rueduco"/>
-                <field name="carrefoures"/>
-                <field name="adeo"/>
-                <field name="leclerc"/>
-                <field name="carrefourfr"/>
-                <field name="but"/>
-                <field name="empik_place"/>
-                <field name="inno"/>
-                <field name="vente_unique"/>
-                <field name="worten"/>
-                <field name="home24_at"/>
-                <field name="home24_fr"/>
-                <field name="darty"/>
-                <field name="vente_unique_es"/>
-                <field name="vente_unique_it"/>
-                <field name="clube_fashion"/>
-                <field name="cdiscount"/>
+                <field name="wayfair_uk" decoration-danger="wayfair_uk > recommended_retail_price"/>
+                <field name="wayfair_de" decoration-danger="wayfair_de > recommended_retail_price"/>
+                <field name="check" decoration-danger="check > recommended_retail_price"/>
+                <field name="amazon_de" decoration-danger="amazon_de > recommended_retail_price"/>
+                <field name="amazon_uk" decoration-danger="amazon_uk > recommended_retail_price"/>
+                <field name="amazon_fr" decoration-danger="amazon_fr > recommended_retail_price"/>
+                <field name="maison" decoration-danger="maison > recommended_retail_price"/>
+                <field name="conforama" decoration-danger="conforama > recommended_retail_price"/>
+                <field name="bricoprive" decoration-danger="bricoprive > recommended_retail_price"/>
+                <field name="home24_de" decoration-danger="home24_de > recommended_retail_price"/>
+                <field name="pccomponentes" decoration-danger="pccomponentes > recommended_retail_price"/>
+                <field name="rueduco" decoration-danger="rueduco > recommended_retail_price"/>
+                <field name="carrefoures" decoration-danger="carrefoures > recommended_retail_price"/>
+                <field name="adeo" decoration-danger="adeo > recommended_retail_price"/>
+                <field name="leclerc" decoration-danger="leclerc > recommended_retail_price"/>
+                <field name="carrefourfr" decoration-danger="carrefourfr > recommended_retail_price"/>
+                <field name="but" decoration-danger="but > recommended_retail_price"/>
+                <field name="empik_place" decoration-danger="empik_place > recommended_retail_price"/>
+                <field name="inno" decoration-danger="inno > recommended_retail_price"/>
+                <field name="vente_unique" decoration-danger="vente_unique > recommended_retail_price"/>
+                <field name="worten" decoration-danger="worten > recommended_retail_price"/>
+                <field name="home24_at" decoration-danger="home24_at > recommended_retail_price"/>
+                <field name="home24_fr" decoration-danger="home24_fr > recommended_retail_price"/>
+                <field name="darty" decoration-danger="darty > recommended_retail_price"/>
+                <field name="vente_unique_es" decoration-danger="vente_unique_es > recommended_retail_price"/>
+                <field name="vente_unique_it" decoration-danger="vente_unique_it > recommended_retail_price"/>
+                <field name="clube_fashion" decoration-danger="clube_fashion > recommended_retail_price"/>
+                <field name="cdiscount" decoration-danger="cdiscount > recommended_retail_price"/>
+                <field name="manomano_fr" decoration-danger="manomano_fr > recommended_retail_price"/>
+                <field name="manomano_es" decoration-danger="manomano_es > recommended_retail_price"/>
+                <field name="manomano_it" decoration-danger="manomano_it > recommended_retail_price"/>
+                <field name="manomano_de" decoration-danger="manomano_de > recommended_retail_price"/>
+                <field name="manomano_gb" decoration-danger="manomano_gb > recommended_retail_price"/>
+                <field name="recommended_retail_price"/>
             </tree>
         </field>
     </record>
@@ -54,7 +55,6 @@
                             <field name="sku"/>
                             <field name="wayfair_uk"/>
                             <field name="wayfair_de"/>
-                            <field name="manomano_shop"/>
                             <field name="check"/>
                             <field name="amazon_de"/>
                             <field name="amazon_uk"/>
@@ -67,11 +67,11 @@
                             <field name="rueduco"/>
                             <field name="carrefoures"/>
                             <field name="adeo"/>
-                        </group>
-                        <group>
                             <field name="leclerc"/>
                             <field name="carrefourfr"/>
                             <field name="but"/>
+                        </group>
+                        <group>
                             <field name="empik_place"/>
                             <field name="inno"/>
                             <field name="vente_unique"/>
@@ -83,9 +83,14 @@
                             <field name="vente_unique_it"/>
                             <field name="clube_fashion"/>
                             <field name="cdiscount"/>
+                            <field name="manomano_fr"/>
+                            <field name="manomano_es"/>
+                            <field name="manomano_it"/>
+                            <field name="manomano_de"/>
+                            <field name="manomano_gb"/>
+                            <field name="recommended_retail_price"/>
                         </group>
                     </group>
-
                 </sheet>
             </form>
         </field>
@@ -98,7 +103,6 @@
                 <field name="sku"/>
                 <field name="wayfair_uk"/>
                 <field name="wayfair_de"/>
-                <field name="manomano_shop"/>
                 <field name="check"/>
                 <field name="amazon_de"/>
                 <field name="amazon_uk"/>
@@ -125,6 +129,12 @@
                 <field name="vente_unique_it"/>
                 <field name="clube_fashion"/>
                 <field name="cdiscount"/>
+                <field name="manomano_fr"/>
+                <field name="manomano_es"/>
+                <field name="manomano_it"/>
+                <field name="manomano_de"/>
+                <field name="manomano_gb"/>
+                <field name="recommended_retail_price"/>
                 <group expand="1" string="Group By">
                     <filter name="group_by_date" string="By date" context="{'group_by': 'create_date:day'}"/>
                 </group>
@@ -141,7 +151,18 @@
                                 }</field>
     </record>
 
+    <!-- map_recommended_retail_price -->
+
+    <record id="mapping_recommended_retail_price_with_product_pricing_server_action" model="ir.actions.server">
+        <field name="name">Mapping Recommended Retail Price</field>
+        <field name="model_id" ref="model_product_shop"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.map_recommended_retail_price_with_product_shop()
+        </field>
+        <field name="binding_model_id" ref="model_product_shop"/>
+        <field name="binding_type">action</field>
+    </record>
 
     <menuitem id="product_saless_menu" action="product_shopp_action" parent="analysis_submenuu" name="Price Analysis" sequence =  '0'/>
-
 </odoo>

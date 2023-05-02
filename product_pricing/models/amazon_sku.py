@@ -9,7 +9,7 @@ class AmazonSKU(models.Model):
 
     vendor_sku=fields.Char("Vendor SKU")
     list_price_currency=fields.Char("List Price Currency")
-    list_price_with_tax=fields.Char("List Price with Tax")
+    list_price_with_tax=fields.Float("List Price with Tax")
     cost_price=fields.Char("Cost Price")
     cost_price_currency=fields.Char("Cost Price Currency")
     amazon_shop_id = fields.Many2one("amazon.shops")

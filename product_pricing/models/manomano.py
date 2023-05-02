@@ -13,6 +13,7 @@ class Manomano(models.Model):
     price=fields.Float("Price Inclusive VAT")
     link=fields.Char("Product URL")
     status=fields.Char("Status")
+    on_shop_quantity=fields.Char("On Shop Quantity")
     manomano_shop_id = fields.Many2one("manomano.shops","Manomano Shop")
     
 

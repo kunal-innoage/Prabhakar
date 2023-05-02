@@ -40,6 +40,7 @@
             <tree>
                 <field name = "shop_name"/>
                 <field name = "total_no_of_products"/>
+                <field name = "cdiscount_shop_id"/>
             </tree>
         </field>
     </record>
@@ -67,6 +68,7 @@
                         <group>
                             <field name = "shop_name"/>
                             <field name = "total_no_of_products"/>
+                            <field name = "cdiscount_shop_id"/>
                         </group>
                     </group>
                     <!-- <notebook>
@@ -88,6 +90,7 @@
             <search>
                 <field name = "shop_name"/>
                 <field name = "total_no_of_products"/>
+                <field name = "cdiscount_shop_id"/>
             </search>
         </field>
     </record>

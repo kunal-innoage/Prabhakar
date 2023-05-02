@@ -23,7 +23,7 @@ class Check(models.Model):
             offers = self.env['check.product'].search([('check_shop_id','=',shop.id)])
 
             for offer in offers:
-                product_id = self.env['product.pricing'].search([('product_name','=',offer.sku),('create_date', '>=', Datetime.to_string(Datetime.now().replace(hour=0, minute=0, second=0, microsecond=0))),('check_id','=',shop.id)],limit =1)
+                product_id = self.env['product.pricing'].search([('product_name','=',offer.sku),('create_date', '>=', Datetime.to_string(Datetime.now().replace(hour=0, minute=0, second=0, microsecond=0))),('shop','=',shop.shop_name)],limit =1)
                 if product_id :
                     for product in product_id:
                         product.price = offer.price
@@ -69,9 +69,9 @@ class Check(models.Model):
             total_no_of_products = self.env['check.product'].search([('check_shop_id', '=', rec.id)])
             rec.total_no_of_products=len(total_no_of_products)
 
-    ########################
-    # SHOP PRICING METHODS #
-    ########################
+    ###########################
+    # PRODUCT PRICING METHODS #
+    ###########################
 
     def product_shopp_action(self):
         self.ensure_one()
@@ -105,4 +105,5 @@ class Check(models.Model):
                             })
                         if shop.shop_name == "Check24":
                             product_id.check = rec.price
-              
+                else:
+                    Found = None       

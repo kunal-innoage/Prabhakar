@@ -67,6 +67,7 @@
                             <field name = "shop_name"/>
                             <field name = "mirakl_shop_id"/>
                             <field name = "total_no_of_products"/>
+                            <field name = "shop_code"/>
                         </group>
                     </group>
                 </sheet>

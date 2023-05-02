@@ -44,8 +44,8 @@ class ProductPricing(models.Model):
                 product.shop = shop_id.shop_name
                 if res._context.get("active_model") == "amazon.shops":
                     product.amazon_id = shop_id
-                elif res._context.get("active_model") == "manomano.shops":
-                    product.manomano_id = shop_id
+                # elif res._context.get("active_model") == "manomano.shops":
+                #     product.manomano_id = shop_id
                 elif res._context.get("active_model") == "wayfair.shops":
                     product.wayfair_id = shop_id                
                 # elif res._context.get("active_model") == "cdiscount.shops":
@@ -65,6 +65,11 @@ class ProductPricing(models.Model):
                 #     product.wayfair_id = shop_id                
         return res
     
+    
+    ######################################################
+    # METHOD FOR MAPPING STOCKS WITH PRODUCT STOCK MODEL #
+    ######################################################
+
 
     # @api.model
     def getting_on_hand_warehouse_quantity(self):
@@ -123,6 +128,12 @@ class ProductPricing(models.Model):
         shops=self.env['amazon.shops'].search([])
         for shop in shops:
             shop.mapping_amazon_products_stock()
+                
+        shops=self.env['product.pricing'].search([])
+        for shop in shops:
+            shop.getting_on_hand_warehouse_quantity()
+        _logger.info(">>>STOCK<<<...........  %r ,...........>>>STOCK<<<",shop.getting_on_hand_warehouse_quantity)
+
         
             
         

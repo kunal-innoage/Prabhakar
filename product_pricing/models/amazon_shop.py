@@ -20,10 +20,10 @@ class AmazonShop(models.Model):
             offers = self.env['amazon.sku'].search([('amazon_shop_id','=',shop.id)])
         
             for offer in offers :
-                product_id = self.env['product.pricing'].search([('product_name','=',offer.vendor_sku),('create_date', '>=', Datetime.to_string(Datetime.now().replace(hour=0, minute=0, second=0, microsecond=0))),('amazon_id','=',shop.id)] , limit =1)
+                product_id = self.env['product.pricing'].search([('product_name','=',offer.vendor_sku),('create_date', '>=', Datetime.to_string(Datetime.now().replace(hour=0, minute=0, second=0, microsecond=0))),('shop','=',shop.shop_name)] , limit =1)
                 if product_id:
                     for product in product_id:
-                        product.price = offer.price
+                        product.price = offer.list_price_with_tax
                         break
                 else:
                     product_id = self.env['product.pricing'].create({

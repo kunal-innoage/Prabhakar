@@ -48,6 +48,7 @@
                 <field name = "shop_name"/>
                 <field name = "url"/>
                 <field name = "total_no_of_products"/>
+                <field name = "manomano_shop_id"/>
             </tree>
         </field>
     </record>
@@ -63,6 +64,8 @@
                     
                     <button name="mapping_manomano_products_stock" type="object" class = 'btn-primary' string="Map Stock"/>
 
+                    <button name="manomano_product_listing" type="object" class = 'btn-primary' string="Map Product Listing"/>
+
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
@@ -75,6 +78,7 @@
                         <group>
                             <field name = "shop_name"/>
                             <field name = "url"/>
+                            <field name = "manomano_shop_id"/>
                             <field name = "total_no_of_products"/>
 
                         </group>
@@ -92,6 +96,7 @@
                 <field name = "shop_name"/>
                 <field name = "url"/>
                 <field name = "total_no_of_products"/>
+                <field name = "manomano_shop_id"/>
 
             </search>
         </field>
@@ -102,6 +107,44 @@
         <field name="res_model">manomano.shops</field>
         <field name="view_mode">kanban,tree,form</field>
 
+    </record>
+
+    <!-- PRODUCT LISTING SERVER ACTION -->
+    <record id="mapping_mano_product_listing_server_action" model="ir.actions.server">
+        <field name="name">Mapping Product Listing</field>
+        <field name="model_id" ref="model_manomano_shops"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.manomano_product_listing()
+        </field>
+        <field name="binding_model_id" ref="model_manomano_shops"/>
+        <field name="binding_type">action</field>
+    </record>
+
+    <!-- PRODUCT STOCK SERVER ACTION -->
+
+    <record id="mapping_mano_product_stock_server_action" model="ir.actions.server">
+        <field name="name">Mapping Stock</field>
+        <field name="model_id" ref="model_manomano_shops"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.mapping_manomano_products_stock()
+        </field>
+        <field name="binding_model_id" ref="model_manomano_shops"/>
+        <field name="binding_type">action</field>
+    </record>
+
+    <!-- PRODUCT PRICING SERVER ACTION -->
+
+    <record id="mapping_mano_product_pricing_server_action" model="ir.actions.server">
+        <field name="name">Mapping Product Pricing</field>
+        <field name="model_id" ref="model_manomano_shops"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.product_shop_pricing()
+        </field>
+        <field name="binding_model_id" ref="model_manomano_shops"/>
+        <field name="binding_type">action</field>
     </record>
     
     <menuitem id="manomano_menu" parent="product_pricing_submenuu" 

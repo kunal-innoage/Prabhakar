@@ -11,6 +11,7 @@
                 <field name="price"/>
                 <field name="link"/>
                 <field name="status"/>
+                <field name="on_shop_quantity"/>
 
                 <!-- <field name="manomano_shop_id"/> -->
 
@@ -32,6 +33,7 @@
                             <field name="price"/>
                             <field name="link"/>
                             <field name="status"/>
+                            <field name="on_shop_quantity"/>
                             <field name="manomano_shop_id"/>
                         </group>
                     </group>
@@ -55,6 +57,7 @@
                 <field name="price"/>
                 <field name="link"/>
                 <field name="status"/>
+                <field name="on_shop_quantity"/>
                 <!-- <group expand="1" string="Group By">
                     <filter name="group_by_date" string="By date" context="{'group_by': 'create_date:day'}"/>
                     <filter name="group_by_product" string="By product" context="{'group_by': 'product_name'}"/>

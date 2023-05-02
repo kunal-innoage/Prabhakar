@@ -12,9 +12,8 @@ class WayfairShop(models.Model):
 
     shop_name=fields.Char("Shop Name")
     url=fields.Char("URL")
-    difference = fields.Float("Difference", invisible = True)
+    difference = fields.Float("Currency Change from £ to €  ", invisible = True)
     total_no_of_products=fields.Integer("Total Number of Products" , compute='_compute_wayfair_product_count')
-    # total_product_count = fields.Integer("Total Product Count", compute = "_get_shops_product_count")
     
         
     ########################
@@ -23,6 +22,7 @@ class WayfairShop(models.Model):
 
 
     def product_shop_pricing(self):
+        # pass
         for shop in self :
             shop.ensure_one()
 
@@ -93,9 +93,11 @@ class WayfairShop(models.Model):
 
     def _compute_wayfair_product_count(self):
         for rec in self:
+
             total_no_of_products = self.env['wayfair.product'].search([('wayfair_shop_id', '=', rec.id),('is_odoo_product','=', True)])
             # _logger.info("........%r.......",len(total_no_of_products))
             rec.total_no_of_products=len(total_no_of_products)
+           
 
 
     ########################
@@ -103,20 +105,30 @@ class WayfairShop(models.Model):
     ########################
 
     def mapping_wayfair_product_stock(self):
+        # pass
         for shop in self:
             shop.ensure_one()
             offers = self.env['wayfair.product'].search([("wayfair_shop_id","=", shop.id),('is_odoo_product','=', True)])
 
             for offer in offers :
-                product_id = self.env['product.pricing'].search([('product_name','=',offer.supplier_part_number),('create_date', '>=', Datetime.to_string(Datetime.now().replace(hour=0, minute=0, second=0, microsecond=0))),('wayfair_id','=',shop.id)], limit = 1)
+                # product_id = self.env['product.pricing'].search([('wayfair_id','=',shop.id)], limit = 1)
+                # product_id = self.env['product.pricing'].search([('product_name','=',offer.supplier_part_number),('create_date', '>=', Datetime.to_string(Datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)))], limit = 1)
+                product_id=self.env['product.pricing'].search([('product_name','=',offer.supplier_part_number),('create_date', '>=', Datetime.to_string(Datetime.now().replace(hour=0, minute=0, second=0, microsecond=0))),('shop', '=', shop.shop_name)])
+                print('supplier_part_number')
+                print('wayfair_id')
+                print(shop.id)
+
+                _logger.info("~~~~~~~~~~~%r~~~~~~~~~~",product_id)
+                # _logger.info("~~~~~~~~~~~%r~~~~~~~~~~",wayfair_id)
+                _logger.info("~~~~~~~~~~~%r~~~~~~~~~~",shop.id)
                 if product_id :
                     for product in product_id :
-                            product.price = offer.price
-                            break
+                            product.price = round(offer.retail_price,2)
+                            
                 else :
                     product_id = self.env['product.pricing'].create({
                                 'product_name' : offer.supplier_part_number,
-                                'price' : offer.retail_price,
+                                'price' : round(offer.retail_price , 2),
                                 'shop': shop.shop_name
                             })
 
@@ -131,9 +143,9 @@ class WayfairShop(models.Model):
             'context' : {'search_default_group_by_date': 1,'search_default_group_by_product': 1,}
         }
 
-    ########################
+    #####################################
     # RECOMMENDED RETAIL PRICE   METHOD #
-    ########################
+    #####################################
 
     def map_recommended_retail_price(self):
         for shop in self:
@@ -147,68 +159,4 @@ class WayfairShop(models.Model):
                     for product in product_id:
                         
                         product.recommended_retail_price = rec.recommended_retail_price
-                #         break
-                # else:
-                #     product_id= self.env['wayfair.product'].create({
-                #         'recommended_retail_price': rec.recommended_retail_price
-                #     })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    ##########################
-    # CURRENCY CHANGE METHOD #
-    ##########################
-
-    # def convert_pound_to_euro_wayfairuk(self):
-    #     for shop in self :
-    #         shop.ensure_one()
-    #         recs= self.env['wayfair_product'].search([('brand_catalog','=',shop.shop_name)])
-    #         for rec in recs:
-    #             if rec.brand_catalog == "Wayfair UK":
-    #                 rec.retail_price = round((float(rec.retail_price)*shop.difference),2)
-
-
-
+ 
