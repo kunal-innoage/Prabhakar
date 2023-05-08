@@ -1,5 +1,8 @@
 from odoo import fields, models, api
 import logging
+# import requests
+# from bs4 import BeautifulSoup
+
 _logger = logging.getLogger(__name__)
 
 class AmazonSKU(models.Model):
@@ -15,6 +18,7 @@ class AmazonSKU(models.Model):
     amazon_shop_id = fields.Many2one("amazon.shops")
     product_url=fields.Char("Product URL")
     product_id = fields.Many2one("product.product","Amazon Shop")
+    product_status = fields.Char("Product Status")
     merchant_suggested_asin=fields.Char("Merchant Suggested Asin")
     # is_odoo_product = fields.Boolean("Is Odoo Product")
     
@@ -38,3 +42,27 @@ class AmazonSKU(models.Model):
                     product.product_url = product.amazon_shop_id.url + product.merchant_suggested_asin
         return res
     
+
+    
+
+
+    # def update_product_status_and_price(products):
+    #     for product in products:
+    #         try:
+    #             response = requests.get(product.product_url)
+    #             if response.status_code != 200:
+    #                 product.product_status = 'inactive'
+    #             else: 
+    #                 soup = BeautifulSoup(response.content, 'html.parser')
+    #                 out_of_stock_element = soup.find('div', {'class': 'oa-size-medium a-color-price'})
+    #                 if out_of_stock_element is not None:
+    #                     product.product_status = 'unavailable'
+    #                 else:
+    #                     price_element = soup.find('div', {'class': 'a-price-whole'})
+    #                     if price_element is not None:
+    #                         product.product_status = 'active'
+    #                         product.price = price_element.text.strip()
+    #                     else:
+    #                         product.product_status = 'active'
+    #         except:
+    #             pass

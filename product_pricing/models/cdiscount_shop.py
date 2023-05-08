@@ -118,6 +118,7 @@ class CDiscount(models.Model):
     ########################
     # STOCK PRODUCT METHOD #
     ########################
+    
 
     def cdiscount_product_mapping_action(self):
         for shop in self:

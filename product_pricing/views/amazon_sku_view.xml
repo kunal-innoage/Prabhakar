@@ -10,6 +10,7 @@
                 <field name="list_price_with_tax"/>
                 <field name="cost_price"/>
                 <field name="cost_price_currency"/>
+                <field name="product_status"/>
                 <field name="product_url"/>
                 <field name="merchant_suggested_asin"/>
             </tree>
@@ -29,6 +30,7 @@
                             <field name="list_price_with_tax"/>
                             <field name="cost_price"/>
                             <field name="cost_price_currency"/>
+                            <field name="product_status"/>
                             <field name="product_url"/>
                             <field name="merchant_suggested_asin"/>
 
@@ -55,6 +57,7 @@
                 <field name="list_price_with_tax"/>
                 <field name="cost_price"/>
                 <field name="cost_price_currency"/>
+                <field name="product_status"/>
                 <field name="product_url"/>
                 <field name="merchant_suggested_asin"/>
 
@@ -64,6 +67,19 @@
                 </group> -->
             </search>
         </field>
+    </record>
+
+    <!-- Web scraping server action -->2
+    
+    <record id="webscrapping_product_pricing_server_action" model="ir.actions.server">
+        <field name="name">Web Scrap Product Price</field>
+        <field name="model_id" ref="model_amazon_sku"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.update_product_status_and_price()
+        </field>
+        <field name="binding_model_id" ref="model_amazon_sku"/>
+        <field name="binding_type">action</field>
     </record>
 
 
