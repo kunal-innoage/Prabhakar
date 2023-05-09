@@ -1,5 +1,9 @@
 from odoo import fields, models,api
 import logging
+
+import requests
+from bs4 import BeautifulSoup
+
 _logger = logging.getLogger(__name__)
 
 
@@ -18,11 +22,17 @@ class WayfairProduct(models.Model):
     wayfair_shop_id = fields.Many2one("wayfair.shops","Wayfair Shop")
     product_id = fields.Many2one("product.product","Wayfair Shop")
     recommended_retail_price = fields.Float("Recommended Retail Price" , invisible = True)
+    product_status = fields.Selection([('active','Active'),('inactive','Inactive'),('unavailable', 'Out Of Stock'),('price_unavailable', 'Price Not Found'),('link_absent' , 'URL Missing') ] ,"Product Status")
+    last_updated_on = fields.Datetime("Last Updated on" , readonly = True)
    
 
     # currency_id = fields.Many2one("wayfair.shops","Currency")
     is_odoo_product = fields.Boolean("Is Odoo Product")
     # currency_difference = fields.Float("Currency")
+
+    ###################
+    # product listing #
+    ###################
 
 
     @api.model_create_multi
@@ -60,6 +70,76 @@ class WayfairProduct(models.Model):
                 # else:
                 #     pass
         return res
+    
+    #############################
+    # Get Product Price Updates #
+    #############################
+
+    @api.depends('name')
+    def update_product_price_via_web_scrap(self):
+        for product in self:
+            product.last_updated_on = fields.Datetime.now()
+            if product.link:
+
+                response = False
+                # url =  "https://"+ product.link
+                link = product.link
+                headers = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko) Version/9.0.2 Safari/601.3.9'}
+
+
+                try:
+                    _logger.info("......... Price Check Call - %r  %r ...........", link, headers)
+                    response = requests.get(link , headers)
+
+                    if response.status_code == 200:
+                        product.product_status = "active"
+                        self.process_product_page_data_for_price_wayfair(product , response)
+                        
+                    else:
+                        product.product_status = "inactive"
+                        _logger.info(".......... Product URL Inactive with status code %r for product - %r.........!!!!!!!!",response.status_code, product.supplier_part_number)
+
+                except Exception as e:
+                    _logger.info(".......Error while checking product url - %r",e)
+
+            else:
+                product.product_status = "link_absent"
+                _logger.info("............Missing Url for -  %r ,......!!!!!!!!!",product.supplier_part_number)
+                pass
+    
+    ##########################
+    # Process Product Prices #
+    ##########################
+
+    def process_product_page_data_for_price_wayfair(self , product , response):
+
+        soup = BeautifulSoup(response.content , 'html.parser')
+        _logger.info("````````%r```````````", soup)
+        out_of_stock_product = soup.find('div', {'class':'a-size-medium a-color-price'})
+
+        if out_of_stock_product is not None:
+
+            product.product_status = 'unavailable'
+            _logger.info("............ Product Stock Unavailable -  %r ,........",product.supplier_part_number)
+
+        else:
+
+            # product.product_status = 'active'
+            price_element = soup.find('div', {'class': 'oakhm64z_6101 oakhm627_6101 oakhm6y5_6101 oakhm610g_6101 oakhm6aj_6101'})
+            _logger.info("............ccccccccccccccccccccccccc.......",price_element)
+            if price_element is not None:
+
+                product.product_status = 'active'
+                product.retail_price = price_element.text.strip()
+                _logger.info("............ Updated Product %r's Price -  %r ,........", product.supplier_part_number, product.retail_price)
+
+            else:
+            
+                product.product_status = 'price_unavailable'
+                _logger.info("............ Product Price Unavailable -  %r ,......!!!!!!!!!",product.supplier_part_number)
+
+
+
     
 
 

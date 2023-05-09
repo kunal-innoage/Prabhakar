@@ -85,6 +85,7 @@ class WayfairShop(models.Model):
             'view_mode': 'list,form',
             'res_model': 'wayfair.product',
             'domain': [('wayfair_shop_id', '=', self.id),('is_odoo_product','=', True)],
+            'context':{'search_default_group_by_product_status': 1,}
         } 
 
     #############

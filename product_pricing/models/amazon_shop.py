@@ -55,6 +55,7 @@ class AmazonShop(models.Model):
             'view_mode': 'list,form',
             'res_model': 'amazon.sku',
             'domain': [('amazon_shop_id', '=', self.id)],
+            'context':{'search_default_group_by_product_status': 1,}
         }
     
     ###########################
