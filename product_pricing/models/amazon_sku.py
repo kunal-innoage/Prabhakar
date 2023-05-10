@@ -61,15 +61,16 @@ class AmazonSKU(models.Model):
 
 
                 response = False
-                url = "https://"+ product.product_url
-                header = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0", "Accept-Encoding":"gzip, deflate", "Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "DNT":"1","Connection":"close", "Upgrade-Insecure-Requests":"1"}
+                url = product.product_url
+                header = {"User-Agent":"Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.0.0 Mobile Safari/537.36", "Accept-Encoding":"gzip, deflate", "Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "DNT":"1","Connection":"close", "Upgrade-Insecure-Requests":"1"}
+                # header = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0", "Accept-Encoding":"gzip, deflate", "Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "DNT":"1","Connection":"close", "Upgrade-Insecure-Requests":"1"}
                 # HEADERS = ({'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36', 'Accept-Language': 'en-US, en;q=0.5'})
                 
                 try:
 
                     # Check if URL is working 
-                    _logger.info("......... Price Check Call - %r  %r ...........", url, header)
-                    response = requests.get(url, headers=header)
+                    _logger.info("......... Price Check Call - %r  %r ...........", url)
+                    response = requests.get(url, header)
                     
                     
                     if response.status_code == 200:
@@ -96,7 +97,7 @@ class AmazonSKU(models.Model):
     def process_product_page_data_for_price(self, product, response):
     
         soup = BeautifulSoup(response.content, 'html.parser')
-        _logger.info("~~~~~~~~~~~~%r~~~~~~~~~~", soup)
+        # _logger.info("~~~~~~~~~~~~%r~~~~~~~~~~", soup)
         out_of_stock_product = soup.find('div', {'class':'a-size-medium a-color-price'})
 
         if out_of_stock_product is not None:
@@ -107,11 +108,11 @@ class AmazonSKU(models.Model):
         else:
 
             product.product_status = 'active'
-            price_element = soup.find('div', {'class': 'a-price-whole'})
+            price_element = soup.find('span', {'class': 'a-price-whole'})
+            _logger.info(">>>>>>>>>>>>>>%r,<<<<<<<<<<",price_element)
             
             if price_element is not None:
-            
-                product.list_price_with_tax = price_element.text.strip()
+                
                 _logger.info("............ Updated Product %r's Price -  %r ,........", product.vendor_sku, product.list_price_with_tax)
 
             else:

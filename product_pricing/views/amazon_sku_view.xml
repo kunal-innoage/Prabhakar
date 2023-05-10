@@ -63,9 +63,9 @@
                 <field name="last_updated_on"/>
                 <field name="product_url"/>
                 <field name="merchant_suggested_asin"/>
-                <group expand = "1" string = "Group By">
+                <!-- <group expand = "1" string = "Group By">
                     <filter name = "group_by_product_status" string = "By Product Status" context = "{'group_by':'product_status'}"/>
-                </group>
+                </group> -->
 
                 <!-- <group expand="1" string="Group By">
                     <filter string="group_by_date" name="By date" context="{'group_by':'create_date:day'}"/>
