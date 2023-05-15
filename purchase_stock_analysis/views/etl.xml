@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="purchase_analysis_list_view" model="ir.ui.view">
+        <field name="name">purchase.analysis.list.view</field>
+        <field name="model">purchase.analysis</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sku"/>
+                <field name="ltm_avg"/>
+                <field name="l9m_avg"/>
+                <field name="l6m_avg"/>
+                <field name="l3m_avg"/>
+                <field name="avg"/>
+                <field name="var1"/>
+                <field name="var2"/>
+                <field name="var3"/>
+                <field name="var4"/>
+                <field name="current_stock"/>
+                <field name="qty_on_po"/>
+                <field name="net_stock"/>
+                <field name="stock_8weeks"/>
+                <field name="lead_time"/>
+                <field name="order_quantity"/>
+                <field name="increased_stock"/>
+                <field name="date_of_first_receipt"/>
+                <field name="age_of_stock"/>
+                <field name="alert"/>
+                <field name="product_id"/>
+                <field name="warehouse_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="purchase_analysis_form_view" model="ir.ui.view">
+        <field name="name">purchase.analysis.form.view</field>
+        <field name="model">purchase.analysis</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="sku"/>
+                            <field name="ltm_avg"/>
+                            <field name="l9m_avg"/>
+                            <field name="l6m_avg"/>
+                            <field name="l3m_avg"/>
+                            <field name="avg"/>
+                            <field name="var1"/>
+                            <field name="var2"/>
+                            <field name="var3"/>
+                            <field name="var4"/>
+                            <field name="current_stock"/>
+                        </group>
+                        <group>
+                            <field name="qty_on_po"/>
+                            <field name="net_stock"/>
+                            <field name="stock_8weeks"/>
+                            <field name="lead_time"/>
+                            <field name="order_quantity"/>
+                            <field name="increased_stock"/>
+                            <field name="date_of_first_receipt"/>
+                            <field name="age_of_stock"/>
+                            <field name="alert"/>
+                            <field name="product_id"/>
+                            <field name="warehouse_id"/>
+
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+
+    <record id="warehouse_kanban_view_purchase_analysis" model="ir.ui.view">
+        <field name="name">purchase.analysis.form.inherit.test</field>
+        <field name="model">marketplace.warehouse</field>
+        <field name="inherit_id" ref="odoo_mirakl_integration.view_warehouse_warehouses_kanban"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//button[@name='tracking_info_so_import_view_action_open']" position="after">
+                <field name="stock_analysis_mapped" invisible="1"/>
+                <button class="col-8 btn btn-primary rounded  mb-2" name="purchase_stock_mapping_action" type="object" attrs="{'invisible': [('stock_analysis_mapped', '!=', False)]}">
+                                            Purchase Stock Analysis Mapping
+                </button>
+                <button class="col-8 btn btn-primary rounded  mb-2" name="purchase_stock_analysis_action" type="object" attrs="{'invisible': [('stock_analysis_mapped','=', False)]}">
+                                            Purchase Stock Analysis
+                </button>
+            </xpath>
+        </field>
+    </record>
+    <record id="warehouse_form_view_purchase_analysis" model="ir.ui.view">
+        <field name="name">purchase.analysis.form.inherit.test</field>
+        <field name="model">marketplace.warehouse</field>
+        <field name="inherit_id" ref="odoo_mirakl_integration.view_warehouse_warehouses_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='warehouse_processed_orders_view_action_open']" position="after">
+                <button class="oe_stat_button" icon="fa-usd" name="purchase_stock_mapping_action" type="object">
+                                Purchase Stock Mapping
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+    <!--  LTM sales -->
+
+
+    <record id="mapping_product_sales_ltm_server_action" model="ir.actions.server">
+        <field name="name">Mapping LTM</field>
+        <field name="model_id" ref="model_purchase_analysis"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records._compute_last_twelve_month_sales()
+        </field>
+        <field name="binding_model_id" ref="model_purchase_analysis"/>
+        <field name="binding_type">action</field>
+    </record>
+
+     <!-- L9M sales -->
+    
+    <record id="mapping_product_sales_L9M_server_action" model="ir.actions.server">
+        <field name="name">Mapping L9M</field>
+        <field name="model_id" ref="model_purchase_analysis"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records._compute_last_nine_month_sales()
+        </field>
+        <field name="binding_model_id" ref="model_purchase_analysis"/>
+        <field name="binding_type">action</field>
+    </record>
+
+     <!-- L6M sales -->
+    
+    <record id="mapping_product_sales_L6M_server_action" model="ir.actions.server">
+        <field name="name">Mapping L6M</field>
+        <field name="model_id" ref="model_purchase_analysis"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records._compute_last_six_month_sales()
+        </field>
+        <field name="binding_model_id" ref="model_purchase_analysis"/>
+        <field name="binding_type">action</field>
+    </record>
+
+</odoo>
+
