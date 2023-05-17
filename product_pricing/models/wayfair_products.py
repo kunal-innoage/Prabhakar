@@ -20,7 +20,7 @@ class WayfairProduct(models.Model):
     wayfair_uk=fields.Char("Waifair UK" , invisible='0')
     wayfair_de=fields.Char("Wayfair DE" , invisible='0')
     wayfair_shop_id = fields.Many2one("wayfair.shops","Wayfair Shop")
-    product_id = fields.Many2one("product.product","Wayfair Shop")
+    product_id = fields.Many2one("product.product","Wayfair Product")
     recommended_retail_price = fields.Float("Recommended Retail Price" , invisible = True)
     # product_status = fields.Selection([('active','Active'),('inactive','Inactive'),('unavailable', 'Out Of Stock'),('price_unavailable', 'Price Not Found'),('link_absent' , 'URL Missing') ] ,"Product Status")
     # last_updated_on = fields.Datetime("Last Updated on" , readonly = True)
