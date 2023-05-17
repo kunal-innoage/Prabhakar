@@ -1,8 +1,10 @@
 from odoo import fields , models 
-# from odoo.fields import Datetime
 from odoo.fields import Datetime
 from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
+from datetime import datetime
 import logging
+import _strptime
 import datetime
 from odoo.tools import float_compare
 _logger = logging.getLogger(__name__)
@@ -19,7 +21,7 @@ class PurchaseStockAnalysis(models.Model):
     l6m_avg = fields.Float("L6M AVG.")
     l3m_avg = fields.Float("L3M AVG.")
     lm_avg = fields.Float("LM AVG.")
-    avg = fields.Float("AVERAGE")
+    avg = fields.Float("SALES AVERAGE")
     var1 = fields.Float("VAR 1")
     var2 = fields.Float("VAR 2")
     var3 = fields.Float("VAR 3")
@@ -32,18 +34,11 @@ class PurchaseStockAnalysis(models.Model):
     order_quantity = fields.Float("ORDER QUANTITY")
     increased_stock = fields.Float("INCREASED Stock")
     date_of_first_receipt = fields.Date("Date of first recipt")
-    age_of_stock = fields.Float("AGE (MONTHS)")
-    alert = fields.Float("ALERT")
-    warehouse_id = fields.Many2one("stock.warehouse" , "Warehouse ID" )
+    age_of_stock = fields.Integer("AGE (MONTHS)")
+    alert = fields.Selection([('excess','EXCESS'),('place_order','PLACE ORDER')])
+    warehouse_id = fields.Many2one("stock.warehouse" , "Warehouse" )
     product_id = fields.Many2one("product.product", "Product ID")
 
-
-    def assign_warehouse(self):
-        for rec in self:
-            if rec.product_id:
-                warehouses = self.env['stock.warehouse'].search([ ])
-                for warehouse in warehouses:
-                    
 
 
     # LTM sales
@@ -53,7 +48,8 @@ class PurchaseStockAnalysis(models.Model):
             if rec.product_id:
                 _logger.info("QUANTITY ORDERED~~~~~~~~~~~~  %r ,...........",rec.product_id)
                 period = ( datetime.datetime.now().date() - datetime.timedelta(days=365) )
-                order_line_ids = self.env['sale.order.line'].search([("product_id" , "=" , rec.product_id.id),("order_id.date_order" , ">" , period),('warehouse_id', '=', rec.warehouse_id.id)])
+                order_line_ids = self.env['sale.order.line'].search([("product_id" , "=" , rec.product_id.id),("order_id.date_order" , ">" , period),("warehouse_id","=", rec.warehouse_id.id )])
+                _logger.info("WAREHOUSE ID~~~~~~~~~~~~  %r ,...........",rec.warehouse_id.code)
                 # order_line_ids = self.env['sale.order'].search([("product_id" , "=" , rec.product_id.id),("warehouse_id" , '=', "Cella IW (ETL) Logistik Center GmbH"),("order_id.date_order",">", period)])
                 _logger.info("TOTAL~~~~~~~~~~~~~~~~ %r , ~~~~~~~~~~~~~~~~~~",order_line_ids)
                 total_ordered_qty = 0
@@ -66,6 +62,8 @@ class PurchaseStockAnalysis(models.Model):
             else:
                 rec.ltm_avg = False
 
+    
+
     # L9M sales
 
     def _compute_last_nine_month_sales(self):
@@ -73,7 +71,7 @@ class PurchaseStockAnalysis(models.Model):
             if rec.product_id:
                 _logger.info("QUANTITY ORDERED~~~~~~~~~~~~  %r ,...........",rec.product_id)
                 period = ( datetime.datetime.now().date() - datetime.timedelta(days=273) )
-                order_line_ids = self.env['sale.order.line'].search([("product_id" , "=" , rec.product_id.id),("order_id.date_order" , ">" , period)])
+                order_line_ids = self.env['sale.order.line'].search([("product_id" , "=" , rec.product_id.id),("order_id.date_order" , ">" , period),("warehouse_id","=", rec.warehouse_id.id )])
                 # order_line_ids = self.env['sale.order'].search([("product_id" , "=" , rec.product_id.id),("warehouse_id" , '=', "Cella IW (ETL) Logistik Center GmbH"),("order_id.date_order",">", period)])
                 _logger.info("TOTAL~~~~~~~~~~~~~~~~ %r , ~~~~~~~~~~~~~~~~~~",order_line_ids)
                 total_ordered_qty = 0
@@ -93,7 +91,7 @@ class PurchaseStockAnalysis(models.Model):
             if rec.product_id:
                 _logger.info("QUANTITY ORDERED~~~~~~~~~~~~  %r ,...........",rec.product_id)
                 period = ( datetime.datetime.now().date() - datetime.timedelta(days=182) )
-                order_line_ids = self.env['sale.order.line'].search([("product_id" , "=" , rec.product_id.id),("order_id.date_order" , ">" , period)])
+                order_line_ids = self.env['sale.order.line'].search([("product_id" , "=" , rec.product_id.id),("order_id.date_order" , ">" , period),("warehouse_id","=", rec.warehouse_id.id )])
                 # order_line_ids = self.env['sale.order'].search([("product_id" , "=" , rec.product_id.id),("warehouse_id" , '=', "Cella IW (ETL) Logistik Center GmbH"),("order_id.date_order",">", period)])
                 _logger.info("TOTAL~~~~~~~~~~~~~~~~ %r , ~~~~~~~~~~~~~~~~~~",order_line_ids)
                 total_ordered_qty = 0
@@ -105,6 +103,265 @@ class PurchaseStockAnalysis(models.Model):
                     rec.l6m_avg = False 
             else:
                 rec.l6m_avg = False
+
+    # L3M sales
+
+    def _compute_last_three_month_sales(self):
+        for rec in self:
+            if rec.product_id:
+                _logger.info("QUANTITY ORDERED~~~~~~~~~~~~  %r ,...........",rec.product_id)
+                period = ( datetime.datetime.now().date() - datetime.timedelta(days=182) )
+                order_line_ids = self.env['sale.order.line'].search([("product_id" , "=" , rec.product_id.id),("order_id.date_order" , ">" , period),("warehouse_id","=", rec.warehouse_id.id )])
+                # order_line_ids = self.env['sale.order'].search([("product_id" , "=" , rec.product_id.id),("warehouse_id" , '=', "Cella IW (ETL) Logistik Center GmbH"),("order_id.date_order",">", period)])
+                _logger.info("TOTAL~~~~~~~~~~~~~~~~ %r , ~~~~~~~~~~~~~~~~~~",order_line_ids)
+                total_ordered_qty = 0
+                for line in order_line_ids: 
+                    total_ordered_qty += line.product_uom_qty
+                    _logger.info("UOM~~~~~~~~~~~~~~~~ %r , ~~~~~~~~~~~~~~~~~~",total_ordered_qty)
+                    rec.l3m_avg = total_ordered_qty / 6
+                if not len(order_line_ids) > 0:
+                    rec.l3m_avg = False 
+            else:
+                rec.l3m_avg = False
+
+
+    # LM sales
+
+    def _compute_last_month_sales(self):
+        for rec in self:
+            if rec.product_id:
+                _logger.info("QUANTITY ORDERED~~~~~~~~~~~~  %r ,...........",rec.product_id)
+                period = ( datetime.datetime.now().date() - datetime.timedelta(days=31) )
+                order_line_ids = self.env['sale.order.line'].search([("product_id" , "=" , rec.product_id.id),("order_id.date_order" , ">" , period),("warehouse_id","=", rec.warehouse_id.id )])
+                # order_line_ids = self.env['sale.order'].search([("product_id" , "=" , rec.product_id.id),("warehouse_id" , '=', "Cella IW (ETL) Logistik Center GmbH"),("order_id.date_order",">", period)])
+                _logger.info("TOTAL~~~~~~~~~~~~~~~~ %r , ~~~~~~~~~~~~~~~~~~",order_line_ids)
+                total_ordered_qty = 0
+                for line in order_line_ids: 
+                    total_ordered_qty += line.product_uom_qty
+                    _logger.info("UOM~~~~~~~~~~~~~~~~ %r , ~~~~~~~~~~~~~~~~~~",total_ordered_qty)
+                    rec.lm_avg = total_ordered_qty
+                if not len(order_line_ids) > 0:
+                    rec.lm_avg = False 
+            else:
+                rec.lm_avg = False
+
+    # AVERAGE SALES
+
+    def calculate_average(self):
+
+
+        for record in self:
+            average = (record.ltm_avg + record.l9m_avg + record.l6m_avg  + record.l3m_avg  )/4
+
+            if average == 0:
+                record.avg = record.lm_avg
+
+            else:   
+                record.avg = average
+
+    # VARIANCE (LTM - L9M)
+
+    def _compute_variance_twelve_and_nine_months(self):
+        for record in self:
+            try:
+                record.var1 = (record.ltm_avg - record.l9m_avg)/record.l9m_avg
+            except:
+                record.var1 == 0
+            
+
+    # VARIANCE (L9M - L6M)
+    
+    def _compute_variance_nine_and_six_months(self):
+        for record in self:
+            try:
+                record.var2 = (record.l9m_avg - record.l6m_avg)/record.l6m_avg
+            except:
+                record.var2 == 0
+
+    # VARIANCE (L6M - L3M)
+    
+    def _compute_variance_six_and_three_months(self):
+        for record in self:
+            try:
+                record.var3 = (record.l6m_avg - record.l3m_avg)/record.l3m_avg
+            except:
+                record.var3 == 0
+                
+
+    # VARIANCE (L3M - LM)
+    
+    def _compute_variance_three_and_last_months(self):
+        for record in self:
+            try:
+                record.var4 = (record.l3m_avg - record.lm_avg)/record.lm_avg
+            except:
+                record.var4 == 0
+                
+
+    # QTY ON PO
+
+    def _compute_quantity_on_po(self):
+        for record in self:
+            total_qty_ordered = 0
+            total_qty_rec = 0
+            orders = self.env['purchase.report'].search([('picking_type_id','=',record.warehouse_id.id),("product_id","=", record.product_id.id)], limit =1)
+            _logger.info("WAREHOUSE ID~~~~~~~~~~~~  %r ,...........",record.warehouse_id.code)
+            
+            for order in orders:
+                total_qty_ordered += order.qty_ordered     
+                total_qty_rec += order.qty_received
+          
+                record.qty_on_po = total_qty_ordered - total_qty_rec
+           
+        
+   
+        
+    # NET STOCK
+
+    def net_stock_purchase_analysis(self):
+        for record in self:
+            record.net_stock = record.current_stock + record.qty_on_po
+
+    # STOCK(8 Weeks)
+
+    def stocks_eight_weeks(self):
+        for record in self:
+            record.stock_8weeks = 2* record.avg
+
+    # LEAD TIME +SHIPPING  (STOCK)
+
+    def lead_time_shipping_stock(self):
+        for record in self:
+            record.lead_time = 2* record.avg
+
+    # Order Quantity
+
+    def order_quantity_stock(self):
+        for record in self:
+            record.order_quantity = (record.stock_8weeks + record.lead_time) - record.net_stock
+
+    # Alert
+
+    def alert_for_quantity(self):
+        for record in self:
+            if record.order_quantity >= 0:
+                record.alert = "place_order"
+            
+            else :
+                record.alert = "excess"
+                
+    # AGE (MONTHS)
+    
+
+
+    def calculate_age_of_stocks_in_months(self):
+        for rec in self:
+                date_of_first_receipt = datetime.strptime(str(rec.date_of_first_receipt), '%Y-%m-%d')
+
+                today = datetime.now().date()
+                age = relativedelta(today, date_of_first_receipt)
+                age_in_months = age.years * 12 + age.months
+
+                rec.age_of_stock = age_in_months
+                
+    
+        
+    # date of first receipt and increased_stock
+        
+    def map_date_of_first_receipt_and_increased_stock(self):
+
+        for rec in self:
+            rec.ensure_one()
+            rec_id = self.env["purchase.extension"].search([('sku', '=', rec.sku)])
+            if rec_id:
+                rec.date_of_first_receipt = rec_id.date_of_first_receipt 
+                rec.increased_stock = rec_id.increased_stock
+            else:
+                rec.date_of_first_receipt = None    
+                rec.increased_stock = None    
+       
+
+    # MAPPING Average
+
+    def mapping_till_last_tweleve_month_average(self):
+        for rec in self:
+            rec._compute_last_twelve_month_sales()
+            rec._compute_last_nine_month_sales()
+            rec._compute_last_six_month_sales()
+            rec._compute_last_three_month_sales()
+            rec._compute_last_month_sales()
+            rec.calculate_average()
+
+    # Mapping Variance
+
+    def mapping_till_last_tweleve_month_variance(self):
+        for rec in self:
+            rec._compute_variance_twelve_and_nine_months()
+            rec._compute_variance_nine_and_six_months()
+            rec._compute_variance_six_and_three_months()
+            rec._compute_variance_three_and_last_months()
+
+    # MAPPING REMAINING FIELDS
+
+    def mapping_stock_order_quantity(self):
+        for rec in self:
+            rec._compute_quantity_on_po()
+            rec.net_stock_purchase_analysis()
+            rec.stocks_eight_weeks()
+            rec.lead_time_shipping_stock()
+            rec.order_quantity_stock()
+            rec.alert_for_quantity()
+            rec.map_date_of_first_receipt_and_increased_stock()
+            rec.calculate_age_of_stocks_in_months()
+
+    # MAPPING ALL FIELDS AT ONCE
+
+    def mapping_sales_stock_analysis(self):
+        for rec in self:
+            rec._compute_last_twelve_month_sales()
+            rec._compute_last_nine_month_sales()
+            rec._compute_last_six_month_sales()
+            rec._compute_last_three_month_sales()
+            rec._compute_last_month_sales()
+            rec.calculate_average()
+            rec._compute_variance_twelve_and_nine_months()
+            rec._compute_variance_nine_and_six_months()
+            rec._compute_variance_six_and_three_months()
+            rec._compute_variance_three_and_last_months()
+            rec._compute_quantity_on_po()
+            rec.net_stock_purchase_analysis()
+            rec.stocks_eight_weeks()
+            rec.lead_time_shipping_stock()
+            rec.order_quantity_stock()
+            rec.alert_for_quantity()
+            rec.map_date_of_first_receipt_and_increased_stock()
+            rec.calculate_age_of_stocks_in_months()
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

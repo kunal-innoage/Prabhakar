@@ -10,6 +10,7 @@
     'data': [
                 "security/ir.model.access.csv",
                 "views/etl.xml",
+                "views/purchase_ext_view.xml",
 
             ],
     'application': True,

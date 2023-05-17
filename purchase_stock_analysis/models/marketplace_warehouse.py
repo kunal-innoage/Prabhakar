@@ -1,4 +1,4 @@
-from odoo import fields , models 
+from odoo import fields , models  ,_ , api
 from odoo.fields import Datetime
 from datetime import datetime, timedelta
 
@@ -11,6 +11,7 @@ class MarketplaceWarehouse(models.Model):
 
     stock_analysis_mapped = fields.Boolean("Stock Aanalysis Mapped", default = False)
 
+
     def purchase_stock_analysis_action(self):
         # _logger.info("~~~~~~~~~~~~  %r ,...........",self)
         for warehouse in self:
@@ -20,40 +21,55 @@ class MarketplaceWarehouse(models.Model):
                     'name': ("Stock Analysis" ),
                     'view_mode': 'list,form',
                     'res_model': 'purchase.analysis',
+                    # 'domain': [('warehouse_id.id', '=', warehouse.id)],
+                    'domain': [('warehouse_id.id', 'in', [self.warehouse_id.id])],
+                    'context': {'search_default_group_by_date': 1,},
+
                     # domain warehouse_id
                 }
-         
+
+    
+    
     def purchase_stock_mapping_action(self):
         for rec in self:
-            if rec.warehouse_id:
-                # date filter_ 
-                products = self.env['warehouse.inventory'].search([('warehouse_id','=', rec.id)])
-                _logger.info("~~~~~~~~~~~~  %r ,...........",products)
+                
+            # if rec.warehouse_id:
+                _logger.info("WAREHOUSE ID BEFORE~~~~~~~~~~ %r ,...........",rec.warehouse_id.code)
+                products = self.env['warehouse.inventory'].search([("warehouse_id","=",rec.id), ('create_date', '>=', Datetime.to_string(Datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)))], order='create_date desc')
+                _logger.info("PRODUcTS~~~~~~~~~~~~  %r ,...........",products)
                 rec.stock_analysis_mapped = True
                 for product in products:
 
-                    prod_id = self.env['purchase.analysis'].search([('sku','=',product.odoo_product_id.default_code),('create_date', '>=', Datetime.to_string(Datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)))])
-                    # _logger.info("~~~~~~~~~~~~  %r ,...........",prod_id)
+                    # prod_id = self.env['purchase.analysis'].search([('warehouse_id','=', rec.id),('sku','=',product.odoo_product_id.default_code),('create_date', '>=', Datetime.to_string(Datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)))])
+                    prod_id = self.env['purchase.analysis'].search([('sku','=',product.odoo_product_id.default_code), ('create_date', '>=', Datetime.to_string(Datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)))] , order='create_date desc')
+                    _logger.info("~~~~purchase analysis id~~~~~~~~  %r ,...........",prod_id)
 
                     if not prod_id:
                         product_current_stock = self.env['purchase.analysis'].create({
                             'sku': product.odoo_product_id.default_code,
                             'current_stock': product.available_stock_count,
                             'product_id': product.odoo_product_id.id,
-                            'warehouse_id': product. 
+                            'warehouse_id': rec.warehouse_id.id,
                         })
-                        _logger.info("CREATED~~~~~~~~~~~~  %r ,...........",product_current_stock)
+                        _logger.info("WAREHOUSE IF~~~~~~~~~~~~  %r ,...........",product_current_stock)
                         
                     else:
                         prod_id.current_stock = product.available_stock_count
                         prod_id.product_id = product.odoo_product_id.id
-
+                        prod_id.warehouse_id = rec.warehouse_id.id
+                        _logger.info("WAREHOUSE ELSE~~~~~~~~~~~~  %r ,...........",rec.warehouse_id.id)
+                        
     
     
-
-
-
-
-    
-
-    
+    # @api.model_create_multi
+    # def create(self , vals):
+    #     res = super(MarketplaceWarehouse , self).create(vals)
+        
+    #     if res._context.get('import_file'):
+            
+                
+     
+        
+        
+        
+        
