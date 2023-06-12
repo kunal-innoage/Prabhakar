@@ -7,7 +7,7 @@
             <tree>
                 <field name="sku"/>
                 <field name="date_of_first_receipt"/>
-                <field name="increased_stock"/>
+                <field name="warehouse"/>
             </tree>
         </field>
     </record>
@@ -22,7 +22,7 @@
                         <group>
                             <field name="sku"/>
                             <field name="date_of_first_receipt"/>
-                            <field name="increased_stock"/>
+                            <field name="warehouse"/>
                         </group>
                     </group>
                 </sheet>
@@ -38,6 +38,10 @@
                 <field name="sku"/>
                 <field name="date_of_first_receipt"/>
                 <field name="increased_stock"/>
+                <field name="warehouse"/>
+                <group expand="1" string="Group By">
+                    <filter name="group_by_warehouse" string="By warehouse" context="{'group_by': 'warehouse'}"/>
+                </group>
             </search>
         </field>
     </record>
@@ -62,6 +66,7 @@
         <field name="name">Purchase Extension</field>
         <field name="res_model">purchase.extension</field>
         <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_group_by_warehouse': 1,}</field>
     </record>
 
     <menuitem id="purchase_stock_pricing_menuitem" name="Purchase Stock Info" parent="odoo_mirakl_integration.purchase_management_menu"  action="purchase_extension_action"/>

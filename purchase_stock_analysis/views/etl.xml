@@ -4,7 +4,7 @@
         <field name="name">purchase.analysis.list.view</field>
         <field name="model">purchase.analysis</field>
         <field name="arch" type="xml">
-            <tree>
+            <tree default_order = "create_date desc">
                 <field name="sku"/>
                 <!-- <field name="ltm_avg"/>
                 <field name="l9m_avg"/>
@@ -22,7 +22,6 @@
                 <field name="stock_8weeks"/>
                 <!-- <field name="lead_time"/> -->
                 <field name="order_quantity"/>
-                <!-- <field name="increased_stock"/> -->
                 <!-- <field name="date_of_first_receipt"/> -->
                 <!-- <field name="age_of_stock"/> -->
                 <field name="alert" decoration-danger="alert > '0'"/>
@@ -97,7 +96,7 @@
                                 <group>
                                     <field name="lead_time"/>
                                     <field name="order_quantity"/>
-                                    <field name="increased_stock"/>
+                                    <field name="sales_span_stock"/>
                                 </group>
                             </group>
                         </page>
@@ -129,10 +128,10 @@
                 <field name="stock_8weeks"/>
                 <field name="lead_time"/>
                 <field name="order_quantity"/>
-                <field name="increased_stock"/>
                 <field name="date_of_first_receipt"/>
                 <field name="age_of_stock"/>
                 <field name="alert"/>
+                <field name="sales_span_stock"/>
                 <field name="product_id"/>
                 <field name="warehouse_id"/>
                 <group expand="1" string="Group By">
@@ -342,7 +341,6 @@
         <field name="binding_model_id" ref="model_purchase_analysis"/>
         <field name="binding_type">action</field>
     </record> -->
-</odoo>
 
 <!-- NET STOCK -->
 
@@ -423,3 +421,4 @@
     </record> -->
 
 <!-- </odoo> -->
+</odoo>

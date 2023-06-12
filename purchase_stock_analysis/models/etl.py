@@ -1,12 +1,7 @@
 from odoo import fields , models 
-from odoo.fields import Datetime
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
-from datetime import datetime
 import logging
-import _strptime
-import datetime
-from odoo.tools import float_compare
 _logger = logging.getLogger(__name__)
 
 
@@ -32,7 +27,7 @@ class PurchaseStockAnalysis(models.Model):
     stock_8weeks = fields.Float("STOCK(8 Weeks)")
     lead_time = fields.Float("LEAD TIME +SHIPPING  (STOCK)")
     order_quantity = fields.Float("ORDER QUANTITY")
-    increased_stock = fields.Float("INCREASED Stock")
+    sales_span_stock = fields.Selection([('moving','MOVING'),('non_moving','NON-MOVING'),('slow_moving','SLOW-MOVING')],"Moving , Non-Moving SKUs")
     date_of_first_receipt = fields.Date("Date of first recipt")
     age_of_stock = fields.Integer("AGE (MONTHS)")
     alert = fields.Selection([('excess','EXCESS'),('place_order','PLACE ORDER')])
@@ -46,38 +41,27 @@ class PurchaseStockAnalysis(models.Model):
     def _compute_last_twelve_month_sales(self):
         for rec in self:
             if rec.product_id:
-                _logger.info("QUANTITY ORDERED~~~~~~~~~~~~  %r ,...........",rec.product_id)
-                period = ( datetime.datetime.now().date() - datetime.timedelta(days=365) )
+                period = ( datetime.now().date() - timedelta(days=365) )
                 order_line_ids = self.env['sale.order.line'].search([("product_id" , "=" , rec.product_id.id),("order_id.date_order" , ">" , period),("warehouse_id","=", rec.warehouse_id.id )])
-                _logger.info("WAREHOUSE ID~~~~~~~~~~~~  %r ,...........",rec.warehouse_id.code)
-                # order_line_ids = self.env['sale.order'].search([("product_id" , "=" , rec.product_id.id),("warehouse_id" , '=', "Cella IW (ETL) Logistik Center GmbH"),("order_id.date_order",">", period)])
-                _logger.info("TOTAL~~~~~~~~~~~~~~~~ %r , ~~~~~~~~~~~~~~~~~~",order_line_ids)
                 total_ordered_qty = 0
                 for line in order_line_ids: 
                     total_ordered_qty += line.product_uom_qty
-                    _logger.info("UOM~~~~~~~~~~~~~~~~ %r , ~~~~~~~~~~~~~~~~~~",line.warehouse_id, rec.warehouse_id)
                     rec.ltm_avg = total_ordered_qty / 12
                 if not len(order_line_ids) > 0:
                     rec.ltm_avg = False 
             else:
                 rec.ltm_avg = False
 
-    
-
     # L9M sales
 
     def _compute_last_nine_month_sales(self):
         for rec in self:
             if rec.product_id:
-                _logger.info("QUANTITY ORDERED~~~~~~~~~~~~  %r ,...........",rec.product_id)
-                period = ( datetime.datetime.now().date() - datetime.timedelta(days=273) )
+                period = ( datetime.now().date() - timedelta(days=273) )
                 order_line_ids = self.env['sale.order.line'].search([("product_id" , "=" , rec.product_id.id),("order_id.date_order" , ">" , period),("warehouse_id","=", rec.warehouse_id.id )])
-                # order_line_ids = self.env['sale.order'].search([("product_id" , "=" , rec.product_id.id),("warehouse_id" , '=', "Cella IW (ETL) Logistik Center GmbH"),("order_id.date_order",">", period)])
-                _logger.info("TOTAL~~~~~~~~~~~~~~~~ %r , ~~~~~~~~~~~~~~~~~~",order_line_ids)
                 total_ordered_qty = 0
                 for line in order_line_ids: 
                     total_ordered_qty += line.product_uom_qty
-                    _logger.info("UOM~~~~~~~~~~~~~~~~ %r , ~~~~~~~~~~~~~~~~~~",total_ordered_qty)
                     rec.l9m_avg = total_ordered_qty / 9
                 if not len(order_line_ids) > 0:
                     rec.l9m_avg = False 
@@ -89,15 +73,11 @@ class PurchaseStockAnalysis(models.Model):
     def _compute_last_six_month_sales(self):
         for rec in self:
             if rec.product_id:
-                _logger.info("QUANTITY ORDERED~~~~~~~~~~~~  %r ,...........",rec.product_id)
-                period = ( datetime.datetime.now().date() - datetime.timedelta(days=182) )
+                period = ( datetime.now().date() - timedelta(days=182) )
                 order_line_ids = self.env['sale.order.line'].search([("product_id" , "=" , rec.product_id.id),("order_id.date_order" , ">" , period),("warehouse_id","=", rec.warehouse_id.id )])
-                # order_line_ids = self.env['sale.order'].search([("product_id" , "=" , rec.product_id.id),("warehouse_id" , '=', "Cella IW (ETL) Logistik Center GmbH"),("order_id.date_order",">", period)])
-                _logger.info("TOTAL~~~~~~~~~~~~~~~~ %r , ~~~~~~~~~~~~~~~~~~",order_line_ids)
                 total_ordered_qty = 0
                 for line in order_line_ids: 
                     total_ordered_qty += line.product_uom_qty
-                    _logger.info("UOM~~~~~~~~~~~~~~~~ %r , ~~~~~~~~~~~~~~~~~~",total_ordered_qty)
                     rec.l6m_avg = total_ordered_qty / 6
                 if not len(order_line_ids) > 0:
                     rec.l6m_avg = False 
@@ -109,36 +89,28 @@ class PurchaseStockAnalysis(models.Model):
     def _compute_last_three_month_sales(self):
         for rec in self:
             if rec.product_id:
-                _logger.info("QUANTITY ORDERED~~~~~~~~~~~~  %r ,...........",rec.product_id)
-                period = ( datetime.datetime.now().date() - datetime.timedelta(days=182) )
+                period = ( datetime.now().date() - timedelta(days=182) )
                 order_line_ids = self.env['sale.order.line'].search([("product_id" , "=" , rec.product_id.id),("order_id.date_order" , ">" , period),("warehouse_id","=", rec.warehouse_id.id )])
                 # order_line_ids = self.env['sale.order'].search([("product_id" , "=" , rec.product_id.id),("warehouse_id" , '=', "Cella IW (ETL) Logistik Center GmbH"),("order_id.date_order",">", period)])
-                _logger.info("TOTAL~~~~~~~~~~~~~~~~ %r , ~~~~~~~~~~~~~~~~~~",order_line_ids)
                 total_ordered_qty = 0
                 for line in order_line_ids: 
                     total_ordered_qty += line.product_uom_qty
-                    _logger.info("UOM~~~~~~~~~~~~~~~~ %r , ~~~~~~~~~~~~~~~~~~",total_ordered_qty)
                     rec.l3m_avg = total_ordered_qty / 6
                 if not len(order_line_ids) > 0:
                     rec.l3m_avg = False 
             else:
                 rec.l3m_avg = False
 
-
     # LM sales
 
     def _compute_last_month_sales(self):
         for rec in self:
             if rec.product_id:
-                _logger.info("QUANTITY ORDERED~~~~~~~~~~~~  %r ,...........",rec.product_id)
-                period = ( datetime.datetime.now().date() - datetime.timedelta(days=31) )
+                period = ( datetime.now().date() - timedelta(days=31) )
                 order_line_ids = self.env['sale.order.line'].search([("product_id" , "=" , rec.product_id.id),("order_id.date_order" , ">" , period),("warehouse_id","=", rec.warehouse_id.id )])
-                # order_line_ids = self.env['sale.order'].search([("product_id" , "=" , rec.product_id.id),("warehouse_id" , '=', "Cella IW (ETL) Logistik Center GmbH"),("order_id.date_order",">", period)])
-                _logger.info("TOTAL~~~~~~~~~~~~~~~~ %r , ~~~~~~~~~~~~~~~~~~",order_line_ids)
                 total_ordered_qty = 0
                 for line in order_line_ids: 
                     total_ordered_qty += line.product_uom_qty
-                    _logger.info("UOM~~~~~~~~~~~~~~~~ %r , ~~~~~~~~~~~~~~~~~~",total_ordered_qty)
                     rec.lm_avg = total_ordered_qty
                 if not len(order_line_ids) > 0:
                     rec.lm_avg = False 
@@ -149,15 +121,23 @@ class PurchaseStockAnalysis(models.Model):
 
     def calculate_average(self):
 
-
         for record in self:
-            average = (record.ltm_avg + record.l9m_avg + record.l6m_avg  + record.l3m_avg  )/4
-
-            if average == 0:
-                record.avg = record.lm_avg
-
-            else:   
-                record.avg = average
+            if record.age_of_stock:
+                age = record.age_of_stock
+                _logger.info("~~~~~~~age~~~~%r~~~~~~%r~~~", age, record.lm_avg)
+                if age < 3:
+                    average = record.lm_avg
+                elif age < 6:
+                    average = (record.l6m_avg  + record.l3m_avg  )/2
+                elif age < 9:
+                    average = (record.l9m_avg + record.l6m_avg  + record.l3m_avg  )/3
+                else:
+                    average = (record.ltm_avg + record.l9m_avg + record.l6m_avg  + record.l3m_avg  )/4
+                    _logger.info("~~~~~~~~~~~%r~~~~~~~~~", average)
+            else:
+                average = record.lm_avg
+            record.avg = average
+                
 
     # VARIANCE (LTM - L9M)
 
@@ -205,8 +185,6 @@ class PurchaseStockAnalysis(models.Model):
             total_qty_ordered = 0
             total_qty_rec = 0
             orders = self.env['purchase.report'].search([('picking_type_id','=',record.warehouse_id.id),("product_id","=", record.product_id.id)], limit =1)
-            _logger.info("WAREHOUSE ID~~~~~~~~~~~~  %r ,...........",record.warehouse_id.code)
-            
             for order in orders:
                 total_qty_ordered += order.qty_ordered     
                 total_qty_rec += order.qty_received
@@ -251,36 +229,66 @@ class PurchaseStockAnalysis(models.Model):
                 record.alert = "excess"
                 
     # AGE (MONTHS)
-    
-
 
     def calculate_age_of_stocks_in_months(self):
         for rec in self:
-                date_of_first_receipt = datetime.strptime(str(rec.date_of_first_receipt), '%Y-%m-%d')
+                if not rec.date_of_first_receipt:
+                    prod_ext_id = self.env["purchase.extension"].search([('sku','=', 'rec.sku')], limit=1)
+                    if prod_ext_id:
+                        rec.date_of_first_receipt = prod_ext_id.date_of_first_receipt
+                if rec.date_of_first_receipt:
+                    date_of_first_receipt = datetime.strptime(str(rec.date_of_first_receipt), '%Y-%m-%d')
+                    today = datetime.now().date()
+                    age = relativedelta(today, date_of_first_receipt)
+                    age_in_months = age.years * 12 + age.months
 
-                today = datetime.now().date()
-                age = relativedelta(today, date_of_first_receipt)
-                age_in_months = age.years * 12 + age.months
-
-                rec.age_of_stock = age_in_months
+                    rec.age_of_stock = age_in_months
                 
-    
-        
     # date of first receipt and increased_stock
         
     def map_date_of_first_receipt_and_increased_stock(self):
 
         for rec in self:
             rec.ensure_one()
-            rec_id = self.env["purchase.extension"].search([('sku', '=', rec.sku)])
+            rec_id = self.env["purchase.extension"].search([('sku', '=', rec.sku),('warehouse', '=' , rec.warehouse_id.code)])
             if rec_id:
-                rec.date_of_first_receipt = rec_id.date_of_first_receipt 
-                rec.increased_stock = rec_id.increased_stock
+                # rec.date_of_first_receipt = rec_id.date_of_first_receipt
+                rec.date_of_first_receipt = rec_id.date_of_first_receipt
+            
+                # rec.increased_stock = rec_id.increased_stock
             else:
                 rec.date_of_first_receipt = None    
-                rec.increased_stock = None    
-       
-
+                # rec.increased_stock = None    
+                
+    # MAPPING WHETHER THE STOCK IS MOVING OR NOT
+    
+    def map_whether_the_stock_is_moving_or_not(self):
+        for rec in self :
+            if rec.age_of_stock >= 6:
+                if rec.ltm_avg == 0:
+                    if rec.l3m_avg == 0:
+                        if rec.l6m_avg == 0:
+                            if rec.l9m_avg ==0:
+                                if rec.lm_avg ==0:
+                                    if rec.avg == 0:
+                                        rec.sales_span_stock = 'non_moving'
+                                    else:
+                                        rec.sales_span_stock = 'moving'
+                                else:
+                                    rec.sales_span_stock = 'moving'
+                            else:
+                                rec.sales_span_stock = 'moving'
+                        else:
+                            rec.sales_span_stock = 'moving'
+                    else:
+                        rec.sales_span_stock = 'moving'
+                else:
+                    rec.sales_span_stock = 'moving'
+            else:
+                rec.sales_span_stock = 'moving'
+                                        
+                            
+                
     # MAPPING Average
 
     def mapping_till_last_tweleve_month_average(self):
@@ -305,19 +313,22 @@ class PurchaseStockAnalysis(models.Model):
 
     def mapping_stock_order_quantity(self):
         for rec in self:
+            rec.map_date_of_first_receipt_and_increased_stock()
+            rec.calculate_age_of_stocks_in_months()
             rec._compute_quantity_on_po()
             rec.net_stock_purchase_analysis()
             rec.stocks_eight_weeks()
             rec.lead_time_shipping_stock()
             rec.order_quantity_stock()
             rec.alert_for_quantity()
-            rec.map_date_of_first_receipt_and_increased_stock()
-            rec.calculate_age_of_stocks_in_months()
+            rec.map_whether_the_stock_is_moving_or_not()
 
     # MAPPING ALL FIELDS AT ONCE
 
     def mapping_sales_stock_analysis(self):
         for rec in self:
+            rec.map_date_of_first_receipt_and_increased_stock()
+            rec.calculate_age_of_stocks_in_months()
             rec._compute_last_twelve_month_sales()
             rec._compute_last_nine_month_sales()
             rec._compute_last_six_month_sales()
@@ -334,34 +345,4 @@ class PurchaseStockAnalysis(models.Model):
             rec.lead_time_shipping_stock()
             rec.order_quantity_stock()
             rec.alert_for_quantity()
-            rec.map_date_of_first_receipt_and_increased_stock()
-            rec.calculate_age_of_stocks_in_months()
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            rec.map_whether_the_stock_is_moving_or_not()

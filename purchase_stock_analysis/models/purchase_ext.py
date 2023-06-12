@@ -8,6 +8,8 @@ class PurchaseExtension(models.Model):
     date_of_first_receipt = fields.Date("Date of first recipt")
     increased_stock = fields.Float("INCREASED Stock")
     
+    warehouse = fields.Char("Warehouse")
+    
 
     def map_increased_stock(self):
         for rec in self:
@@ -18,4 +20,3 @@ class PurchaseExtension(models.Model):
                     'date_of_first_receipt':rec.date_of_first_receipt ,
                     'increased_stock':rec.increased_stock
                 })
-
