@@ -21,9 +21,9 @@ class PurchaseStockAnalysis(models.Model):
     var2 = fields.Float("VAR 2")
     var3 = fields.Float("VAR 3")
     var4 = fields.Float("VAR 4")
-    current_stock = fields.Float("Current Stock")
-    qty_on_po = fields.Float("QTY ON P.O (NOT RECEIVED)")
-    net_stock = fields.Float("NET STOCK")
+    current_stock = fields.Float("CURRENT STOCK")
+    qty_on_po = fields.Float("UPCOMING STOCK")
+    net_stock = fields.Float("CURRENT + UPCOMING STOCK")
     stock_8weeks = fields.Float("STOCK(8 Weeks)")
     lead_time = fields.Float("LEAD TIME +SHIPPING  (STOCK)")
     order_quantity = fields.Float("ORDER QUANTITY")
@@ -57,7 +57,7 @@ class PurchaseStockAnalysis(models.Model):
     def _compute_last_nine_month_sales(self):
         for rec in self:
             if rec.product_id:
-                period = ( datetime.now().date() - timedelta(days=273) )
+                period = ( datetime.now().date() - timedelta(days=275) )
                 order_line_ids = self.env['sale.order.line'].search([("product_id" , "=" , rec.product_id.id),("order_id.date_order" , ">" , period),("warehouse_id","=", rec.warehouse_id.id )])
                 total_ordered_qty = 0
                 for line in order_line_ids: 
@@ -73,7 +73,7 @@ class PurchaseStockAnalysis(models.Model):
     def _compute_last_six_month_sales(self):
         for rec in self:
             if rec.product_id:
-                period = ( datetime.now().date() - timedelta(days=182) )
+                period = ( datetime.now().date() - timedelta(days=183) )
                 order_line_ids = self.env['sale.order.line'].search([("product_id" , "=" , rec.product_id.id),("order_id.date_order" , ">" , period),("warehouse_id","=", rec.warehouse_id.id )])
                 total_ordered_qty = 0
                 for line in order_line_ids: 
@@ -89,13 +89,13 @@ class PurchaseStockAnalysis(models.Model):
     def _compute_last_three_month_sales(self):
         for rec in self:
             if rec.product_id:
-                period = ( datetime.now().date() - timedelta(days=182) )
+                period = ( datetime.now().date() - timedelta(days=92) )
                 order_line_ids = self.env['sale.order.line'].search([("product_id" , "=" , rec.product_id.id),("order_id.date_order" , ">" , period),("warehouse_id","=", rec.warehouse_id.id )])
                 # order_line_ids = self.env['sale.order'].search([("product_id" , "=" , rec.product_id.id),("warehouse_id" , '=', "Cella IW (ETL) Logistik Center GmbH"),("order_id.date_order",">", period)])
                 total_ordered_qty = 0
                 for line in order_line_ids: 
                     total_ordered_qty += line.product_uom_qty
-                    rec.l3m_avg = total_ordered_qty / 6
+                    rec.l3m_avg = total_ordered_qty / 3
                 if not len(order_line_ids) > 0:
                     rec.l3m_avg = False 
             else:
@@ -124,7 +124,6 @@ class PurchaseStockAnalysis(models.Model):
         for record in self:
             if record.age_of_stock:
                 age = record.age_of_stock
-                _logger.info("~~~~~~~age~~~~%r~~~~~~%r~~~", age, record.lm_avg)
                 if age < 3:
                     average = record.lm_avg
                 elif age < 6:
@@ -133,7 +132,6 @@ class PurchaseStockAnalysis(models.Model):
                     average = (record.l9m_avg + record.l6m_avg  + record.l3m_avg  )/3
                 else:
                     average = (record.ltm_avg + record.l9m_avg + record.l6m_avg  + record.l3m_avg  )/4
-                    _logger.info("~~~~~~~~~~~%r~~~~~~~~~", average)
             else:
                 average = record.lm_avg
             record.avg = average
@@ -184,7 +182,7 @@ class PurchaseStockAnalysis(models.Model):
         for record in self:
             total_qty_ordered = 0
             total_qty_rec = 0
-            orders = self.env['purchase.report'].search([('picking_type_id','=',record.warehouse_id.id),("product_id","=", record.product_id.id)], limit =1)
+            orders = self.env['purchase.report'].search([('picking_type_id','=',record.warehouse_id.id),("product_id","=", record.product_id.id),('state', 'not in', ['done', 'cancel'])])
             for order in orders:
                 total_qty_ordered += order.qty_ordered     
                 total_qty_rec += order.qty_received
@@ -216,13 +214,13 @@ class PurchaseStockAnalysis(models.Model):
 
     def order_quantity_stock(self):
         for record in self:
-            record.order_quantity = (record.stock_8weeks + record.lead_time) - record.net_stock
+            record.order_quantity = round((record.stock_8weeks + record.lead_time) - record.net_stock)
 
     # Alert
 
     def alert_for_quantity(self):
         for record in self:
-            if record.order_quantity >= 0:
+            if record.order_quantity > 0:
                 record.alert = "place_order"
             
             else :

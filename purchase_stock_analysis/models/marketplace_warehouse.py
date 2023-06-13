@@ -53,7 +53,7 @@ class MarketplaceWarehouse(models.Model):
                                 'warehouse_id': rec.warehouse_id.id,
                             })
                             
-                        else:   
+                        else:
                             prod_id.current_stock = product.available_stock_count
                             prod_id.product_id = product.odoo_product_id.id
                             prod_id.warehouse_id = rec.warehouse_id.id
@@ -82,3 +82,5 @@ class MarketplaceWarehouse(models.Model):
                             prod_id.current_stock = product.available_stock_count
                             prod_id.product_id = product.odoo_product_id.id
                             prod_id.warehouse_id = rec.warehouse_id.id
+                                
+                            
