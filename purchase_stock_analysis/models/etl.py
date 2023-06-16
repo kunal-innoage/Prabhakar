@@ -27,12 +27,14 @@ class PurchaseStockAnalysis(models.Model):
     stock_8weeks = fields.Float("STOCK(8 Weeks)")
     lead_time = fields.Float("LEAD TIME +SHIPPING  (STOCK)")
     order_quantity = fields.Float("ORDER QUANTITY")
-    sales_span_stock = fields.Selection([('moving','MOVING'),('non_moving','NON-MOVING'),('slow_moving','SLOW-MOVING')],"Moving , Non-Moving SKUs")
+    sales_span_stock = fields.Selection([('moving','MOVING SKU'),('non_moving','NON-MOVING SKU'),("slow_moving" , "SlOW-MOVING SKU")])
     date_of_first_receipt = fields.Date("Date of first recipt")
     age_of_stock = fields.Integer("AGE (MONTHS)")
     alert = fields.Selection([('excess','EXCESS'),('place_order','PLACE ORDER')])
     warehouse_id = fields.Many2one("stock.warehouse" , "Warehouse" )
     product_id = fields.Many2one("product.product", "Product ID")
+    creel = fields.Char("Creel")
+    continuity = fields.Char("Continuity")
 
 
 
@@ -241,6 +243,20 @@ class PurchaseStockAnalysis(models.Model):
                     age_in_months = age.years * 12 + age.months
 
                     rec.age_of_stock = age_in_months
+                    
+    # map data of creel and continuity
+                    
+    def creel_and_continuity(self):
+        # for rec in self:
+        #     product_ids = self.env["marketplace.product"].search([('sku','=',rec.sku)])
+        #     _logger.info("~~~~~~~~~~~~~%r~~~~~~~~~~~~",product_ids)
+        #     if product_ids:
+        #         for product in product_ids:
+        #             rec.creel = product.creel,
+        #             rec.continuity = product.continuity
+        #     else :
+        pass
+                
                 
     # date of first receipt and increased_stock
         
@@ -252,10 +268,15 @@ class PurchaseStockAnalysis(models.Model):
             if rec_id:
                 # rec.date_of_first_receipt = rec_id.date_of_first_receipt
                 rec.date_of_first_receipt = rec_id.date_of_first_receipt
+                rec.creel = rec_id.creel
+                rec.continuity = rec_id.continuity
             
                 # rec.increased_stock = rec_id.increased_stock
             else:
-                rec.date_of_first_receipt = None    
+                rec.date_of_first_receipt = None  
+                rec.creel = None
+                rec.continuity = None
+                 
                 # rec.increased_stock = None    
                 
     # MAPPING WHETHER THE STOCK IS MOVING OR NOT
@@ -284,6 +305,12 @@ class PurchaseStockAnalysis(models.Model):
                     rec.sales_span_stock = 'moving'
             else:
                 rec.sales_span_stock = 'moving'
+                
+            if rec.age_of_stock >= 6 and rec.avg <= 10   :
+                rec.sales_span_stock = 'slow_moving'
+                _logger.info("~REC AVERAGE~~~~~~~%r~~~~~~~~``",rec.sales_span_stock)
+                
+                
                                         
                             
                 
@@ -320,6 +347,7 @@ class PurchaseStockAnalysis(models.Model):
             rec.order_quantity_stock()
             rec.alert_for_quantity()
             rec.map_whether_the_stock_is_moving_or_not()
+            rec.creel_and_continuity()
 
     # MAPPING ALL FIELDS AT ONCE
 
@@ -344,3 +372,4 @@ class PurchaseStockAnalysis(models.Model):
             rec.order_quantity_stock()
             rec.alert_for_quantity()
             rec.map_whether_the_stock_is_moving_or_not()
+            rec.creel_and_continuity()

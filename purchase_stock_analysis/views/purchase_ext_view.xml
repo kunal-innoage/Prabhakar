@@ -8,6 +8,8 @@
                 <field name="sku"/>
                 <field name="date_of_first_receipt"/>
                 <field name="warehouse"/>
+                <field name="continuity"/>
+                <field name="creel"/>
             </tree>
         </field>
     </record>
@@ -23,6 +25,8 @@
                             <field name="sku"/>
                             <field name="date_of_first_receipt"/>
                             <field name="warehouse"/>
+                            <field name="continuity"/>
+                            <field name="creel"/>
                         </group>
                     </group>
                 </sheet>

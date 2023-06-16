@@ -7,7 +7,8 @@ class PurchaseExtension(models.Model):
     sku = fields.Char("SKU")
     date_of_first_receipt = fields.Date("Date of first recipt")
     increased_stock = fields.Float("INCREASED Stock")
-    
+    creel = fields.Char("Creel")
+    continuity = fields.Char("Continuity")    
     warehouse = fields.Char("Warehouse")
     
 

@@ -1,7 +1,6 @@
-from odoo import fields , models  , _ , api
+from odoo import fields , models  ,_ , api
 from odoo.fields import Datetime
 from datetime import datetime, timedelta
-
 
 import logging
 _logger = logging.getLogger(__name__)
@@ -14,6 +13,7 @@ class MarketplaceWarehouse(models.Model):
 
 
     def purchase_stock_analysis_action(self):
+        # _logger.info("~~~~~~~~~~~~  %r ,...........",self)
         for warehouse in self:
             warehouse.purchase_stock_mapping_action()
             return {
@@ -28,9 +28,7 @@ class MarketplaceWarehouse(models.Model):
                     # domain warehouse_id
                 }
 
-    ###################################################
-    # MAPPING INVENTORY UPDATE WITH PURCHASE ANALYSIS #
-    ###################################################
+    
     
     def purchase_stock_mapping_action(self):
         for rec in self:

@@ -97,6 +97,8 @@
                                     <field name="lead_time"/>
                                     <field name="order_quantity"/>
                                     <field name="sales_span_stock"/>
+                                    <field name="creel"/>
+                                    <field name="continuity"/>
                                 </group>
                             </group>
                         </page>
