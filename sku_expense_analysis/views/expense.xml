@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- XPATH MIRAKL MARKETPLACE -->
+
+    <record id="view_product_template_form_view" model="ir.ui.view">
+        <field name="name">shop.integrator</field>
+        <field name="model">shop.integrator</field>
+        <field name="inherit_id" ref="odoo_mirakl_integration.shop_integrator_form_view"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//notebook" position="inside">
+                    <page string = "Expense static value">
+                        <group>
+                            <group>
+                                <field name="replenishment_period"/>
+                                <field name="storage"/>
+                                <field name="pick_pack"/>
+                                <field name="adv_cost"/>
+                            </group>
+                            <group>
+                                <field name="shipping_cost"/>
+                                <field name="salary_cost"/>
+                                <field name="carrer_admin_cost"/>
+                                <field name="comission"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+    <!-- XPATH MANOMANO CONNECTOR -->
+    
+    <record id="view_product_template_form_view_manomano" model="ir.ui.view">
+        <field name="name">manomano.seller</field>
+        <field name="model">manomano.seller</field>
+        <field name="inherit_id" ref="manomano_connector.manomano_seller_view_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//notebook" position="inside">
+                    <page string = "Expense static value">
+                        <group>
+                            <group>
+                                <field name="replenishment_period"/>
+                                <field name="storage"/>
+                                <field name="pick_pack"/>
+                                <field name="adv_cost"/>
+                            </group>
+                            <group>
+                                <field name="shipping_cost"/>
+                                <field name="salary_cost"/>
+                                <field name="carrer_admin_cost"/>
+                                <field name="comission"/>
+
+
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+    <!-- XPATH CDISCOUNT CONNECTOR -->
+    
+    <record id="view_product_template_form_view_cdiscount" model="ir.ui.view">
+        <field name="name">cdiscount.seller</field>
+        <field name="model">cdiscount.seller</field>
+        <field name="inherit_id" ref="cdiscount_connector.cdiscount_seller_view_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//notebook" position="inside">
+                    <page string = "Expense static value">
+                        <group>
+                            <group>
+                                <field name="replenishment_period"/>
+                                <field name="storage"/>
+                                <field name="pick_pack"/>
+                                <field name="adv_cost"/>
+                            </group>
+                            <group>
+                                <field name="shipping_cost"/>
+                                <field name="salary_cost"/>
+                                <field name="carrer_admin_cost"/>
+                                <field name="comission"/>
+
+
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+    <!-- XPATH AMAZON CONNECTOR -->
+
+    <record id="view_product_template_form_view_amazon" model="ir.ui.view">
+        <field name="name">amazon.seller</field>
+        <field name="model">amazon.seller</field>
+        <field name="inherit_id" ref="amazon_connector.amazon_seller_view_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//notebook" position="inside">
+                    <page string = "Expense static value">
+                        <group>
+                            <group>
+                                <field name="replenishment_period"/>
+                                <field name="storage"/>
+                                <field name="pick_pack"/>
+                                <field name="adv_cost"/>
+                            </group>
+                            <group>
+                                <field name="shipping_cost"/>
+                                <field name="salary_cost"/>
+                                <field name="carrer_admin_cost"/>
+                                <field name="comission"/>
+
+
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </data>
+        </field>
+    </record>
+    
+    <!-- XPATH WAYFAIR CONNECTOR -->
+
+    <record id="view_product_template_form_view_amazon" model="ir.ui.view">
+        <field name="name">wayfair.seller</field>
+        <field name="model">wayfair.seller</field>
+        <field name="inherit_id" ref="wayfiar_connector.wayfair_seller_view_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//notebook" position="inside">
+                    <page string = "Expense static value">
+                        <group>
+                            <group>
+                                <field name="replenishment_period"/>
+                                <field name="storage"/>
+                                <field name="pick_pack"/>
+                                <field name="adv_cost"/>
+                            </group>
+                            <group>
+                                <field name="shipping_cost"/>
+                                <field name="salary_cost"/>
+                                <field name="carrer_admin_cost"/>
+                                <field name="comission"/>
+
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+    <!-- Check -->
+        
+        <record id="model_sku_analysisssss" model="ir.actions.server">
+            <field name="name">CHECK</field>
+            <field name="model_id" ref="odoo_mirakl_integration.model_marketplace_product"/>
+            <field name="binding_model_id" ref="odoo_mirakl_integration.model_marketplace_product"/>
+            <field name="state">code</field>
+            <field name="code">action = records.create_products()</field>
+        </record>
+
+</odoo>
+    

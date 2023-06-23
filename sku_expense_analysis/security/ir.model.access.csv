@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_sku_expense_analysis,access_sku_expense_analysisabc,model_sku_expense_analysis,,1,1,1,1
