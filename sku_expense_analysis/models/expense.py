@@ -2,7 +2,7 @@ from odoo import fields , models
 import logging
 _logger = logging.getLogger(__name__)
 
-    # MIRAKL MARKETPLACE
+# MIRAKL MARKETPLACE
 
 class MarketplaceIntegration(models.Model):
     _inherit = "shop.integrator"
@@ -16,7 +16,7 @@ class MarketplaceIntegration(models.Model):
     carrer_admin_cost = fields.Float("Carrer Admin Cost")
     comission = fields.Float("Commission")
     
-    # MANOMANO CONNECTOR
+# MANOMANO CONNECTOR
 
 class ManomanoConnector(models.Model):
     _inherit = "manomano.seller"
@@ -28,9 +28,9 @@ class ManomanoConnector(models.Model):
     shipping_cost = fields.Float("Shipping Cost")
     salary_cost = fields.Float("Salary Cost")
     carrer_admin_cost = fields.Float("Carrer Admin Cost")
-    comission  = fields.Integer("Commission")
+    comission  = fields.Float("Commission")
     
-    # CDISCOUNT CONNECTOR
+# CDISCOUNT CONNECTOR
 
 class CdiscountConnector(models.Model):
     _inherit = "cdiscount.seller"
@@ -42,9 +42,9 @@ class CdiscountConnector(models.Model):
     shipping_cost = fields.Float("Shipping Cost")
     salary_cost = fields.Float("Salary Cost")
     carrer_admin_cost = fields.Float("Carrer Admin Cost")
-    comission  = fields.Integer("Commission")
+    comission  = fields.Float("Commission")
     
-    # AMAZON CONNECTOR
+# AMAZON CONNECTOR
 
 class AmazonConnector(models.Model):
     _inherit = "amazon.seller"
@@ -56,9 +56,9 @@ class AmazonConnector(models.Model):
     shipping_cost = fields.Float("Shipping Cost")
     salary_cost = fields.Float("Salary Cost")
     carrer_admin_cost = fields.Float("Carrer Admin Cost")
-    comission  = fields.Integer("Commission")
+    comission  = fields.Float("Commission")
     
-    # WAYFAIR CONNECTOR
+# WAYFAIR CONNECTOR
 
 class WayfiarConnector(models.Model):
     _inherit = "wayfair.seller"
@@ -70,5 +70,6 @@ class WayfiarConnector(models.Model):
     shipping_cost = fields.Float("Shipping Cost")
     salary_cost = fields.Float("Salary Cost")
     carrer_admin_cost = fields.Float("Carrer Admin Cost")
-    comission  = fields.Integer("Commission")
+    comission  = fields.Float("Commission")
+
 
