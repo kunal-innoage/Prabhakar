@@ -56,10 +56,14 @@
                             <group>
                                 <field name="sale_order_line_ids">
                                     <tree>
-                                        <field name="order_id"></field>                            
-                                        <field name="name"></field>                            
-                                        <field name="product_uom_qty"></field>                            
-                                        <field name="total_cogs"></field>                            
+                                        <field name="order_id"></field>
+                                        <!-- <field name="name"></field> -->
+                                        <field name="product_uom_qty"></field>
+                                        <!-- <field name="total_cogs"></field> -->
+                                        <field name="cogs_per_order_line"></field>
+                                        <field name="commission_per_order_line"></field>
+                                        <field name="price_unit"></field>
+                                        <field name="price_subtotal"></field>
                                     </tree>
                                 </field>
                             </group>
@@ -113,17 +117,17 @@
         <field name="state">code</field>
         <field name="code">action = records.mapping_all_static_fields()</field>
     </record>
-    
+
     <!-- SERVER ACTION MAP WITH SALE ORDER FROM SKU ANALYSIS -->
 
-    <record id="action_map_total_cogs_values" model="ir.actions.server">
+    <!-- <record id="action_map_total_cogs_values" model="ir.actions.server">
         <field name="name">Map COGS</field>
         <field name="model_id" ref="sku_expense_analysis.model_sku_expense_analysis"/>
         <field name="binding_model_id" ref="sku_expense_analysis.model_sku_expense_analysis"/>
         <field name="binding_view_types">list</field>
         <field name="state">code</field>
         <field name="code">action = records.cogs_mapping_server_action()</field>
-    </record>
+    </record> -->
 
     <menuitem id="sku_expense_analysis_menuitem" name="SKU Expense Analysis" parent="odoo_mirakl_integration.purchase_management_menu" sequence="104" action="sku_expense_analysis_action"/>
 

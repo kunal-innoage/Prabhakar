@@ -13,7 +13,8 @@ class SkuExpenseAnalysis(models.Model):
     vat_exclusive = fields.Float("Vat Exclusive")
     
     comission  = fields.Float("Comission")
-    total_cogs  = fields.Integer("Total COGS")
+    total_cogs  = fields.Float("Total COGS")
+
     net_margin  = fields.Char("Net Margin")
     replenishment_period = fields.Integer("Replenishment Period (Months)")
     storage = fields.Float("Storage")
@@ -72,6 +73,8 @@ class SkuExpenseAnalysis(models.Model):
                 rec.carrer_admin_cost = static_values.carrer_admin_cost
                 rec.comission = static_values.comission
                 
+
+                
     def compute_commission(self):
         for rec in self:
             rec.comission = rec.vat_inclusive * rec.comission
@@ -87,12 +90,13 @@ class SkuExpenseAnalysis(models.Model):
                 rec.net_margin = f"{net_margin}%" 
             except:
                 rec.net_margin == 0
-            
+               
     def cogs_mapping_server_action(self):
         for rec in self:
             if rec.sale_order_line_ids:
                 for line in  rec.sale_order_line_ids:
                     line.total_cogs = rec.total_cogs * line.product_uom_qty 
+
         
     def mapping_all_static_fields(self):
         for rec in self:
@@ -103,6 +107,7 @@ class SkuExpenseAnalysis(models.Model):
             rec.compute_total_cogs()
             rec.compute_net_margin()
             rec.cogs_mapping_server_action()
+            rec.sale_order_line_ids._execute_all_functions()
 
 class MarketplaceProduct(models.Model):
     _inherit = "marketplace.product"
@@ -150,10 +155,84 @@ class MarketplaceProduct(models.Model):
                     if price_exclusive:
                         exp_product_id.vat_exclusive = price_exclusive / len(shop_wise_ol[shop])
                         _logger.info("~~~~~~~~exp_product_id.vat_exclusive    %r     %r   ...", exp_product_id.vat_exclusive, len(shop_wise_ol[shop]))
-
+                        
+   
 
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
     
     expanse_product_id = fields.Many2one("sku.expense.analysis","Expense Product")
     total_cogs = fields.Float(string="Total COGS")
+    cogs_per_order_line = fields.Float('COGS') 
+    commission_per_order_line = fields.Float("Commission")
+    replenishment_period = fields.Integer("Replenishment Period (Months)")
+    storage = fields.Float("Storage")
+    pick_pack = fields.Float("Pick & Pack")
+    adv_cost = fields.Float("Adv Cost")
+    shipping_cost = fields.Float("Shipping Cost")
+    salary_cost = fields.Float("Salary Cost")
+    
+    carrer_admin_cost = fields.Float("Carrer Admin Cost")
+    
+    # MIRAKL MARKETPLACE
+     
+    def order_line_mirakl_static_values(self):
+        for rec in self:
+            static_values = self.env["shop.integrator"].search([('name','=',rec.order_id.market_place_shop)])
+            if static_values:
+                rec.replenishment_period = static_values.replenishment_period
+                rec.storage = static_values.storage
+                rec.pick_pack = static_values.pick_pack
+                rec.adv_cost = static_values.adv_cost
+                rec.shipping_cost = static_values.shipping_cost
+                rec.salary_cost = static_values.salary_cost
+                rec.carrer_admin_cost = static_values.carrer_admin_cost
+                rec.commission_per_order_line = static_values.comission 
+    
+    # CDISCOUNT MARKETPLACE
+    
+    def order_line_cdiscount_seller_static_values(self):
+        for rec in self:
+            static_values = self.env["cdiscount.seller"].search([('name','=',rec.order_id.market_place_shop)])
+            if static_values:
+                rec.replenishment_period = static_values.replenishment_period
+                rec.storage = static_values.storage
+                rec.pick_pack = static_values.pick_pack
+                rec.adv_cost = static_values.adv_cost
+                rec.shipping_cost = static_values.shipping_cost
+                rec.salary_cost = static_values.salary_cost
+                rec.carrer_admin_cost = static_values.carrer_admin_cost
+                rec.commission_per_order_line = static_values.comission
+                
+    # MANOMANO MARKETPLACE    
+    
+    def order_line_manomano_seller_static_values(self):
+        for rec in self:
+            static_values = self.env["manomano.seller"].search([('name','=',rec.order_id.market_place_shop)])
+            if static_values:
+                rec.replenishment_period = static_values.replenishment_period
+                rec.storage = static_values.storage
+                rec.pick_pack = static_values.pick_pack
+                rec.adv_cost = static_values.adv_cost
+                rec.shipping_cost = static_values.shipping_cost
+                rec.salary_cost = static_values.salary_cost
+                rec.carrer_admin_cost = static_values.carrer_admin_cost
+                rec.commission_per_order_line = static_values.comission
+                
+    def _commission_per_sale_order_line(self):
+        for rec in self:
+            rec.commission_per_order_line = rec.price_unit * rec.commission_per_order_line
+            
+    def _cogs_for_each_product(self):
+        for rec in self:
+            rec.cogs_per_order_line = rec.storage + rec.pick_pack + rec.adv_cost + rec.commission_per_order_line + rec.shipping_cost + rec.salary_cost + rec.carrer_admin_cost
+            
+                
+    def _execute_all_functions(self):
+        for rec in self:
+            rec.order_line_mirakl_static_values()
+            rec.order_line_cdiscount_seller_static_values()
+            rec.order_line_manomano_seller_static_values()
+            rec._commission_per_sale_order_line()
+            rec._cogs_for_each_product()
+    
