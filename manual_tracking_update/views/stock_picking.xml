@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- stock_picking_manual_tracking inherit form view -->
+    <record id="stock_picking_manual_tracking" model="ir.ui.view">
+        <field name="name">stock_picking_manual_tracking.inherit.view.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_send_tracking_info_manually" type="object" string="Send Tracking" class="btn-danger ml-5"/>                
+            </xpath>
+        </field>
+    </record>
+</odoo>

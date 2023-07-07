@@ -128,6 +128,16 @@
             <field name="state">code</field>
             <field name="code">action = records.map_marketplace_product_with_asi_extension()</field>
         </record>
+        
+        <!-- Check
+        
+        <record id="model_sku_analysisssss" model="ir.actions.server">
+            <field name="name">CHECK</field>
+            <field name="model_id" ref="odoo_mirakl_integration.model_marketplace_product"/>
+            <field name="binding_model_id" ref="odoo_mirakl_integration.model_marketplace_product"/>
+            <field name="state">code</field>
+            <field name="code">action = records.create_products()</field>
+        </record> -->
 
     </data>
 </odoo>

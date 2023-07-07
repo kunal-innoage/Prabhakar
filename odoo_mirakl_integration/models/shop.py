@@ -86,7 +86,7 @@ class ShopIntegrator(models.Model):
         for shop in self:
             shop.total_carrier_count = self.env['mirakl.carrier'].search_count([('shop_id', '=', shop.id)])
 
-    #Required's
+    #Required's 
     name = fields.Char("Name", required=True)
     api_key = fields.Char("API Key", required=True)
     shop_url = fields.Char("Mirakl Shop URL", required=True, help="add your mirakl shop url like - https://maisonsdumonde-prod.mirakl.net")
@@ -1523,3 +1523,25 @@ class ShopIntegrator(models.Model):
                     return countries.get(order.partner_id.country_id.name.lower())
             return order.partner_id.country_id.name
         return False
+
+
+    def force_validate_shops(self, data):
+        call = self.shop_url + "/api/shipments/tracking"
+        response = False
+        try:
+            _logger.info("~~~~~~~~DATA~~~~%r",data)
+            # api call
+            header = {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }   
+            # _logger.info("~~~~~~~~~~HEADER~~~%r",header)
+            response = requests.put(call , headers={'Authorization': self.api_key,'Content-Type': 'application/json'}, data = data).json()
+            _logger.info("~~~~~~~~~~RESPONSE~~~%r",response)
+        except Exception as e:
+            # logger with error
+            _logger.info("!!!!!! Error in getting Validate shipments as shipped ~~%r",e)
+        if response:
+            
+            return True 
+        return False       

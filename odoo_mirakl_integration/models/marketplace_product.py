@@ -90,6 +90,8 @@ class MarketplaceProduct(models.Model):
                     if product.vendor in  seller.name.name:
                         seller.price = product.fob_cost_per_pc
                         
+                
+                        
                         
     def map_marketplace_product_with_asi_extension(self):
         for rec in self:
@@ -151,3 +153,13 @@ class MarketplaceProduct(models.Model):
                 product_id.creel = rec.creel
                 product_id.continuity = rec.continuity
 
+
+    # def create_products(self):
+    #     for rec in self:
+    #         products = self.env["sale.order.line"].search([("name","=",rec.sku)])
+            
+            # _logger.info("!!!!!!!!!!!%r!!!!!!!!!",products)
+            # if not products:
+            #     product = self.env["sku.expense.analysis"].create({
+            #         'product' : rec.sku 
+            #     })
