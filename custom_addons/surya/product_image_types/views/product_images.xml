@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- product_images form view -->
+    <record id="product_images_view_form" model="ir.ui.view">
+        <field name="name">product_images.view.form</field>
+        <field name="model">product.image.type</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="sku"/>
+                            <field name="shape"/>
+                            <field name="flat_image"/>
+                            <field name="corner"/>
+                            <field name="swatch"/>
+                            <field name="roomscene2"/>
+                            <field name="design_id"/>
+                        </group>       
+                        <group>
+                        <field name="product_id"/>
+                            <field name="fold_image"/>
+                            <field name="front"/>
+                            <field name="pile"/>
+                            <field name="roomscene1"/>
+                            <field name="styleshot"/>
+                            <field name="video"/>
+                            <field name="roomscene3"/>
+                            <field name="roomscene4"/>
+                            <field name="texture"/>
+                            <field name="bat_set_one"/>
+                            <field name="bat_set_two"/>
+                        </group>                   
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="product_image_view_tree" model="ir.ui.view">
+        <field name="name">product_image.view.tree</field>
+        <field name="model">product.image.type</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sku"/>
+                <field name="shape"/>
+                <field name="flat_image"/>
+                <field name="corner"/>
+                <field name="swatch"/>
+                <field name="roomscene2"/>          
+            </tree>
+        </field>
+    </record>
+
+    <record id="product_image_action" model="ir.actions.act_window">
+        <field name="name">Product Media Information</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.image.type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <menuitem id="product_images_menu_act" name="Product Images" action="product_image_action"/>
+
+    <record model="ir.actions.server" id="action_map_product_ifo">
+       <field name="name">Map Information</field>
+       <field name="model_id" ref="model_product_image_type"/>
+        <field name="binding_view_types">form,list</field>
+       <field name="binding_model_id" ref="model_product_image_type"/>
+       <field name="state">code</field>
+       <field name="code">
+           action = records.map_product_information()
+       </field>
+   </record>
+
+    <record model="ir.actions.server" id="action_check_image_links">
+       <field name="name">Check Image Links</field>
+       <field name="model_id" ref="model_product_image_type"/>
+        <field name="binding_view_types">form,list</field>
+       <field name="binding_model_id" ref="model_product_image_type"/>
+       <field name="state">code</field>
+       <field name="code">
+           action = records.check_image_links()
+       </field>
+   </record>
+
+</odoo>

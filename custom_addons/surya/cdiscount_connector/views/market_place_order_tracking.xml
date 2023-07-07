@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- marketplace.order.tracking inherit form view -->
+    <record id="view_id" model="ir.ui.view">
+        <field name="name">marketplace.order.tracking.inherit.view.form</field>
+        <field name="model">marketplace.order.tracking</field>
+        <field name="inherit_id" ref="odoo_mirakl_integration.view_marketplace_order_tracking_form_view"/>
+        <field name="arch" type="xml">
+            <field name="sale_order_id" position="after">
+                <field name="picking_id"/>
+            </field>
+        </field>
+    </record>
+</odoo>

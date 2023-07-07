@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="amazon_sku_list_view" model="ir.ui.view">
+        <field name="name">amazon.sku.list.view</field>
+        <field name="model">amazon.sku</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="vendor_sku"/>
+                <field name="list_price_currency"/>
+                <field name="list_price_with_tax"/>
+                <field name="cost_price"/>
+                <field name="cost_price_currency"/>
+                <field name="product_url"/>
+                <field name="merchant_suggested_asin"/>
+            </tree>
+        </field>
+    </record>
+    <record id="amazon_sku_form_view" model="ir.ui.view">
+        <field name="name">amazon.sku.form.view</field>
+        <field name="model">amazon.sku</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+
+                            <field name="vendor_sku"/>
+                            <field name="list_price_currency"/>
+                            <field name="list_price_with_tax"/>
+                            <field name="cost_price"/>
+                            <field name="cost_price_currency"/>
+                            <field name="product_url"/>
+                            <field name="merchant_suggested_asin"/>
+
+                        </group>
+                    </group>
+                    <notebook>
+
+                    </notebook>
+
+                </sheet>
+
+
+            </form>
+        </field>
+    </record>
+
+    <record id="amazon_sku_search_view" model="ir.ui.view">
+        <field name="name">amazon.sku.search.view</field>
+        <field name="model">amazon.sku</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="vendor_sku"/>
+                <field name="list_price_currency"/>
+                <field name="list_price_with_tax"/>
+                <field name="cost_price"/>
+                <field name="cost_price_currency"/>
+                <field name="product_url"/>
+                <field name="merchant_suggested_asin"/>
+
+                <!-- <group expand="1" string="Group By">
+                    <filter string="group_by_date" name="By date" context="{'group_by':'create_date:day'}"/>
+                    <filter string="group_by_status" name="By status" context="{'group_by':'status'}"/>
+                </group> -->
+            </search>
+        </field>
+    </record>
+
+
+
+    <!-- <record id="amazon_sku_action" model="ir.actions.act_window">
+        <field name="name">Amazon SKU</field>
+        <field name="res_model">amazon.sku</field>
+        <field name="view_mode">tree,form</field> -->
+    <!-- <field name="search_view_id" ref="wayfair_sku.wayfair_sku_search_view"/>
+        <field name="context">  { 
+                                    'search_default_group_by_date': 1, 
+                                    'search_default_group_by_status': 1,
+                                }</field> -->
+    <!-- </record> -->
+
+
+
+</odoo>

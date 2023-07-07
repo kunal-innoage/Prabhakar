@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="everstox_order_shipment_view_form" model="ir.ui.view">
+        <field name="name">Everstox Order Shipment Form View</field>
+        <field name="model">everstox.order.shipment</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="shipment_id"></field>
+                            <field name="forwarded_to_shop"></field>
+                            <field name="shipment_date"></field>
+                            <field name="carrier_id"></field>
+                            <field name="carrier_name"></field>
+                            <field name="tracking_id"></field>
+                        </group>
+                        <group> 
+                            <field name="fulfillment_id"></field>
+                            <field name="everstox_shop_id"></field>
+                            <field name="tracking_code"></field>
+                            <field name="tracking_codes"></field>
+                            <field name="rma_num"></field>
+                            <field name="tracking_urls"></field>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="shipment_items" string="Shipment Items">
+                        <field name="shipment_items">
+                            <tree>
+                                <field name="fulfillment_item_id"></field>
+                                <field name="shipment_item_id"></field>
+                                <field name="quantity"></field>
+                            </tree>
+                        </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+
+
+    <record id="everstox_order_shipment_view_tree" model="ir.ui.view">
+        <field name="name">everstox_order_shipment.view.tree</field>
+        <field name="model">everstox.order.shipment</field>
+        <field name="arch" type="xml">
+            <tree string="Shipments" default_order="create_date desc">
+                <field name="shipment_id"></field>
+                <field name="forwarded_to_shop"></field>
+                <field name="shipment_date"></field>
+                <field name="carrier_name"></field>
+                <field name="tracking_codes"></field>
+                <field name="tracking_id"></field>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Filters -->
+    <record id="view_everstox_order_shipment_filters" model="ir.ui.view">
+        <field name="name">everstox_order_shipment_filters</field>
+        <field name="model">everstox.order.shipment</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <search string="Search Shipments">
+                <group expand="0" string="Group By">
+                    <filter string="Create Date" name="create_date" domain="[ ]" context="{'group_by': 'create_date:day'}" />
+                    <filter string="Shift" name="shift" domain="[ ]" context="{'group_by': 'processing_time'}" />
+                    <filter string="Orders" name="shop_orders" domain="[ ]" context="{'group_by': 'shop_order_id'}" />
+                    <filter string="Forwarded To Shop" name="forwarded_to_shop" domain="[ ]" context="{'group_by': 'forwarded_to_shop'}" />
+                </group>
+            </search>
+        </field>    
+    </record>
+    
+
+    <!-- Server Actions -->
+    <record id="action_get_everstox_shipment_updated" model="ir.actions.server">
+        <field name="name">Shipment Forwarded</field>
+        <field name="model_id" ref="odoo_everstox_integration.model_everstox_order_shipment"/>
+        <field name="binding_model_id" ref="odoo_everstox_integration.model_everstox_order_shipment"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">action = records.put_forwarded_to_shop_true()</field>
+    </record>
+
+    <record id="action_map_everstox_shipment" model="ir.actions.server">
+        <field name="name">Map Shipment</field>
+        <field name="model_id" ref="odoo_everstox_integration.model_everstox_order_shipment"/>
+        <field name="binding_model_id" ref="odoo_everstox_integration.model_everstox_order_shipment"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">action = records.map_tracking_info()</field>
+    </record>
+
+
+</odoo>

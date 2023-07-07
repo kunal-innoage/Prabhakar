@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+    <record model="ir.actions.server" id="do_publish_product">
+        <field name="name">Publish Products</field>
+        <field name="model_id" ref="model_product_template"/>
+        <field name="binding_view_types">form,list</field>
+        <field name="binding_model_id" ref="model_product_template"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.publish_website_products()
+        </field>
+   </record>
+
+
+</odoo>

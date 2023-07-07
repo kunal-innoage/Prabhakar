@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Tree and Kanban View -->
+
+        <record id="view_mirakl_shops_kanban" model="ir.ui.view">
+            <field name="name">mirakl.shops.kanban</field>
+            <field name="model">shop.integrator</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <field name="name"/>
+                    <field name="activate_shop"/>
+                    <field name="mirakl_sale_order_waiting_count"/>
+                    <field name="mirakl_sale_order_waiting_payment_count"/>
+                    <field name="mirakl_sale_order_shipping_count"/>
+                    <field name="mirakl_sale_order_shipped_count"/>
+                    <field name="mirakl_sale_order_count"/>
+                    <field name="total_offer_count"/>
+                    <field name="inventory_count"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click shadow rounded border-light mb-3">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <strong class="o_kanban_record_title"><span style="font-size: 20px;"><t t-esc="record.name.value"/></span></strong>
+                                    </div>
+                                    <div class="col-6 text-right">
+                                        <strong class="o_kanban_record_subtitle float-right"><span class="text-right"><field name="activate_shop" widget="boolean" readonly="1" /></span></strong>
+                                    </div>
+                                </div>
+                                <div class="row mt8">
+                                    <div class="col-12 text-muted mb-2 text-center">
+                                        <span class="text-warning">Waiting : <t t-esc="record.mirakl_sale_order_waiting_count.value"/></span>
+                                    </div>
+                                    <div class="col-6 text-muted mb-2">
+                                        <span class="text-warning">Payment : <t t-esc="record.mirakl_sale_order_waiting_payment_count.value"/></span>
+                                    </div>
+                                    <div class="col-6 text-muted mb-2">
+                                        <span class="text-success float-right">Shipping : <t t-esc="record.mirakl_sale_order_shipping_count.value"/></span>
+                                    </div>
+                                    <div class="col-6 text-muted mb-2">
+                                        <span class="text-primary float-left">Shipped : <t t-esc="record.mirakl_sale_order_shipped_count.value"/></span>
+                                    </div>
+                                    <div class="col-6 text-muted">
+                                        <span class="text-info float-right">Total Orders: <t t-esc="record.mirakl_sale_order_count.value"/></span>
+                                    </div>
+                                    <div class="col-6 text-muted">
+                                        <span class="float-left">Offers : <t t-esc="record.total_offer_count.value"/></span>
+                                    </div>
+                                    <div class="col-6 text-muted">
+                                        <span class="float-right">Total Products : <t t-esc="record.inventory_count.value"/></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        
+
+        <!-- Form View -->
+
+        <record id="shop_integrator_form_view" model="ir.ui.view">
+            <field name="name">Shop Integrator Form View</field>
+            <field name="model">shop.integrator</field>
+            <field name="arch" type="xml">
+                <form string="Shop">
+                    <header>
+                        <button name="get_last_days_orders" string="Yesterdays Orders" type="object" class="btn btn-primary rounded shadow" attrs="{'invisible': [('activate_shop', '=', False)]}"/>
+                        <button name="accept_marketplace_sale_order" string="Accept Awaiting Orders" type="object" class="btn btn-primary rounded shadow" attrs="{'invisible': [('activate_shop', '=', False)]}"/>
+                        <button name="update_shops_orders" string="Update Orders" type="object" class="btn btn-primary rounded shadow" attrs="{'invisible': [('activate_shop', '=', False)]}"/>
+                        <button name="process_warehouse_orders" string="Process Shipping Orders" type="object" class="btn btn-primary rounded shadow" attrs="{'invisible': [('activate_shop', '=', False)]}"/>
+                        <button name="mirakl_inventory_mapping" string="Inventory Mapping" type="object" class="btn btn-secondary rounded shadow" attrs="{'invisible': [('activate_shop', '=', False)]}"/>
+                        <button name="mirakl_inventory_offers" string="Offers Mapping" type="object" class="btn btn-secondary rounded shadow" attrs="{'invisible': [('activate_shop', '=', False)]}"/>
+                        <button name="map_carrier_of_this_shop" string="Carriers Mapping" type="object" class="btn btn-secondary rounded shadow" attrs="{'invisible': [('activate_shop', '=', False)]}"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            
+                            <button name="action_view_marketplace_waiting_orders" type="object" class="oe_stat_button" icon="fa-clock-o" >
+                                <field name="mirakl_sale_order_waiting_count" widget="statinfo" string="Waiting Orders"/>
+                            </button>
+
+                            <button name="action_view_marketplace_waiting_debit_payment_orders" type="object" class="oe_stat_button" icon="fa-money" >
+                                <field name="mirakl_sale_order_waiting_payment_count" widget="statinfo" string="Payment Pending"/>
+                            </button>
+
+                            <button name="action_view_marketplace_shipping_orders" type="object" class="oe_stat_button" icon="fa-truck" >
+                                <field name="mirakl_sale_order_shipping_count" widget="statinfo" string="Shipping Orders"/>
+                            </button>
+                            
+                            <button name="action_view_marketplace_shipped_orders" type="object" class="oe_stat_button" icon="fa-road" >
+                                <field name="mirakl_sale_order_shipped_count" widget="statinfo" string="Shipped Orders"/>
+                            </button>
+
+                            <button name="action_view_marketplace_sale_order" type="object" class="oe_stat_button" icon="fa-usd" >
+                                <field name="mirakl_sale_order_count" widget="statinfo" string="Total Sale Orders"/>
+                            </button>
+
+                            <button name="action_view_marketplace_products" type="object" class="oe_stat_button" icon="fa-cubes" >
+                                <field name="inventory_count" widget="statinfo" string="Products"/>
+                            </button>
+
+                            <button name="action_view_marketplace_offers" type="object" class="oe_stat_button" icon="fa-gift" >
+                                <field name="total_offer_count" widget="statinfo" string="Offers"/>
+                            </button>
+
+                            <button name="action_view_marketplace_carriers" type="object" class="oe_stat_button" icon="fa-car" >
+                                <field name="total_carrier_count" widget="statinfo" string="Carriers"/>
+                            </button>
+                        </div>
+                        <div>
+                            <group>
+                                <group>
+                                    <field name="name"/>
+                                    <field name="shop_code"/>
+                                    <field name="shop_id"/>
+                                </group>
+                                <group>
+                                    <field name="activate_shop" widget="boolean_button"/>
+                                    <field name="shop_url"/>
+                                    <field name="api_key" groups="base.group_system"/>
+                                </group>
+                            </group>
+                        </div>
+                        <notebook>
+
+                            <page string="Order Management" attrs="{'invisible': [('activate_shop', '=', False)]}">
+                                <group>
+                                    <group> 
+                                        <button name="get_all_orders" string="Get Orders" type="object" class="btn btn-primary rounded shadow" attrs="{'invisible': [('activate_shop', '=', False)]}"/>
+                                    </group>
+                                    <group> 
+                                        <field name="is_filter_activate"/>
+                                    </group>
+                                </group>
+                                <field name="is_filter_activate" invisible="1"/>
+                                <group string="Add Filters" attrs="{'invisible': [('is_filter_activate', '=', False)]}">
+                                    <group>
+                                        <field name="mirakl_order_filter_by_state"/>
+                                        <field name="is_refund_filter_activate"/>
+                                        <field name="refunded" attrs="{'invisible': [('is_refund_filter_activate', '=', False)]}"/>
+                                        <field name="refund_reason_code" attrs="{'invisible': [('is_refund_filter_activate', '=', False)]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="has_open_incident"/>
+                                        <field name="is_date_filter_activate"/>
+                                        <field name="date_created_start" attrs="{'invisible': [('is_date_filter_activate', '=', False)]}"/>
+                                        <field name="date_created_end" attrs="{'invisible': [('is_date_filter_activate', '=', False)]}"/>
+                                        <field name="date_updated_start" attrs="{'invisible': [('is_date_filter_activate', '=', False)]}"/>
+                                        <field name="date_updated_end" attrs="{'invisible': [('is_date_filter_activate', '=', False)]}"/>
+                                    </group>
+                                </group>
+                            </page>
+
+                            <page string="Basic Configuration" attrs="{'invisible': [('activate_shop', '=', False)]}">
+                                <field name="company_id" invisible="1"/>
+                                <group>
+                                    <group>
+                                        <field name="is_cdiscount_priority" widget="boolean_button"/>
+                                        <field name="warehouse_id"/>
+                                        <field name="pricelist_id"/>
+                                    </group>
+                                    <group>
+                                        <field name= "inventory_alert_limit"/>
+
+                                    </group>
+                                </group>
+                                <p class="muted">Select a pricelist in which you want offers updated from odoo to api or from api to odoo.</p>
+                                <group>
+                                    <field name="sale_workflow_process_id" widget="section_and_note_one2many">
+                                        <tree editable="bottom">
+                                            <field name="validate_picking" />
+                                            <field name="create_picking" />
+                                            <field name="create_invoice" />
+                                            <field name="validate_invoice" />
+                                        </tree>
+                                    </field>
+                                </group>
+                            </page>
+                            <!-- Inventory -->
+                            <page string="Inventory" >
+                                <group>
+                                    <group>
+                                        <field name="min_qty_to_zero"/>
+                                        <field name="lead_time_to_ship"/>
+                                    </group>
+                                </group>
+                            </page>
+
+                            <page string="Scheduled Actions" groups="base.group_system">
+                                <group>
+                                    <group>
+                                        <field name="accept_order_cron"/>
+                                        <field name="get_waiting_order_cron"/>
+                                    </group>
+                                </group>
+                            </page>
+
+                        </notebook>
+                        
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        
+        <!-- Server Actions -->
+
+        <record id="action_get_multi_shop_waiting_orders" model="ir.actions.server">
+            <field name="name">Get Waiting Orders</field>
+            <field name="model_id" ref="odoo_mirakl_integration.model_shop_integrator"/>
+            <field name="binding_model_id" ref="odoo_mirakl_integration.model_shop_integrator"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">action = records.get_multi_shop_waiting_orders()</field>
+        </record>
+        
+        <record id="action_accept_multi_shop_waiting_orders" model="ir.actions.server">
+            <field name="name">Accept Waiting Orders</field>
+            <field name="model_id" ref="odoo_mirakl_integration.model_shop_integrator"/>
+            <field name="binding_model_id" ref="odoo_mirakl_integration.model_shop_integrator"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">action = records.accept_multi_shop_waiting_orders()</field>
+        </record>
+
+        <record id="action_get_multi_shop_shipping_orders" model="ir.actions.server">
+            <field name="name">Get Shipping Orders</field>
+            <field name="model_id" ref="odoo_mirakl_integration.model_shop_integrator"/>
+            <field name="binding_model_id" ref="odoo_mirakl_integration.model_shop_integrator"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">action = records.get_multi_shop_shipping_orders()</field>
+        </record>
+        
+        <record id="action_update_multi_waiting_orders" model="ir.actions.server">
+            <field name="name">Update Waiting Orders</field>
+            <field name="model_id" ref="odoo_mirakl_integration.model_shop_integrator"/>
+            <field name="binding_model_id" ref="odoo_mirakl_integration.model_shop_integrator"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">action = records.update_multi_shop_waiting_orders()</field>
+        </record>
+        
+        <record id="action_process_shipping_orders" model="ir.actions.server">
+            <field name="name">Process Shipping Orders</field>
+            <field name="model_id" ref="odoo_mirakl_integration.model_shop_integrator"/>
+            <field name="binding_model_id" ref="odoo_mirakl_integration.model_shop_integrator"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">action = records.process_multi_shop_orders()</field>
+        </record>
+
+
+        <!-- Crons  -->
+        <!-- CRONS  -->
+        <record id="get_waiting_order_cron" model="ir.cron">
+            <field name="name">Get Waiting Orders Mirakl</field>
+            <field name="model_id" ref="model_shop_integrator"/>
+            <field name="state">code</field>
+            <field name="code">model.select_all_shopes_for_gwom()</field>
+            <field name='interval_number'>5</field>
+            <field name='interval_type'>minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+        </record>
+
+        <record id="get_shipping_order_cron" model="ir.cron">
+            <field name="name">Get Shipping Orders Mirakl</field>
+            <field name="model_id" ref="model_shop_integrator"/>
+            <field name="state">code</field>
+            <field name="code">model.select_all_shopes_for_gsom()</field>
+            <field name='interval_number'>5</field>
+            <field name='interval_type'>minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+        </record>  
+
+        <record id="accept_mirakl_order_cron" model="ir.cron">
+            <field name="name">Accept Orders Mirakl</field>
+            <field name="model_id" ref="model_shop_integrator"/>
+            <field name="state">code</field>
+            <field name="code">model.select_all_shopes_for_amo()</field>
+            <field name='interval_number'>5</field>
+            <field name='interval_type'>minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+        </record>
+
+        <record id="update_waiting_payment_mirakl_order_cron" model="ir.cron">
+            <field name="name">Update Waiting Orders Mirakl</field>
+            <field name="model_id" ref="model_shop_integrator"/>
+            <field name="state">code</field>
+            <field name="code">model.select_all_shopes_for_upmo()</field>
+            <field name='interval_number'>20</field>
+            <field name='interval_type'>minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+        </record>
+
+        <record id="update_shipping_mirakl_order_cron" model="ir.cron">
+            <field name="name">Update Shipping Orders Mirakl</field>
+            <field name="model_id" ref="model_shop_integrator"/>
+            <field name="state">code</field>
+            <field name="code">model.select_all_shopes_for_uso()</field>
+            <field name='interval_number'>20</field>
+            <field name='interval_type'>minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+        </record>
+
+    </data>
+</odoo>
+    

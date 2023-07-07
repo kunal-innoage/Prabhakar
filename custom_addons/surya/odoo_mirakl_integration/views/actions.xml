@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Shop Management -->
+        <record id="action_shop_integrator" model="ir.actions.act_window">
+            <field name="name">Shops</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">shop.integrator</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+
+        
+
+        <!-- Process Logs -->
+        <!-- ~~~~~~~~~~~~ -->
+
+        <!-- Sale Order Logs -->
+        <record id="action_sale_order_logs" model="ir.actions.act_window">
+            <field name="name">Sale Order Logs</field>
+            <field name="res_model">sale.order</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,kanban,form,calendar,pivot,graph,activity</field>
+            <field name="search_view_id" ref="odoo_mirakl_integration.mirakl_sale_order_search_inherit_sale"/>
+            <field name="context">{"search_default_all_shops":1 , "search_default_order_logs":1,}</field>
+            <field name="view_id" ref="sale.view_quotation_tree_with_onboarding"/>
+        </record>
+        
+
+        <!-- Invoice Logs -->
+        <record id="action_order_invoice_logs" model="ir.actions.act_window">
+            <field name="name">Invoice Logs</field>
+            <field name="res_model">account.move</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="odoo_mirakl_integration.view_account_invoice_filter_mirakl"/>
+            <field name="context">{"search_default_mirakl_invoices":1, "search_default_payment_state": 1}</field>
+        </record>
+
+
+        <!-- Delivery Logs -->
+        <record id="action_sale_delivery_logs" model="ir.actions.act_window">
+            <field name="name">Delivery Logs</field>
+            <field name="res_model">stock.picking</field>
+            <field name="view_mode">tree,kanban,form,calendar</field>
+            <field name="search_view_id" ref="odoo_mirakl_integration.view_picking_internal_search_mirakl"/>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No transfer found. Let's create one!
+                </p>
+                <p>
+                    Transfers allow you to move products from one location to another.
+                </p>
+            </field>
+        </record>
+
+
+        <record id="shop_stock_transfers_view_action" model="ir.actions.act_window">
+            <field name="name">Stock Transfers</field>
+            <field name="res_model">stock.picking</field>
+            <field name="view_mode">tree,kanban,form,calendar</field>
+            <!-- <field name="context">{"search_default_channable_warehouse_transfers":1}</field> -->
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No transfer found. Let's create one!
+                </p>
+                <p>
+                    Transfers allow you to move products from one location to another.
+                </p>
+            </field>
+        </record>
+
+
+        <!-- Ticket Managment -->
+        <!-- ~~~~~~~~~~~~~~~~ -->
+
+        <!-- Return Tickets -->
+        <!-- <record id="shop_ticket_view_action" model="ir.actions.act_window">
+            <field name="name">Return Ticket</field>
+            <field name="res_model">helpdesk.ticket</field>
+            <field name="view_mode">list,kanban,form,activity</field>
+            <field name="view_id" ref="helpdesk.helpdesk_tickets_view_tree"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No tickets found. Let's create one!
+                </p><p>To get things done, use activities and statuses on tickets. <br/>
+                    Chat in real-time or by email to collaborate efficiently.
+                </p>
+            </field>
+        </record> -->
+        <!-- <field name="context">{"search_default_channable_return":1,}</field> -->
+        <!-- <field name="search_view_id" ref="odoo_mirakl_integration.helpdesk_ticket_view_search_inherit_channable"/> -->
+
+
+        <!-- Warehouse Inv Fix -->
+        <!-- ~~~~~~~~~~~~~~~~ -->
+
+        <record id="warehouse_pricing_view_action" model="ir.actions.act_window">
+            <field name="name">Warehouse Pricing</field>
+            <field name="res_model">warehouse.price</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="odoo_mirakl_integration.view_warehouse_price"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No pricing found. Let's add new!
+                </p>
+                <p>
+                    Import the warehouse product pricing file using import from faviorate section.
+                </p>
+            </field>
+        </record>
+
+        <!-- Surya Warehouse -->
+        <!-- ~~~~~~~~~~~~~~~ -->
+
+        <!-- Action View -->
+        <record id="marketplace_warehouse_view_action" model="ir.actions.act_window">
+            <field name="name">Warehouse Managment</field>
+            <field name="res_model">marketplace.warehouse</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'kanban', 'view_id': ref('view_warehouse_warehouses_kanban')}),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('view_warehouse_warehouses_tree_view')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_warehouse_warehouses_form_view')})]"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No Warehouse are linked yet.
+                </p>
+                <p>
+                    Add a new Marketplace Warehouse and link it with a Odoo warehouse.
+                </p>
+            </field>
+        </record>
+
+        <!-- Warehouse Inventory -->
+        <!-- ~~~~~~~~~~~~~~~~~~~ -->
+
+        <!-- Filters -->
+        <record id="view_warehouse_inventory_filters" model="ir.ui.view">
+            <field name="name">warehouse</field>
+            <field name="model">warehouse.inventory</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <search string="Search Warehouse Inventory">
+                    <group expand="0" string="Group By">
+                        <filter string="Date" name="date" domain="[ ]" context="{'group_by': 'create_date:day'}" />
+                        <filter string="Timing" name="processing_time" context="{'group_by': 'processing_time'}"/>
+                    </group> 
+               </search>
+            </field>    
+        </record>
+
+        <!-- Action View -->
+        <record id="warehouse_inventory_view_action" model="ir.actions.act_window">
+            <field name="name">Warehouse Inventory</field>
+            <field name="res_model">warehouse.inventory</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="odoo_mirakl_integration.view_warehouse_inventory"/>
+            <field name="search_view_id" ref="odoo_mirakl_integration.view_warehouse_inventory_filters"/>
+            <field name="context">{'search_default_date': 1, 'search_default_processing_time': 1 }</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No inventory data found. Let's add new!
+                </p>
+                <p>
+                    Import the current warehouse inventory status of products using import from faviorate section for German Warehouse.
+                </p>
+            </field>
+        </record>
+
+        <record id="warehouse_inventory_update_view_action" model="ir.actions.act_window">
+            <field name="name">Warehouse Inventory</field>
+            <field name="res_model">warehouse.inventory</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="odoo_mirakl_integration.view_warehouse_inventory"/>
+            <field name="search_view_id" ref="odoo_mirakl_integration.view_warehouse_inventory_filters"/>
+            <field name="context">{'search_default_date': 1, 'search_default_processing_time': 1 }</field>
+        </record>
+        
+
+        <!-- Import Functionality -->
+        <!-- ~~~~~~~~~~~~~~~~~~~~ -->
+
+        <!-- Filters -->
+        <record id="view_marketplace_order_tracking_filters" model="ir.ui.view">
+            <field name="name">marketplace_order_tracking_filters</field>
+            <field name="model">marketplace.order.tracking</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <search string="Search Orders Info To Import">
+                    <group expand="0" string="Group By">
+                        <filter string="Date" name="date" domain="[ ]" context="{'group_by': 'tracking_date:day'}" />
+                        <filter string="Timing" name="processing_time" domain="[ ]" context="{'group_by': 'processing_time'}" />
+                        <filter string="Shops" name="marketplace" domain="[ ]" context="{'group_by': 'marketplace'}" />
+                    </group>
+               </search>
+            </field>    
+        </record>
+
+        <!-- Action View -->
+        <record id="marketplace_order_tracking_view_action" model="ir.actions.act_window">
+            <field name="name">Marketplace Order Tracking</field>
+            <field name="res_model">marketplace.order.tracking</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{ 'search_default_date': 1, 'search_default_processing_time': 1, }</field>
+            <field name="view_id" ref="odoo_mirakl_integration.view_marketplace_order_tracking_tree_view"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No tracking data found. Let's add new!
+                </p>
+                <p>
+                    Import the order tracking file using import from faviorate section.
+                </p>
+            </field>
+        </record>
+
+
+        <!-- Surya Purchase Order Management -->
+        <!-- ~~~~~~~~~~~~~~~ -->
+
+
+        <!-- Warehouse Purchase Orders  -->
+        <!-- Action View -->
+        <record id="warehouse_purchase_order_view_action" model="ir.actions.act_window">
+            <field name="name">Replishment POs</field>
+            <field name="res_model">warehouse.purchase.order</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{ 'search_default_date': 1 , 'search_default_purchase_order': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No Warehouse Purchase Orders are linked yet.
+                </p>
+                <p>
+                    Add a new Warehouse Purchase Order and please import details from faviorates dropdown.
+                </p>
+            </field>
+        </record>
+
+        <!-- Filters -->
+        <record id="view_warehouse_purchase_order_filters" model="ir.ui.view">
+            <field name="name">warehouse_purchase_order_filters</field>
+            <field name="model">warehouse.purchase.order</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <search string="Search Bulk PO Info To Import">
+                    <group expand="0" string="Group By">
+                        <filter string="Date" name="date" domain="[ ]" context="{'group_by': 'create_date:day'}" />
+                        <filter string="Purchase Order" name="purchase_order" domain="[ ]" context="{'group_by': 'purchase_order_id'}" />
+                    </group>
+               </search>
+            </field>    
+        </record>
+
+        <!-- Vendor Management-->
+        <!-- Action View -->
+        <record id="marketplace_vendor_view_action" model="ir.actions.act_window">
+            <field name="name">Vendor Management</field>
+            <field name="res_model">marketplace.vendor</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No Vendor are linked yet.
+                </p>
+                <p>
+                    Add a new Marketplace Vendors and please import vendor details.
+                </p>
+            </field>
+        </record>
+
+        <!-- Action View -->
+        <record id="marketplace_product_view_action" model="ir.actions.act_window">
+            <field name="name">Product Management</field>
+            <field name="res_model">marketplace.product</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No Products are linked yet.
+                </p>
+                <p>
+                    Add a new Marketplace Priducts and please import vendor details.
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

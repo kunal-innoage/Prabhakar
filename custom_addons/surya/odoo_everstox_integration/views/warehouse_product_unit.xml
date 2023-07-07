@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="everstox_shop_product_unit_view_tree" model="ir.ui.view">
+        <field name="name">Everstox Products Units</field>
+        <field name="model">everstox.product.unit</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="unit_id"></field>
+                <field name="name"></field>
+                <field name="quantity_of_base_unit"></field>
+                <field name="everstox_shop_id"></field>
+                <field name="everstox_product_id"></field>
+            </tree>
+        </field>
+    </record>
+
+    <record id="everstox_product_unit_view_form" model="ir.ui.view">
+        <field name="name">Everstox Product Units Form View</field>
+        <field name="model">everstox.product.unit</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                    </div>
+                    <group>
+                        <group>
+
+                            <field name="name"></field>
+                            <field name="unit_id"></field>
+                            <field name="gtin"></field>
+                            <field name="default_unit"></field>
+                            <field name="base_unit_id"></field>
+                            <field name="base_unit_name"></field>
+                            <field name="quantity_of_base_unit"></field>
+                            <field name="weight_gross_in_kg"></field>
+                            <field name="height_in_cm"></field>
+                            <field name="width_in_cm"></field>
+                            <field name="length_in_cm"></field>
+                        
+                        </group>
+                        <group>
+                            <field name="everstox_shop_id"></field>
+                            <field name="everstox_product_id"></field>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    
+</odoo>

@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- blade.channel form view -->
+    <record id="blade_channel_view_form" model="ir.ui.view">
+        <field name="name">blade.channel.view.form</field>
+        <field name="model">blade.channel</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <field name="channel_id"/>                   
+                        <field name="org_id"/>                   
+                        <field name="tax_id"/>                   
+                        <field name="tax_name"/>                   
+                        <field name="tax_code"/>                   
+                        <field name="tax_rate"/>                   
+                        <field name="org_name"/>                   
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

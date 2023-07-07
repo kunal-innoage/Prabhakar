@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Mirakl Offer Tree -->
+        <record id="view_mirakl_carrier" model="ir.ui.view">
+            <field name="name">Shop Carriers</field>
+            <field name="model">mirakl.carrier</field>
+            <field name="arch" type="xml">
+                <tree create="false">
+                    <field name="activate"/>
+                    <field name="shop_id"/>
+                    <field name="label"/>
+                    <field name="code"/>
+                    <field name="tracking_url"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Mirakl Offer Form -->
+        <record id="view_mirakl_carrier_form" model="ir.ui.view">
+            <field name="name">Shop Carrier</field>
+            <field name="model">mirakl.carrier</field>
+            <field name="arch" type="xml">
+                <form create="false">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="activate"/>
+                                <field name="shop_id"/>
+                                <field name="label"/>
+                            </group>
+                            <group>
+                                <field name="code"/>
+                                <field name="tracking_url"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+    </data>
+</odoo>
+    

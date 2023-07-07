@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Mirakl Product Tree -->
+        <record id="view_shop_stock" model="ir.ui.view">
+            <field name="name">shop.stock.tree</field>
+            <field name="model">mirakl.stock</field>
+            <field name="arch" type="xml">
+                <tree create="false">
+                    <field name="shop_id"/>
+                    <field name="mirakl_product_ref"/>
+                    <field name="odoo_product_id"/>
+                    <field name="last_updated_date"/>
+                    <field name="quantity"/>
+                    <field name="warehouse_quantity"/>
+                    <field name="inventory_alert_limit" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Mirakl Product Tree Colors -->
+        <record id="colors_shop_stock" model="ir.ui.view">
+            <field name="name">shop.stock.tree</field>
+            <field name="model">mirakl.stock</field>
+            <field name="inherit_id" ref="odoo_mirakl_integration.view_shop_stock"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="decoration-success">quantity &gt;= inventory_alert_limit</attribute>
+                    <attribute name="decoration-warning">quantity &lt; inventory_alert_limit</attribute>
+                    <attribute name="decoration-danger">quantity == 0</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Mirakl Product Form -->
+        <record id="view_shop_stock_form" model="ir.ui.view">
+            <field name="name">shop.stock.form</field>
+            <field name="model">mirakl.stock</field>
+            <field name="arch" type="xml">
+                <form create="false">
+                    <header>
+                        <button name="update_stock_quantity" string="Add Shop Qty" type="object" class="btn btn-primary rounded shadow"/>
+                        <button name="change_stock_quantity" string="Change Shop Qty" type="object" class="btn btn-primary rounded shadow"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="shop_id"/>
+                                <field name="odoo_product_id"/>
+                                <field name="mirakl_product_ref"/>
+                            </group>
+                            <group>
+                                <field name="last_updated_date"/>
+                                <field name="warehouse_quantity"/>
+                                <field name="quantity"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+    </data>
+</odoo>
+    

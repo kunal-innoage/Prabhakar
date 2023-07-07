@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="standard_price_list_view" model="ir.ui.view">
+        <field name="name">standard.price.list.view</field>
+        <field name="model">standard.pricing</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sku"/>
+                <field name="recommended_retail_price"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="standard_price_form_view" model="ir.ui.view">
+        <field name="name">standard.price.form.view</field>
+        <field name="model">standard.pricing</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="sku"/>
+                            <field name="recommended_retail_price"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="standard_price_search_view" model="ir.ui.view">
+        <field name="name">standard.price.search.view</field>
+        <field name="model">standard.pricing</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="sku"/>
+                <field name="recommended_retail_price"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="standard_pricing_action" model="ir.actions.act_window">
+        <field name="name">Standard Price</field>
+        <field name="res_model">standard.pricing</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem id="standard_submenuu" parent ='product_pricing_menu' action = "standard_pricing_action" name="Surya Product" />
+
+
+</odoo>

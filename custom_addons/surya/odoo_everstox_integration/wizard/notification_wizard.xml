@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="everstox_shop_wizard_form_id" model="ir.ui.view">
+            <field name="name">Message</field>
+            <field name="model">everstox.shop.wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Notification">
+                    <field name="message" colspan="4" nolabel="1" readonly="1" widget="html"/>
+                    <separator colspan="6"/>
+                    <footer>
+                        <button special="cancel" string="Close" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="everstox_shop_wizard_wizard_action_id" model="ir.actions.act_window">
+            <field name="name">Wizard Message</field>
+            <field name="res_model">everstox.shop.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+
+    </data>
+</odoo>

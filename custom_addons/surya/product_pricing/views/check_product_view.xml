@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="check_product_list_view" model="ir.ui.view">
+        <field name="name">check.product.list.view</field>
+        <field name="model">check.product</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sku"/>
+                <field name="sku_name"/>
+                <field name="link"/>
+                <field name="price"/>
+                <field name="status"/>
+
+            </tree>
+        </field>
+    </record>
+    <record id="check_product_form_view" model="ir.ui.view">
+        <field name="name">check.product.form.view</field>
+        <field name="model">check.product</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="sku"/>
+                            <field name="sku_name"/>
+                            <field name="link"/>
+                            <field name="price"/>
+                            <field name="status"/>
+
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="check_product_search_view" model="ir.ui.view">
+        <field name="name">check.product.search.view</field>
+        <field name="model">check.product</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="sku"/>
+                <field name="sku_name"/>
+                <field name="link"/>
+                <field name="price"/>
+                <field name="status"/>
+                <!-- <group expand="1" string="Group By">
+                    <filter string="group_by_date" name="By date" context="{'group_by':'create_date:day'}"/>
+                    <filter string="group_by_status" name="By status" context="{'group_by':'status'}"/>
+                </group> -->
+            </search>
+        </field>
+    </record>
+</odoo>

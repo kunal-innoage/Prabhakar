@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sku_expense_analysis_list_view" model="ir.ui.view">
+        <field name="name">sku.expense.analysis.list.view</field>
+        <field name="model">sku.expense.analysis</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="product"/>
+                <field name="vat_inclusive"/>
+                <field name="vat_exclusive"/>
+                <field name="replenishment_period"/>
+                <field name="storage"/>
+                <field name="pick_pack"/>
+                <field name="adv_cost"/>
+                <field name="comission"/>
+                <field name="shipping_cost"/>
+                <field name="salary_cost"/>
+                <field name="carrer_admin_cost"/>
+                <field name="net_margin"/>
+                <field name="total_cogs"/>
+                <field name="shop_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="sku_expense_analysis_form_view" model="ir.ui.view">
+        <field name="name">sku.expense.analysis.form.view</field>
+        <field name="model">sku.expense.analysis</field>
+        <field name="arch" type="xml">
+            <form>
+
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="product"/>
+                            <field name="vat_inclusive"/>
+                            <field name="vat_exclusive"/>
+                            <field name="replenishment_period"/>
+                            <field name="storage"/>
+                            <field name="pick_pack"/>
+                            <field name="adv_cost"/>
+                            <field name="product_id"/>
+                        </group>
+                        <group>
+                            <field name="comission"/>
+                            <field name="shipping_cost"/>
+                            <field name="salary_cost"/>
+                            <field name="carrer_admin_cost"/>
+                            <field name="net_margin"/>
+                            <field name="total_cogs"/>
+                            <field name="shop_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="sale_order_lines" string="Sale Order Lines">
+                            <group>
+                                <field name="sale_order_line_ids">
+                                    <tree>
+                                        <field name="order_id"></field>
+                                        <!-- <field name="name"></field> -->
+                                        <field name="product_uom_qty"></field>
+                                        <!-- <field name="total_cogs"></field> -->
+                                        <field name="cogs_per_order_line"></field>
+                                        <field name="commission_per_order_line"></field>
+                                        <field name="price_unit"></field>
+                                        <field name="price_subtotal"></field>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="sku_expense_analysis_search_view" model="ir.ui.view">
+        <field name="name">sku.expense.analysis.search.view</field>
+        <field name="model">sku.expense.analysis</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="product"/>
+                <field name="vat_inclusive"/>
+                <field name="vat_exclusive"/>
+                <field name="replenishment_period"/>
+                <field name="storage"/>
+                <field name="pick_pack"/>
+                <field name="adv_cost"/>
+                <field name="comission"/>
+                <field name="shipping_cost"/>
+                <field name="salary_cost"/>
+                <field name="carrer_admin_cost"/>
+                <field name="net_margin"/>
+                <field name="total_cogs"/>
+                <field name="shop_id"/>
+                <group expand="1" string="Group By">
+                    <filter name="group_by_shop" string="By shop" context="{'group_by': 'shop_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="sku_expense_analysis_action" model="ir.actions.act_window">
+        <field name="name">SKU Expense Analysis</field>
+        <field name="res_model">sku.expense.analysis</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_group_by_shop': 1,}</field>
+    </record>
+
+    <!-- SERVER ACTION MAP STATIC VALUES FROM INSIDE SHOPS -->
+
+    <record id="action_sku_mirakl_static_values" model="ir.actions.server">
+        <field name="name">static values</field>
+        <field name="model_id" ref="sku_expense_analysis.model_sku_expense_analysis"/>
+        <field name="binding_model_id" ref="sku_expense_analysis.model_sku_expense_analysis"/>
+        <field name="state">code</field>
+        <field name="code">action = records.mapping_all_static_fields()</field>
+    </record>
+
+    <!-- SERVER ACTION MAP WITH SALE ORDER FROM SKU ANALYSIS -->
+
+    <!-- <record id="action_map_total_cogs_values" model="ir.actions.server">
+        <field name="name">Map COGS</field>
+        <field name="model_id" ref="sku_expense_analysis.model_sku_expense_analysis"/>
+        <field name="binding_model_id" ref="sku_expense_analysis.model_sku_expense_analysis"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.cogs_mapping_server_action()</field>
+    </record> -->
+
+    <menuitem id="sku_expense_analysis_menuitem" name="SKU Expense Analysis" parent="odoo_mirakl_integration.purchase_management_menu" sequence="104" action="sku_expense_analysis_action"/>
+
+</odoo>

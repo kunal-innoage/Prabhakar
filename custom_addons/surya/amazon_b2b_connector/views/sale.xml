@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sale_amazon_b2b_view_form" model="ir.ui.view">
+        <field name="name">sale_amazon_b2b.view.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"></field>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="amazon_b2b_order_id" attrs="{'invisible': [('amazon_b2b_order_id','=',False)]}"></field>
+            </field>
+        </field>
+        
+
+    </record>
+
+
+
+</odoo>

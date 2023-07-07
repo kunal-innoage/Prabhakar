@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+
+    <record id="product_attribute_custom_form_view" model="ir.ui.view">
+        <field name="name">product_attribute_custom.view.form</field>
+        <field name="model">product.attribute.custom</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="product_id"/>
+                            <field name="sku"/>
+                            <field name="color"/>
+                            <field name="style"/>
+                            <field name="material"/>
+                        </group>
+                        <group>
+                            <field name="size"/>
+                            <field name="backing_material"/>
+                            <field name="shape"/>
+                            <field name="care_instructions"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="product_attribute_custom_tree_view" model="ir.ui.view">
+        <field name="name">product.attribute.custom.view.tree</field>
+        <field name="model">product.attribute.custom</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sku"/>
+                <field name="color"/>
+                <field name="style"/>
+                <field name="material"/>
+                <field name="size"/>
+                <field name="backing_material"/>
+                <field name="shape"/>
+                <field name="care_instructions"/>
+                <field name="product_id"/>
+            </tree>        
+        </field>
+    </record>
+
+    <record id="product_custom_attribute_action" model="ir.actions.act_window">
+        <field name="name">Product Custom Attributes</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.attribute.custom</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <menuitem id="product_attribute_custom_action" name="Product Custom Attributes" parent="website_sale.menu_product_settings" action="product_custom_attribute_action"/>
+
+    <record model="ir.actions.server" id="map_product_custom_attributes">
+        <field name="name">Map Attributes</field>
+        <field name="model_id" ref="model_product_attribute_custom"/>
+        <field name="binding_view_types">form,list</field>
+        <field name="binding_model_id" ref="model_product_attribute_custom"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.map_product_attributes()
+        </field>
+   </record>
+
+
+</odoo>

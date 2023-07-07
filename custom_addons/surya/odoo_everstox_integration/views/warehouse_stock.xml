@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="everstox_warehouse_stock_view_tree" model="ir.ui.view">
+        <field name="name">Everstox Warehouse Stock</field>
+        <field name="model">everstox.warehouse.stock</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="stock_id"></field>
+                <field name="name"></field>
+                <field name="sku"></field>
+                <field name="status"></field>
+                <field name="total_stock"></field>
+                <field name="everstox_shop_id"></field>
+                <field name="batch_product"></field>
+            </tree>
+        </field>
+    </record>
+
+    <record id="everstox_warehouse_stock_view_form" model="ir.ui.view">
+        <field name="name">Everstox Warehouse Stock Form View</field>
+        <field name="model">everstox.warehouse.stock</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="stock_id"></field>
+                            <field name="name"></field>
+                            <field name="sku"></field>
+                            <field name="status"></field>
+                        </group>
+                        <group>
+                            <field name="everstox_shop_id"></field>
+                            <field name="total_stock"></field>
+                            <field name="batch_product"></field>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page name="stock_items" string="Stock Items">
+                            <field name="stock_item_ids">
+                                <tree>
+                                    <field name="stock_warehouse_name"></field>
+                                    <field name="quantity"></field>
+                                    <field name="updated_date"></field>
+                                    <field name="stock_runway"></field>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Filters -->
+    <!-- <record id="view_everstox_order_filters" model="ir.ui.view">
+        <field name="name">everstox_order_filters</field>
+        <field name="model">everstox.warehouse.stock</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <search string="Search Orders To Map">
+                <group expand="0" string="Group By">
+                    <filter string="Mapped Status" name="everstox_mapped_state" domain="[ ]" context="{'group_by': 'everstox_mapped_state'}" />
+                </group>
+            </search>
+        </field>    
+    </record> -->
+    
+
+    <!-- Server Actions -->
+
+    <!-- <record id="model_order_everstox_mapping" model="ir.actions.server">
+        <field name="name">Create Order</field>
+        <field name="model_id" ref="odoo_everstox_integration.model_everstox_shop_order"/>
+        <field name="binding_model_id" ref="odoo_everstox_integration.model_everstox_shop_order"/>
+        <field name="state">code</field>
+        <field name="code">action = records.prepare_order_and_order_data()</field>
+    </record> -->
+
+    <record id="everstox_warehouse_stock_item_view_form" model="ir.ui.view">
+        <field name="name">Everstox Warehouse Stock Item Form View</field>
+        <field name="model">everstox.warehouse.stock.item</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="quantity"></field>
+                            <field name="stock_runway"></field>
+                            <field name="updated_date"></field>
+                            <field name="stock_warehouse_name"></field>
+                        </group>
+                        <group>
+                            <field name="stock_id"></field>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page name="stock_quantities" string="Stock Quantities">
+                            <field name="stock_quantities_ids">
+                                <tree>
+                                    <field name="stock_type"></field>
+                                    <field name="stock_quantity"></field>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="everstox_warehouse_stock_item_view_tree" model="ir.ui.view">
+        <field name="name">everstox_warehouse_stock_item.view.tree</field>
+        <field name="model">everstox.warehouse.stock.item</field>
+        <field name="arch" type="xml">
+            <tree string="Stock Items">
+                <field name="stock_item_id"></field>
+                <field name="quantity"></field>
+                <field name="stock_runway"></field>
+                <field name="updated_date"></field>
+                <field name="stock_warehouse_name"></field>
+            </tree>
+        </field>
+    </record>
+
+    <record id="everstox_warehouse_stock_quantities_view_form" model="ir.ui.view">
+        <field name="name">Everstox Stock Quantities Form View</field>
+        <field name="model">everstox.stock.quantities</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="stock_type"></field>
+                            <field name="stock_quantity"></field>
+                        </group>
+                        <group>
+                            <field name="stock_item_id"></field>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="everstox_warehouse_stock_quantities_view_tree" model="ir.ui.view">
+        <field name="name">everstox_warehouse_stock_quantities.view.tree</field>
+        <field name="model">everstox.stock.quantities</field>
+        <field name="arch" type="xml">
+            <tree string="Stock Qauntities">
+                <field name="stock_type"></field>
+                <field name="stock_quantity"></field>
+                <field name="stock_item_id"></field>
+            </tree>
+        </field>
+    </record>
+
+    
+</odoo>

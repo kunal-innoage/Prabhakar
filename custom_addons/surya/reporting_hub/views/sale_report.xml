@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- model.name inherit graph view -->
+    <record id="sale_report_marketplace_hub_inh" model="ir.ui.view">
+        <field name="name">sale.report.marketplace.hub.inh</field>
+        <field name="model">sale.report</field>
+        <field name="inherit_id" ref="sale.view_order_product_search"/>
+        <field name="arch" type="xml">
+            <field name="user_id" position="after">
+                <field name="market_place_shop"/>
+            </field>
+            <xpath expr="//filter[@name='industry_id']" position="after">
+                <filter string="Shops" name="shop" context="{'group_by':'market_place_shop'}"/>
+                <separator/>
+                <filter string="Maison" name="maison_shop" domain="[('market_place_shop','=','Maison')]"/>
+                <filter string="Amazon" name="amazon_shop" domain="[('market_place_shop','ilike','amazon')]"/>
+                <filter string="Wayfair" name="wayfair_shop" domain="[('market_place_shop','ilike','wayfair')]"/>
+                <filter string="Cdiscount" name="cdisc_shop" domain="[('market_place_shop','ilike','Cdisc')]"/>
+                <filter string="Manomano" name="manomano_shop" domain="[('market_place_shop','ilike','manomano')]"/>
+                <separator/>
+                <filter string="ETL" name="wayfair_shop" domain="[('warehouse_id.name','ilike','Cella')]"/>
+                <filter string="CDisc Warehouse" name="wayfair_shop" domain="[('warehouse_id.name','ilike','Cdisc')]"/>
+                <filter string="iFulfilment" name="wayfair_shop" domain="[('warehouse_id.name','ilike','iFulfilment')]"/>
+                <filter string="Warehouse" name="etl_warehouse" context="{'group_by':'warehouse_id'}"/>
+                <filter string="Last 30 Days" name="last_month" domain="[('date','&gt;=', (context_today() - datetime.timedelta(days=30)).strftime('%%Y-%%m-%%d'))]"/>
+
+
+                <!-- <filter string="Cdisc Warehouse" name="etl_warehouse" domain="[('warehouse_id.name','ilike','Cdisc')]"/> -->
+                <filter name="today" string="Last Week" icon="terp-partner" domain="[('date', '&lt;=', ((context_today()+relativedelta(weeks=0, weekday=-1)).strftime('%Y-%m-%d'))), 
+
+('date', '&gt;=', ((context_today()-relativedelta(weeks=1, weekday=0)).strftime('%Y-%m-%d')))]"/>
+
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="sale_report_marketplace_tree" model="ir.ui.view">
+        <field name="name">sale.report.marketplace.tree.inherit.view.fotreerm</field>
+        <field name="model">sale.report</field>
+        <field name="inherit_id" ref="sale.sale_report_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="order_id" position="after">
+                <field name="market_place_shop"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="sale.action_order_report_all" model="ir.actions.act_window">
+        <field name="name">Sales Analysis</field>
+        <field name="res_model">sale.report</field>
+        <field name="view_mode">graph,pivot</field>
+        <field name="view_id"></field>
+        <field name="search_view_id" ref="sale.view_order_product_search"/>
+        <field name="context">{'search_default_Sales':1, 'group_by_no_leaf':1,'search_default_shop':1, 'search_default_last_month': 1, 'pivot_measures': ['product_uom_qty'],'graph_measure': ['product_uom_qty']}</field>
+        <field name="help">This report performs analysis on your quotations and sales orders. Analysis check your sales revenues and sort it by different group criteria (salesman, partner, product, etc.) Use this report to perform analysis on sales not having invoiced yet. If you want to analyse your turnover, you should use the Invoice Analysis report in the Accounting application.</field>
+    </record>
+
+
+    <!-- This Menu Item must have a parent and an action -->
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="report_main_menu_surya" name="Report Hub" web_icon="reporting_hub,static/description/icon.png"/>
+    <menuitem id="reporting_hub_menu_act" name="Sales Report" parent="report_main_menu_surya" action="sale.action_order_report_all" sequence="1"/>
+
+
+</odoo>

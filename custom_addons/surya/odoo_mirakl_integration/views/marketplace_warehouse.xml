@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Marketplace Warehouses Kanban -->
+        <record id="view_warehouse_warehouses_kanban" model="ir.ui.view">
+            <field name="name">Warehouse Management</field>
+            <field name="model">marketplace.warehouse</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <field name="warehouse_id"/>
+                    <field name="warehouse_code"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click shadow rounded border-light mb-3">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <strong class="o_kanban_record_title"><span style="font-size: 20px;"><t t-esc="record.warehouse_code.value"/></span></strong>
+                                    </div>
+                                    <div class="col-6 text-muted my-2">
+                                        <span class="o_kanban_record_title text-info float-right" style="font-size: 16px;"><t t-esc="record.warehouse_id.value"/></span>
+                                    </div>
+                                </div>
+                                <div class="row mt16">
+                                    <div class="col-12 mb-2 d-flex flex-wrap justify-content-center">
+                                        <button class="col-8 btn btn-primary rounded mb-2" name="warehouse_inventory_view_action_open" type="object">
+                                            Inventory Update
+                                        </button>
+                                        <button class="col-8 btn btn-primary rounded  mb-2" name="warehouse_processed_orders_view_action_open" type="object">
+                                            Processed Orders
+                                        </button>
+                                        <button class="col-8 btn btn-primary rounded  mb-2" name="tracking_info_so_import_view_action_open" type="object">
+                                            Orders Tracking
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Warehouse Management Tree -->
+        <record id="view_warehouse_warehouses_tree_view" model="ir.ui.view">
+            <field name="name">Warehouse Management</field>
+            <field name="model">marketplace.warehouse</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="warehouse_code"/>
+                    <field name="warehouse_id"/>
+                    <button class="btn btn-primary" string="Update Today's Inventory" name="warehouse_inventory_view_action_open" type="object">
+                    </button>
+                    <button class="btn btn-primary" string="Processed Order" name="warehouse_processed_orders_view_action_open" type="object">
+                    </button>
+                </tree>
+            </field>
+        </record>
+        
+
+        <!-- Warehouse Management Form -->
+        <record id="view_warehouse_warehouses_form_view" model="ir.ui.view">
+            <field name="name">Warehouse Management</field>
+            <field name="model">marketplace.warehouse</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="warehouse_inventory_view_action_open"  type="object" class="oe_stat_button" icon="fa-cubes" >
+                                Inventory
+                            </button>
+                            <button class="oe_stat_button" icon="fa-usd" name="warehouse_processed_orders_view_action_open" type="object">
+                                Sale Orders
+                            </button>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="warehouse_code"/>
+                            </group>
+                            <group>
+                                <field name="warehouse_id"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <group>
+                                <field name="stock_picking_type_id"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+
+        
+
+    </data>
+</odoo>
+    

@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- product_label_layout inherit form view -->
+    <record id="product_label_layout" model="ir.ui.view">
+        <field name="name">product_label_layout.inherit.view.form</field>
+        <field name="model">product.label.layout</field>
+        <field name="inherit_id" ref="stock.product_label_layout_form_picking"/>
+        <field name="arch" type="xml">
+            <field name="extra_html" position="attributes">
+                <attribute name="invisible"> 1</attribute>
+             </field>            
+        </field>
+    </record>
+</odoo>

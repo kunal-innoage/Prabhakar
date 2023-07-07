@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    
+    <!-- amazon.labels form view -->
+    <record id="amazon_labels_view_form" model="ir.ui.view">
+        <field name="name">amazon.labels.view.form</field>
+        <field name="model">amazon.labels</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header>
+                    <button string="Map Orders" type="object" name="split_and_map_labels" class="btn btn-primary rounded shadow" attrs="{'invisible': [('splitting_done','=',True)]}"/>
+                    <button string="Reset and Split" type="object" name="reset_and_split" class="btn btn-primary rounded shadow" attrs="{'invisible': [('splitting_done','=',False)]}"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_split_labels" string="Labels" type="object" class="oe_stat_button" icon="fa-usd" >
+                        </button>
+                    </div>
+                    <group>
+                        <field name="name"/>                        
+                        <!-- <field name="label" widget="pdf_viewer"/>                         -->
+                        <field name="order_id" invisible="1"/>                         
+                        <field name="sale_order" invisible="1"/> 
+                        <field name="splitting_done"/>                        
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- amazon.labels tree view -->
+    <record id="amazon_labels_view_tree" model="ir.ui.view">
+        <field name="name">amazon.labels.view.tree</field>
+        <field name="model">amazon.labels</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="label"/>
+                <!-- <field name="order_id"/> -->
+                <field name="create_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- amazon.labels kanban view -->
+    <record id="amazon_labels_view_kanban" model="ir.ui.view">
+        <field name="name">amazon.labels.view.kanban</field>
+        <field name="model">amazon.labels</field>
+        <field name="arch" type="xml">
+            <kanban string="Kanban Description">
+                <field name="label" widet="pdf_viewer"/>
+                <field name="order_id"/>                
+                <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click shadow rounded border-light">
+                                <div class="oe_kanban_details">
+                                    
+                                    <div t-if="record.label.value">
+                                            <t t-esc="record.label.value"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- split.labels form view -->
+    <record id="split_labels_view_form" model="ir.ui.view">
+        <field name="name">split.labels.view.form</field>
+        <field name="model">split.labels</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <field name="name"/>                        
+                        <field name="label" widget="pdf_viewer"/>                        
+                        <field name="order_id"/>                        
+                        <field name="sale_order"/>                        
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- split.labels tree view -->
+    <record id="split_labels_view_tree" model="ir.ui.view">
+        <field name="name">split.labels.view.tree</field>
+        <field name="model">split.labels</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>                
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.server" id="action_map_sale_oreders">
+       <field name="name">Map Sale Orders</field>
+       <field name="model_id" ref="model_split_labels"/>
+        <field name="binding_view_types">form,list</field>
+       <field name="binding_model_id" ref="model_split_labels"/>
+       <field name="state">code</field>
+       <field name="code">
+           action = records.map_sale_orders()
+       </field>
+    </record>
+
+</odoo>

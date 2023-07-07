@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id ="competitor_shop_kanban_view" model ="ir.ui.view">
+        <field name = "name">competitor.shop.kanban.view</field>
+        <field name = "model">competitor.shop</field>
+        <field name = "arch" type = "xml">
+            <kanban>
+                <field name = "name"/>
+                <field name = "url"/>
+                <templates>
+                    <t t-name = "kanban-box">
+                        <div class = "oe_kanban_card">
+                            <span t-esc = "record.name.raw_value"/>
+                            <span t-esc = "record.url.raw_value"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+
+
+    <record id="competitor_shop_list_view" model="ir.ui.view">
+        <field name="name">competitor.shop.list.view</field>
+        <field name="model">competitor.shop</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name = "name"/>
+                <field name = "url"/>
+
+            </tree>
+        </field>
+    </record>
+    <record id="competitor_shop_form_view" model="ir.ui.view">
+        <field name="name">competitor.shop.form.view</field>
+        <field name="model">competitor.shop</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+
+                            <field name = "name"/>
+                            <field name = "url"/>
+                        </group>
+                    </group>
+                    <notebook>
+
+                    </notebook>
+
+                </sheet>
+
+
+            </form>
+        </field>
+    </record>
+
+    <record id="competitor_shop_search_view" model="ir.ui.view">
+        <field name="name">competitor.shop.search.view</field>
+        <field name="model">competitor.shop</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name = "name"/>
+                <field name = "url"/>
+                <!-- <group expand="1" string="Group By">
+                    <filter name="group_by_date" string="By date" context="{'group_by': 'create_date:day'}"/>
+                    <filter name="group_by_product" string="By product" context="{'group_by': 'product_name'}"/> -->
+                <!-- </group> -->
+            </search>
+        </field>
+    </record>
+
+    <record id="competitor_shop_action" model="ir.actions.act_window">
+        <field name="name">Competitor Shop</field>
+        <field name="res_model">competitor.shop</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <!-- <field name="search_view_id" ref="product_pricing.product_pricing_search_view"/>
+        <field name="context">  {
+                                    'search_default_group_by_date': 1,
+                                    'search_default_group_by_product': 1,
+                                }</field> -->
+    </record>
+
+    <menuitem id="competitor_shop_submenuuu" parent="competitor_submenuuu" action= "competitor_shop_action" name="Competitors Shop"/>
+
+
+
+
+
+    
+
+</odoo>

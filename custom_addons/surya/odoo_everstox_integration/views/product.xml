@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="product_everstox_search_view" model="ir.ui.view">
+        <field name="name">Products Search Everstox View</field>
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <search string="Search Everstox Products">
+                <group expand="0" string="Group By">
+                    <filter string="Everstox Mapped" name="everstox_mapped_state" domain="[]" context="{'group_by': 'everstox_mapped_state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+
+    <record id="everstox_product_view_tree" model="ir.ui.view">
+        <field name="name">Products</field>
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name"></field>
+                <field name="everstox_shop_ids"></field>
+                <field name="everstox_mapped_state"></field>
+                <field name="everstox_product_id"></field>
+            </tree>
+        </field>
+    </record>
+    
+    <!-- Server Actions -->
+
+    <record id="action_get_everstox_mapped_product" model="ir.actions.server">
+        <field name="name">Everstox Product Mapping</field>
+        <field name="model_id" ref="odoo_everstox_integration.model_product_product"/>
+        <field name="binding_model_id" ref="odoo_everstox_integration.model_product_product"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.mapped_products_data()</field>
+    </record>
+
+    <record id="action_get_everstox_unmapped_product" model="ir.actions.server">
+        <field name="name">Everstox Product UnMapping</field>
+        <field name="model_id" ref="odoo_everstox_integration.model_product_product"/>
+        <field name="binding_model_id" ref="odoo_everstox_integration.model_product_product"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.unmap()</field>
+    </record>
+
+</odoo>

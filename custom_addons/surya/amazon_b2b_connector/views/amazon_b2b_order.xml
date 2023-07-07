@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Tree -->
+        <record id="view_amazon_b2b_sale_order_tree_view" model="ir.ui.view">
+            <field name="name">Amazon B2b Sale Order</field>
+            <field name="model">amazon.b2b.sale.order</field>
+            <field name="arch" type="xml">
+                <tree default_order="create_date desc">
+                    <field name="purchase_order"/>
+                    <field name="vendor"/>
+                    <field name="asin"/>
+                    <field name="model_number"/>
+                    <field name="unit_cost"/>
+                    <field name="quantity_requested"/>
+                    <field name="in_transit_quantity"/>
+                    <field name="current_stock"/>
+                    <field name="accepted_quantity"/>
+                    <field name="sale_order_id"/>
+                </tree>
+            </field>
+        </record>
+        
+
+        <!-- Form -->
+        <record id="view_amazon_b2b_sale_order_form_view" model="ir.ui.view">
+            <field name="name">Amazon B2b Sale Order</field>
+            <field name="model">amazon.b2b.sale.order</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="purchase_order"/>
+                                <field name="vendor"/>
+                                <field name="warehouse"/>
+                                <field name="asin"/>
+                                <field name="external_id"/>
+                                <field name="external_id_type"/>
+                                <field name="model_number"/>
+                                <field name="title"/>
+                                <field name="availablity"/>
+                                <field name="expected_date"/>
+                            </group>
+                            <group>
+                                <field name="amazon_b2b_shop_id"/>
+                                <field name="sale_order_id"/>
+                                <field name="expected_quantity"/>
+                                <field name="quantity_requested"/>
+                                <field name="in_transit_quantity"/>
+                                <field name="current_stock"/>
+                                <field name="accepted_quantity"/>
+                                <field name="window_type"/>
+                                <field name="window_start"/>
+                                <field name="window_end"/>
+                                <field name="unit_cost"/>
+                                <field name="currency"/>
+                                <field name="invoice_date"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="amazon_b2b_order_search_view_search" model="ir.ui.view">
+            <field name="name">amazon_b2b_sale_order.view.search</field>
+            <field name="model">amazon.b2b.sale.order</field>
+            <field name="arch" type="xml">
+                <search string="">
+                    <filter name="today" string="Today" icon="terp-partner" context="{'group_by': 'create_date:day'}"/> 
+                </search>
+            </field>
+        </record>
+
+        <!-- Server Actions -->
+
+        <record id="model_amazon_b2b_sale_order_mapping" model="ir.actions.server">
+            <field name="name">Map Bulk Orders</field>
+            <field name="model_id" ref="amazon_b2b_connector.model_amazon_b2b_sale_order"/>
+            <field name="binding_model_id" ref="amazon_b2b_connector.model_amazon_b2b_sale_order"/>
+            <field name="binding_view_types">form,list</field>
+            <field name="state">code</field>
+            <field name="code">action = records.map_with_bulk_order()</field>
+        </record>
+        
+    </data>
+</odoo>
+    

@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+        <data>
+            <template id="report_simple_label_dymo_inh" inherit_id="product.report_simple_label_dymo" name="Return Label">
+                <xpath expr="//div[hasclass('o_label_small_barcode')]"  position="replace">
+                    <div class="o_label_small_barcode">
+                       
+                    </div>
+                </xpath>
+                <xpath expr="//div[hasclass('o_label_small_barcode')]"  position="after">
+                <t t-set="table_style" t-value="'width:100%;height:80mm;'"/>
+
+                    <div style="font-size: 12px">
+                        <!-- <div>
+                            Product : <span t-esc="product.name"/>
+                        </div> -->
+                        <div>
+                            Marketplace : <span t-esc="marketplace"/>
+                        </div> 
+                        <div>
+                            Order Number : <span t-esc="order_number"/>
+                        </div>
+                        <div>
+                            Customer : <span t-esc="customer"/>
+                        </div>
+                    </div>
+                </xpath>
+                <xpath expr="//div[hasclass('text-right')]" position="replace">
+                    <span/>
+                </xpath>
+            </template>            
+        </data>
+</odoo>
