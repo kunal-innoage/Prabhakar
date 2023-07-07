@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sale_cdiscount_view_form" model="ir.ui.view">
+        <field name="name">sale_cdiscount.view.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"></field>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="amazon_order_id" attrs="{'invisible': [('amazon_order_id','=',False)]}"></field>
+            </field>
+            <xpath expr="//page[@name='other_information']"  position="after">
+            <page name="amazon_page" string="Amazon" attrs="{'invisible': [('amazon_order_id','=',False)]}">
+                <group>
+                    <group>
+                        <field name="amazon_order"></field>
+                        <field name="sku"></field>
+                        <field name="warehouse"></field>
+                        <field name="asin"></field>
+                        <field name="amazon_order_id" invisible="1"></field>
+                        <field name="order_status"></field>
+                        <field name="shipping_method"></field>
+                        <field name="shipping_zip"></field>
+                        <field name="delivery_city"></field>
+                        <field name="delivery_country"></field>
+                        <field name="total_price"></field>
+                        <field name="delivery_cost"></field>
+                        <field name="amazon_shop_id"/>
+                        
+
+                    </group>
+                    <group>
+                        <field name="full_name"></field>
+                        <!-- <field name="first_name"></field>
+                        <field name="last_name"></field> -->
+                        <!-- <field name="order_date"></field> -->
+                        <field name="req_ship_date"></field>
+                        <field name="ship_method_code"></field>
+                        <field name="market_place_shop" force_save="true"></field>
+                        <field name="shipping_address2"></field>
+                        <field name="shipping_address3"></field>
+                        <field name="shipping_state"></field>
+                        <field name="is_gift"></field>
+                        <field name="gift_meesage"></field>
+                        <field name="tracking_id"></field>
+                        <field name="ship_date"></field>
+                        <field name="phone"></field>
+                        <!-- <field name="billing_zip"></field>
+                        <field name="billing_city"></field> -->
+                    </group>
+                </group>
+            </page>
+            
+        </xpath>
+        </field>
+        
+
+    </record>
+
+    <record id="sale_order_line_inh" model="ir.ui.view">
+        <field name="name">sale.order.line.inh</field>
+        <field name="model">sale.order.line</field>
+        <field name="inherit_id" ref="sale.view_order_line_tree"></field>
+        <field name="arch" type="xml">
+            <field name="qty_invoiced" position="after">
+                <field name="line_id"></field>
+            </field>
+        </field>
+    </record>
+
+    <record id="model_sale_order_update_shop_name" model="ir.actions.server">
+        <field name="name">Update Shop Name</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="state">code</field>
+        <field name="code">action = records.update_shop_name()</field>
+    </record>
+
+
+</odoo>

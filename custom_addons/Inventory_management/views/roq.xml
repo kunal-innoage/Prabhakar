@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="request_list_view" model="ir.ui.view">
+        <field name="name">request.list.view</field>
+        <field name="model">request</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="vendor_id"/>
+                <field name="vendor_reference"/>
+                <field name="order_deadline"/>
+                <field name="receipt_date"/>
+            </tree>
+        </field>
+    </record>
+    <record id="request_form_view" model="ir.ui.view">
+        <field name="name">request.form.view</field>
+        <field name="model">request</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="test" type="object" class="oe_stat_button" string="Test">
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+
+                            <field name="vendor_id"/>
+                            <field name="vendor_reference"/>
+                        </group>
+                        <group>
+                            <field name="order_deadline"/>
+                            <field name="receipt_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Products">
+                            <field name="request_order_lines">
+                                <tree string="" editable="bottom" create='1'>
+                                    <!-- <field name="request_id"/> -->
+                                    <field name="product_ids"/>
+                                    <field name="quantity"/>
+                                    <field name="unit_price"/>
+                                    <field name="taxes"/>
+                                    <field name="subtotal"/>
+
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Other Information"></page>
+
+                    </notebook>
+
+                </sheet>
+
+                <!-- chatter -->
+                <div class = "oe_chatter">
+                    <field name = "message_follower_ids" groups="base.group_user"/>
+                    <field name = "activity_ids"/>
+                    <field name = "message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="request_search_view" model="ir.ui.view">
+        <field name="name">request.search.view</field>
+        <field name="model">request</field>
+        <field name="arch" type="xml">
+            <search>
+
+            </search>
+        </field>
+    </record>
+
+    <record id="request_action" model="ir.actions.act_window">
+        <field name="name">request</field>
+        <field name="res_model">request</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id = "roq_menu" parent ="purchasee_menu" action = "request_action"/>
+</odoo>

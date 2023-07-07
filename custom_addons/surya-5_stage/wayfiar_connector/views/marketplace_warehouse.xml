@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- marketplace.warehouse inherit form view -->
+    <record id="marketplace_warehouse_inh_form" model="ir.ui.view">
+        <field name="name">marketplace.warehouse.inherit.view.form</field>
+        <field name="model">marketplace.warehouse</field>
+        <field name="inherit_id" ref="odoo_mirakl_integration.view_warehouse_warehouses_form_view"/>
+        <field name="arch" type="xml">
+            <field name="warehouse_id" position="after">
+                <field name="wayfair_supplier_id"/>
+            </field>
+        </field>
+    </record>
+</odoo>

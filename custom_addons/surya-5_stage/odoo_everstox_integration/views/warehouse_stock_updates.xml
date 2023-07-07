@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="everstox_warehouse_stock_updates_view_tree" model="ir.ui.view">
+        <field name="name">Everstox Warehouse Stock Updates Tree View</field>
+        <field name="model">everstox.warehouse.stock.updates</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="action_type"></field>
+                <field name="stock_update_id"></field>
+                <field name="new_quantity"></field>
+                <field name="quantity_correction"></field>
+                <field name="update_datetime"></field>
+                <field name="update_reason"></field>
+                <field name="update_reason_code"></field>
+            </tree>
+        </field>
+    </record>
+
+    <record id="everstox_warehouse_stock_updates_view_form" model="ir.ui.view">
+        <field name="name">Everstox Warehouse Stock Updates Form View</field>
+        <field name="model">everstox.warehouse.stock.updates</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="action_type"></field>
+                            <field name="stock_update_id"></field>
+                            <field name="new_quantity"></field>
+                            <field name="quantity_correction"></field>
+                        </group>
+                        <group>
+                            <field name="everstox_shop_id"></field>
+                            <field name="update_reason"></field>
+                            <field name="update_reason_code"></field>
+                            <field name="update_datetime"></field>
+                            <field name="stock_id"></field>
+                            
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Server Action -->
+
+    <record id="model_everstox_warehouse_stock_updates_update" model="ir.actions.server">
+        <field name="name">Update</field>
+        <field name="model_id" ref="odoo_everstox_integration.model_everstox_warehouse_stock_updates"/>
+        <field name="binding_model_id" ref="odoo_everstox_integration.model_everstox_warehouse_stock_updates"/>
+        <field name="state">code</field>
+        <field name="code">action = records.update_stock_updates()</field>
+    </record>
+    
+</odoo>

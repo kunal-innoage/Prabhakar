@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="everstox_shop_product_view_tree" model="ir.ui.view">
+        <field name="name">Everstox Shop Products</field>
+        <field name="model">everstox.shop.product</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"></field>
+                <field name="item_id"></field>
+                <field name="sku"></field>
+                <field name="status"></field>
+                <field name="total_stock"></field>
+                <field name="everstox_shop_id"></field>
+                <field name="everstox_batch_unit"></field>
+                <field name="product_id"></field>
+            </tree>
+        </field>
+    </record>
+
+    <record id="everstox_product_view_form" model="ir.ui.view">
+        <field name="name">Everstox Product Form View</field>
+        <field name="model">everstox.shop.product</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name"></field>
+                            <field name="item_id"></field>
+                            <field name="sku"></field>
+                            <field name="status"></field>
+                            <field name="shop_id"></field>
+                            <field name="size"></field>
+                            <field name="creation_date"></field>
+                            <field name="updated_date"></field>
+                            <field name="batch_product"></field>
+                            <field name="bundle_product"></field>
+                            <field name="bundles"></field>
+                        
+                        </group>
+                        <group>
+                            <field name="total_stock"></field>
+                            <field name="everstox_shop_id"></field>
+                            <field name="everstox_warehouse_id"></field>
+                            <field name="product_id"></field>
+                            <field name="country_of_origin"></field>
+                            <field name="color"></field>
+                            <field name="creation_date"></field>
+                            <field name="customs_code"></field>
+                            <field name="customs_description"></field>
+                            <field name="ignore_during_import"></field>
+                            <field name="api_mapping_status"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="config" string="Units">
+                            <group>
+                                <field name="everstox_batch_unit" widget="many2many_tags"></field>
+                            </group>
+                        </page>
+                    </notebook>
+                    
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <!-- Filters -->
+    <record id="view_everstox_shop_product_filters" model="ir.ui.view">
+        <field name="name">everstox_product_filters</field>
+        <field name="model">everstox.shop.product</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <search string="Search Products To Map">
+                <group expand="0" string="Group By">
+                    <filter string="Mapped Status" name="mapping_status" domain="[ ]" context="{'group_by': 'api_mapping_status'}" />
+                </group>
+            </search>
+        </field>    
+    </record>
+
+    
+    <!-- Server Actions -->
+
+    
+    <record id="action_post_everstox_product_bulk_upload" model="ir.actions.server">
+        <field name="name">Bulk Product Upload</field>
+        <field name="model_id" ref="odoo_everstox_integration.model_everstox_shop_product"/>
+        <field name="binding_model_id" ref="odoo_everstox_integration.model_everstox_shop_product"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">action = records.bulk_upload_products_on_everstox()</field>
+    </record>
+
+
+    <record id="action_post_everstox_mapped_product" model="ir.actions.server">
+        <field name="name">Everstox Product Create</field>
+        <field name="model_id" ref="odoo_everstox_integration.model_everstox_shop_product"/>
+        <field name="binding_model_id" ref="odoo_everstox_integration.model_everstox_shop_product"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">action = records.map_product_with_everstox()</field>
+    </record>
+    
+
+    <record id="action_post_everstox_update_product" model="ir.actions.server">
+        <field name="name">Everstox Product Update</field>
+        <field name="model_id" ref="odoo_everstox_integration.model_everstox_shop_product"/>
+        <field name="binding_model_id" ref="odoo_everstox_integration.model_everstox_shop_product"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">action = records.update_product_on_everstox()</field>
+    </record>
+
+
+    <record id="action_post_everstox_delete_product" model="ir.actions.server">
+        <field name="name">Everstox Product Delete</field>
+        <field name="model_id" ref="odoo_everstox_integration.model_everstox_shop_product"/>
+        <field name="binding_model_id" ref="odoo_everstox_integration.model_everstox_shop_product"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">action = records.delete_product_on_everstox()</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_seller_wayfair,wayfiar_connector.wayfair.seller,model_wayfair_seller,base.group_user,1,1,1,1
+access_seller_wayfair_orders,wayfiar_connector.wayfair.orders,model_wayfair_orders,base.group_user,1,1,1,1
+access_seller_wayfair_labels,wayfiar_connector.wayfair.labels,model_wayfair_labels,base.group_user,1,1,1,1
+access_seller_wayfair_product_description,wayfiar_connector.wayfair_product_description,model_wayfair_product_description,base.group_user,1,1,1,1
+

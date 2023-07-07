@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- blade.shop.order form view -->
+    <record id="blade_shop_order_view_form" model="ir.ui.view">
+        <field name="name">blade.shop.order.view.form</field>
+        <field name="model">blade.shop.order</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="billing_vat_number"/>
+                            <field name="billing_address_1"/>
+                            <field name="billing_address_2"/>
+                            <field name="billing_address_type"/>
+                            <field name="billing_city"/>
+                            <field name="billing_company"/>
+                            <field name="billing_contact_person"/>
+                            <field name="billing_country"/>
+                            <field name="billing_country_code"/>
+                            <field name="billing_first_name"/>
+                            <field name="billing_last_name"/>
+                            <field name="billing_latitude"/>
+                            <field name="billing_latitude"/>
+                            <field name="billing_longitude"/>
+                            <field name="billing_phone"/>
+                            <field name="billing_province"/>
+                            <field name="billing_province_code"/>
+                            <field name="billing_department"/>
+                            <field name="billing_sub_department"/>
+                            <field name="billing_title"/>
+                            <field name="billing_zip"/>
+                            <field name="shipping_address_1"/>
+                            <field name="shipping_address_2"/>
+                            <field name="shipping_address_type"/>
+                            <field name="shipping_city"/>
+                            <field name="shipping_company"/>
+                            <field name="sale_order_id"/>
+                        </group>
+                        <group>
+                                <field name="shipping_contact_person"/>
+                                <field name="shipping_country"/>
+                                <field name="shipping_country_code"/>
+                                <field name="shipping_department"/>
+                                <field name="shipping_first_name"/>
+                                <field name="shipping_last_name"/>
+                                <field name="shipping_latitude"/>
+                                <field name="shipping_longitude"/>
+                                <field name="shipping_phone"/>
+                                <field name="shipping_province"/>
+                                <field name="shipping_province_code"/>
+                                <field name="shipping_sub_department"/>
+                                <field name="shipping_title"/>
+                                <field name="shipping_zip"/>
+                                <field name="creation_date"/>
+                                <field name="custom_email"/>
+                                <field name="email"/>
+                                <field name="financial_status"/>
+                                <field name="hours_late"/>
+                                <field name="order_id"/>
+                                <field name="order_date"/>
+                                <field name="order_number"/>
+                                <field name="billing_zip"/>
+                                <field name="order_priority"/>
+                                <field name="payment_methods"/>
+                                <field name="shipping_address_type"/>
+                                <field name="requested_delivery_date"/>
+                                <field name="order_shop_id"/>
+                                <field name="udpated_date"/>
+                                <field name="order_errors"/>
+                                <field name="order_returns"/>
+                                <field name="order_attachments"/>
+                                <field name="label_file"/>
+                                <field name="blade_platform_id"/>
+                                <field name="base_64"/>
+                                <field name="picking_instructions"/>
+                                </group>
+                        </group>
+                        <notebook>
+                            <page string="Order Lines" name="">
+                                <group>
+                                    <field name="order_line_ids">
+                                        <tree>
+                                            <!-- <field name="order_line_id"/> -->
+                                            <field name="order_line_product_sku"/>
+                                            <field name="order_line_quantity"/>
+                                            <field name="order_line_price"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                            </page>
+                        </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- blade_sale_order tree view -->
+    <record id="blade_sale_order_view_tree" model="ir.ui.view">
+        <field name="name">blade_sale_order.view.tree</field>
+        <field name="model">blade.shop.order</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="order_number"/>
+                <field name="blade_platform_id"/>
+                <field name="shipping_contact_person"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- model.name search view -->
+     <record id="view_blade_order_filters" model="ir.ui.view">
+        <field name="name">blade_order_filters</field>
+        <field name="model">blade.shop.order</field>
+        <field name="arch" type="xml">
+            <search string="Search Orders To Map">
+                <group expand="0" string="Group By">
+                    <filter string="Mapped Status" name="blade_mapped_state" context="{'group_by': 'blade_mapped_state'}" />
+                </group>
+            </search>
+        </field>    
+    </record>
+
+    <record id="model_order_blade_mapping" model="ir.actions.server">
+        <field name="name">Create Order</field>
+        <field name="model_id" ref="odoo_blade_integration.model_blade_shop_order"/>
+        <field name="binding_model_id" ref="odoo_blade_integration.model_blade_shop_order"/>
+        <field name="state">code</field>
+        <field name="code">action = records.prepare_order_and_order_data()</field>
+    </record>
+
+     <record id="model_order_blade_label_mapping" model="ir.actions.server">
+        <field name="name">Send Labels to blade</field>
+        <field name="model_id" ref="odoo_blade_integration.model_blade_shop_order"/>
+        <field name="binding_model_id" ref="odoo_blade_integration.model_blade_shop_order"/>
+        <field name="state">code</field>
+        <field name="code">action = records.send_labels_to_blade()</field>
+    </record>
+
+</odoo>

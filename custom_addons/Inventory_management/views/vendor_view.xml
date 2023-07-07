@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="vendor_list_view" model="ir.ui.view">
+        <field name="name">vendor.list.view</field>
+        <field name="model">vendor</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="vendor_name"/>
+                <field name="vendor_id"/>
+                <field name="location"/>
+                <field name="contact_number"/>
+                <field name="product_ids"/>
+
+            </tree>
+        </field>
+    </record>
+    <record id="vendor_form_view" model="ir.ui.view">
+        <field name="name">vendor.form.view</field>
+        <field name="model">vendor</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+
+                            <field name="vendor_name"/>
+                            <field name="vendor_id"/>
+                            <field name="location"/>
+                        </group>
+                        <group>
+                            <field name="contact_number"/>
+                            <field name="company_name"/>
+                            <field name="product_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Personal Information">
+                            <group>
+                                <field name="year_the_company_was_founded"/>
+                                <field name="vendor_type"/>
+                                <field name="payment_through"/>
+                                <field name="transport_facility"/>
+                                <field name="email"/>
+                                <!-- <field name="product_ids"/> -->
+                            </group>
+                        </page>
+
+                        
+                        <page string="About"></page>
+
+                    </notebook>
+
+                </sheet>
+
+                <!-- chatter -->
+                <div class = "oe_chatter">
+                    <field name = "message_follower_ids" groups="base.group_user"/>
+                    <field name = "activity_ids"/>
+                    <field name = "message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="vendor_search_view" model="ir.ui.view">
+        <field name="name">vendor.search.view</field>
+        <field name="model">vendor</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="vendor_name"/>
+                <field name="vendor_id"/>
+                <field name="location"/>
+                <field name="contact_number"/>
+                <field name="product_ids"/>
+
+
+            </search>
+        </field>
+    </record>
+
+    <record id="vendor_action" model="ir.actions.act_window">
+        <field name="name">vendor</field>
+        <field name="res_model">vendor</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id = "inventory_product_menu" name ="InnoAge Inventory"/>
+    <menuitem id = "vendor_menu" parent ="inventory_product_menu" action = "vendor_action" name = "Vendor"/>
+</odoo>

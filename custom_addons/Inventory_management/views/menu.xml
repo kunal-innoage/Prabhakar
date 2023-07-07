@@ -1,0 +1,10 @@
+<!-- <?xml version = "1.0" encoding = "UTF8" ?>
+<odoo>
+    <menuitem id="inventory_product_menu" name="Innoage Inventory">
+
+        <menuitem id="inventory_menu_product_menu" parent="inventory_product_menu" name="Inventory" sequence='1'>
+            <menuitem id="inventory_submenu" action="product_action" parent="inventory_menu_product_menu" name="Items" sequence='0'/>
+        </menuitem>
+    </menuitem>
+
+</odoo> -->

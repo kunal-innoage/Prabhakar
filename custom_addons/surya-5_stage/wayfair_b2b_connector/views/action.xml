@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Wayfair B2b Shop Action  -->
+
+    <record id="action_wayfair_b2b_shop_action" model="ir.actions.act_window" >
+        <field name="name">Wayfair B2B Shop</field>
+        <field name="res_model">wayfair.b2b.shop</field>
+        <field name="view_mode">kanban,form,tree</field>
+        <!-- <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'kanban', 'view_id': ref('wayfair_b2b_shop.wayfair_b2b_shop_view_kanban')}),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('wayfair_b2b_shop.wayfair_b2b_shop_view_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('wayfair_b2b_shop.wayfair_b2b_shop_view_form')})]"/> -->
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Wayfair B2B Shop are linked yet.
+            </p>
+            <p>
+                Add a Wayfair B2B Shop from create button.
+            </p>
+        </field>
+    </record>
+
+
+    <!-- Wayfair B2b Sale Order Action  -->
+
+</odoo>
+
+
+

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="purchase_extension_list_view" model="ir.ui.view">
+        <field name="name">purchase.extension.list.view</field>
+        <field name="model">purchase.extension</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sku"/>
+                <field name="date_of_first_receipt"/>
+                <field name="warehouse"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="purchase_extension_form_view" model="ir.ui.view">
+        <field name="name">purchase.extension.form.view</field>
+        <field name="model">purchase.extension</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="sku"/>
+                            <field name="date_of_first_receipt"/>
+                            <field name="warehouse"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="purchase_extension_search_view" model="ir.ui.view">
+        <field name="name">purchase.extension.search.view</field>
+        <field name="model">purchase.extension</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="sku"/>
+                <field name="date_of_first_receipt"/>
+                <field name="increased_stock"/>
+                <field name="warehouse"/>
+                <group expand="1" string="Group By">
+                    <filter name="group_by_warehouse" string="By warehouse" context="{'group_by': 'warehouse'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="purchase_ext_menu_view_purchase_analysis" model="ir.ui.view">
+        <field name="name">purchase.ext.form.inherit.test</field>
+        <field name="model">marketplace.warehouse</field>
+        <field name="inherit_id" ref="odoo_mirakl_integration.view_warehouse_warehouses_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form//sheet" position="before">
+                
+            </xpath>
+            <!--  <xpath expr="//form[@name='warehouse_processed_orders_view_action_open']" position="after">
+                <button class="oe_stat_button" icon="fa-usd" name="purchase_stock_mapping_action" type="object">
+                                Purchase Stock Mapping
+                </button>
+            </xpath> -->
+        </field>
+    </record>
+
+    <record id="purchase_extension_action" model="ir.actions.act_window">
+        <field name="name">Purchase Extension</field>
+        <field name="res_model">purchase.extension</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_group_by_warehouse': 1,}</field>
+    </record>
+
+    <menuitem id="purchase_stock_pricing_menuitem" name="Purchase Stock Info" parent="odoo_mirakl_integration.purchase_management_menu"  action="purchase_extension_action"/>
+
+</odoo>

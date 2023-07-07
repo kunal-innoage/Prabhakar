@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem
+        id="amazon_b2b_shop"
+        name="Amazon B2B"
+        parent="odoo_mirakl_integration.menu_multiple_shops"
+        action="action_amazon_b2b_shop_action"
+        sequence="100"/>   
+
+</odoo>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="cdiscount_orders_tree_view" model="ir.ui.view">
+        <field name="name">cdiscount.orders.tree.view</field>
+        <field name="model">cdiscount.orders</field>
+        <field name="arch" type="xml">
+            <tree edit="false">
+                <field name="sku"></field>
+                <field name="cdiscount_order_id"></field>
+                <field name="order_status"></field>
+                <field name="order_id"></field>
+                <field name="date_modify"></field>
+            </tree>
+        </field>
+    </record>
+
+    <record id="cdiscount_search_view_search" model="ir.ui.view">
+        <field name="name">cdiscount_search.view.search</field>
+        <field name="model">cdiscount.orders</field>
+        <field name="arch" type="xml">
+            <search string="">
+                <filter string="Shipped" name="filter_shipped" domain="[('order_status', '=', 'Shipped')]"/>
+                <filter name="group_status" string="Status" icon="terp-partner" context="{'group_by':'order_status'}"/> 
+                <filter name="group_order_id" string="Cdiscount Order Id" icon="terp-partner" context="{'group_by':'cdiscount_order_id'}"/> 
+                <filter name="group_so" string="Sale Order" icon="terp-partner" context="{'group_by':'order_id'}"/> 
+                <filter name="today" string="Today" icon="terp-partner" context="{'group_by': 'create_date:day'}"/> 
+                <filter name="shop" string="shop" icon="terp-partner" context="{'group_by': 'shop_id'}"/> 
+
+            </search>
+        </field>
+    </record>
+
+    <record id="cdiscount_orders_view_form" model="ir.ui.view">
+        <field name="name">cdiscount.orders.form.view</field>
+        <field name="model">cdiscount.orders</field>
+        <field name="arch" type="xml">
+            <form string="" create="false" edit="false">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"></field>
+                            <field name="cdiscount_order_id"></field>
+                            <field name="order_status"></field>
+                            <field name="shipping_method"></field>
+                            <field name="shipping_zip"></field>
+                            <field name="delivery_city"></field>
+                            <field name="shipping_address"></field>
+                            <field name="name_and_billing_address"></field>
+                            <field name="ean"></field>
+                            <field name="product_state"></field>
+                            <field name="civillity"></field>
+                            <field name="date_modify"></field>
+                            <field name="fee"></field>
+                            <field name="seller_remu"></field>
+                            <field name="warehouse_id"></field>
+                            <field name="shop_id"></field>
+                            <field name="phone"></field>
+                            <field name="phone_free2"></field>
+                            <field name="house_number"></field>
+                        </group>
+                        <group>
+                            <field name="order_id"></field>
+                                    <field name="product_ref"></field>
+                                    <!-- <field name="date_order"></field> -->
+                                    <field name="product_status"></field>
+                                    <field name="quantity"></field>
+                                    <field name="total_price"></field>
+                                    <field name="delivery_cost"></field>
+                                    <field name="first_name"></field>
+                                    <field name="last_name"></field>
+                                    <field name="line_id"></field>
+                                    <field name="billing_zip"></field>
+                                    <field name="billing_city"></field>
+                                    <field name="billing_country"></field>
+                                    <!-- <field name="delivery_country"></field> -->
+                                    <field name="sku"></field>
+                                    <!-- <field name="date_order_sent"></field> -->
+                        </group>
+                           
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.server" id="action_create_sale_oreders">
+       <field name="name">Map Sale Orders</field>
+       <field name="model_id" ref="model_cdiscount_orders"/>
+        <field name="binding_view_types">form,list</field>
+       <field name="binding_model_id" ref="model_cdiscount_orders"/>
+       <field name="state">code</field>
+       <field name="code">
+           action = records.map_sale_orders()
+       </field>
+   </record>
+
+</odoo>

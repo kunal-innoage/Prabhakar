@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Everstrox Shop Action  -->
+
+    <record id="action_everstox_shop_action" model="ir.actions.act_window" >
+        <field name="name">Everstox Shop</field>
+        <field name="res_model">everstox.shop</field>
+        <field name="view_mode">kanban,form,tree</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Everstrox Shop are linked yet.
+            </p>
+            <p>
+                Add a Everstrox Shop from create button.
+            </p>
+        </field>
+    </record>
+
+
+</odoo>
+
+
+

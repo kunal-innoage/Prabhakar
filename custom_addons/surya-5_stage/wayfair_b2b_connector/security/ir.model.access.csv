@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_wayfair_b2b_shop,amazon_b2b_shop,wayfair_b2b_connector.model_wayfair_b2b_shop,,1,1,1,1
+access_wayfair_b2b_sale_order,wayfair_b2b_sale_order,wayfair_b2b_connector.model_wayfair_b2b_sale_order,,1,1,1,1
+access_wayfair_b2b_replenishment,wayfair_b2b_replenishment,wayfair_b2b_connector.model_wayfair_b2b_replenishment,,1,1,1,1

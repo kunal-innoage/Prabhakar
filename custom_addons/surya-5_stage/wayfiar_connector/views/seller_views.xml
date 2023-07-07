@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<record id="wayfair_seller_view_form" model="ir.ui.view">
+    <field name="name">wayfair.seller.form.view</field>
+    <field name="model">wayfair.seller</field>
+    <field name="arch" type="xml">
+        <form string="Seller Information">
+            <header>
+                <button string="Accept awaiting Orders" class="btn btn-primary rounded shadow"/>
+                <button name="map_shop_id" string="Map Shop to orders" type="object" class="btn btn-primary rounded shadow"/>
+
+                <button name="process_shipping_orders" string="Export Shipping Orders" type="object" class="btn btn-primary rounded shadow"/>
+                <button name="action_update_marketplace_shop_name" string="Update Shop Name" type="object" class="btn btn-danger rounded shadow"  />
+
+            </header>
+            <sheet>
+                <div class="oe_button_box" name="button_box">
+                    <button name="action_view_waiting_orders"  type="object" class="oe_stat_button" icon="fa-cubes" >
+                        <field name="awaiting_accept_sale_count" widget="statinfo" class="w-auto"/>
+                    </button>
+                    <button name="action_view_shipping_orders"  type="object" class="oe_stat_button" icon="fa-cubes" >
+                        <field name="shipping_sale_count" widget="statinfo" class="w-auto"/>
+                    </button>
+                    <button name="action_view_sale_orders"  type="object" class="oe_stat_button" icon="fa-cubes" >
+                        <field name="sale_count" widget="statinfo" class="w-auto"/>
+                    </button>
+                    <button string="Import Labels" name="import_wayfair_labels" type="object" class="oe_stat_button" icon="fa-tag">
+                    </button>
+                    <button name="action_view_wayfair_sale_order" string="Import Orders" type="object" class="oe_stat_button" icon="fa-usd" >
+                    </button>
+                    <button name="action_view_wayfair_products" string="Products" type="object" class="oe_stat_button" icon="fa-usd" >
+                    </button>
+                </div>
+                <group>
+                    <field name="name"></field>
+                    <field name="warehouse_id"></field>
+                    <field name="token_expiry"/>
+                </group>
+                <notebook>
+                    <page name="order" string="Orders">
+                        <group>
+                            <group>
+                                <button string="Get Orders" class="btn btn-primary rounded shadow" type="object" name="get_orders"/>
+                            </group>
+                            <group>
+                                <field name="is_filter_activate"></field>
+                            </group>
+                        </group>
+                        <group string="Add Filters" attrs="{'invisible': [('is_filter_activate', '=', False)]}">
+                            <group>
+                                <field name="date_created_start" attrs="{'invisible': [('is_filter_activate', '=', False)]}"/>
+                            </group>
+                            <group >
+                                <field name="order_number"/>
+                            </group>
+                        </group>
+
+                    </page>
+                </notebook>
+                
+            </sheet>
+        </form>
+    </field>
+</record>
+
+<record id="wayfair_seller_view_kanban" model="ir.ui.view">
+    <field name="name">wayfair_seller.view.kanban</field>
+    <field name="model">wayfair.seller</field>
+    <field name="arch" type="xml">
+        <kanban>
+            <!-- <field name="state"></field> -->
+            <field name="name"></field>
+            <field name="seller_id"></field>
+            <field name="seller_token"></field>
+             <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click shadow rounded border-light">
+                                <div class="oe_kanban_details">
+                                    <strong class="o_kanban_record_title">
+                                    <field name="name"/>
+                                    </strong>
+                                <div t-if="record.seller_id.value">
+                                        <t t-esc="record.seller_id.value"/>
+                                </div>
+                                    <div t-if="record.seller_token.value">
+                                        <t t-esc="record.seller_token.value"/>
+                                </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+        </kanban>
+    </field>
+</record>
+
+<record id="action_wayfair_seller_form" model="ir.actions.act_window" >
+    <field name="name">Wayfair</field>
+    <field name="res_model">wayfair.seller</field>
+    <field name="view_mode">kanban,form,tree</field>
+</record>
+
+<menuitem
+    id="wayfair_root_shop"
+    name="Wayfair"
+    parent="odoo_mirakl_integration.menu_multiple_shops"
+    action="action_wayfair_seller_form"
+    sequence="100"/>   
+
+
+
+
+
+</odoo>

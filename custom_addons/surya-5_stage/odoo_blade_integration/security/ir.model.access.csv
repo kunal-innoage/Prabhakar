@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_blade_shop,odoo_blade_integration.blade.shop,model_blade_shop,base.group_user,1,1,1,1
+access_blade_shop_order,odoo_blade_integration.blade.shop.order,model_blade_shop_order,base.group_user,1,1,1,1
+access_blade_shop_order_line,odoo_blade_integration.blade.shop.order.line,model_blade_shop_order_line,base.group_user,1,1,1,1
+access_blade_product,odoo_blade_integration.blade.product,model_blade_product,base.group_user,1,1,1,1
+access_blade_channel,odoo_blade_integration.blade.channel,model_blade_channel,base.group_user,1,1,1,1
+

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_list_view" model="ir.ui.view">
+        <field name="name">product.details.list.view</field>
+        <field name="model">add.product.details</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="product_name"/>
+                <field name="supplier_part_number"/>
+                <!-- <field name="option_name"/> -->
+                <field name="construction"/>
+                <!-- <field name="technique"/> -->
+                <!-- <field name="rug_type"/> -->
+                <!-- <field name="material_composition"/> -->
+                <!-- <field name="backing_material_composition"/> -->
+                <!-- <field name="rug_shape"/> -->
+                <field name="primary_colour"/>
+                <!-- <field name="pattern"/> -->
+                <field name="purposeful_distressing_type"/>
+                <field name="loaction"/>
+                <!-- <field name="life_stage"/> -->
+                <field name="product_care"/>
+                <!-- <field name="rug_size"/> -->
+                <!-- <field name="pile_height"/> -->
+                <!-- <field name="overall_product_weight"/> -->
+                <!-- <field name="overall_width"/> -->
+                <!-- <field name="overall_length"/> -->
+                <field name="warranty_length"/>
+            </tree>
+        </field>
+    </record>
+    <record id="product_details_form_view" model="ir.ui.view">
+        <field name="name">product.details.form.view</field>
+        <field name="model">add.product.details</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+
+                            <field name="product_name"/>
+                            <field name="supplier_part_number"/>
+                            <field name="option_name"/>
+                            <field name="construction"/>
+                            <field name="technique"/>
+                            <field name="rug_type"/>
+                            <field name="material_composition"/>
+                            <field name="backing_material_composition"/>
+                            <field name="rug_shape"/>
+                            <field name="primary_colour"/>
+                        </group>
+                        <group>
+                            <field name="pattern"/>
+                            <field name="purposeful_distressing_type"/>
+                            <field name="loaction"/>
+                            <field name="life_stage"/>
+                            <field name="product_care"/>
+                            <field name="rug_size"/>
+                            <field name="pile_height"/>
+                            <field name="overall_product_weight"/>
+                            <field name="overall_width"/>
+                            <field name="overall_length"/>
+                            <field name="warranty_length"/>
+                            <field name="product_id"/>
+                            
+                        </group>
+                    </group>
+                    <notebook>
+
+                    </notebook>
+
+                </sheet>
+
+
+            </form>
+        </field>
+    </record>
+
+    <record id="product_search_view" model="ir.ui.view">
+        <field name="name">product.details.search.view</field>
+        <field name="model">add.product.details</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="product_name"/>
+                <field name="supplier_part_number"/>
+                <field name="option_name"/>
+                <field name="construction"/>
+                <field name="technique"/>
+                <field name="rug_type"/>
+                <field name="material_composition"/>
+                <field name="backing_material_composition"/>
+                <field name="rug_shape"/>
+                <field name="primary_colour"/>
+                <field name="pattern"/>
+                <field name="purposeful_distressing_type"/>
+                <field name="loaction"/>
+                <field name="life_stage"/>
+                <field name="product_care"/>
+                <field name="rug_size"/>
+                <field name="pile_height"/>
+                <field name="overall_product_weight"/>
+                <field name="overall_width"/>
+                <field name="overall_length"/>
+                <field name="warranty_length"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="product_details_action" model="ir.actions.act_window">
+        <field name="name">Product</field>
+        <field name="res_model">add.product.details</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+    <record id="mapping_description" model="ir.actions.server">
+        <field name="name">Map Description</field>
+        <field name="model_id" ref="model_add_product_details"/>
+        <field name="binding_model_id" ref="model_add_product_details"/>
+        <field name="state">code</field>
+        <field name="binding_view_types">list,form</field>
+        <field name="code">action = records.map_description()</field>
+    </record>
+    
+
+    <menuitem id="product_description_menu" name="Products"/>
+
+    <menuitem id="product_description_submenu" action="product_details_action" parent="product_description_menu" name="Product Description"/>
+
+
+
+</odoo>

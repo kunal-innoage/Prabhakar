@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_purchase_analysis,access_purchase_analysisabc,model_purchase_analysis,,1,1,1,1
+
+access_purchase_extension,access_purchase_extensionabc,model_purchase_extension,,1,1,1,1

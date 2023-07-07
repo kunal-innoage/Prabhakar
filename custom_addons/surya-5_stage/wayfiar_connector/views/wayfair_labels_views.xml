@@ -1,0 +1,69 @@
+<!-- wayfair.labels form view -->
+<odoo>
+    <record id="wayfair_labels_view_form" model="ir.ui.view">
+        <field name="name">wayfair.labels.view.form</field>
+        <field name="model">wayfair.labels</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header>
+                    <button string="Split and Map" type="object" name="split_and_map_labels" class="btn btn-primary rounded shadow" attrs="{'invisible': [('orders_mapped','=',True)]}"/>
+                    <button string="Reset" type="object" name="reset_and_map" class="btn rounded shadow" />
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>                    
+                        <field name="create_date"/>                  
+                        <!-- <field name="label" widget="pdf_viewer" />                     -->
+                        <field name="shop_id"/>
+                        <field name="orders_mapped"/>
+                    </group>
+                    <notebook>
+                        <page string="Mapped Sale Orders">
+                            <group>
+                                <field name="mapped_sale_orer_ids">
+                                    <tree>
+                                        <field name="name" readonly="1"/>
+                                        <field name="wayfair_order_id"/>
+                                        <field name="date_order" readonly="1"/>
+                                        <field name="label_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- wayfair.labels tree view -->
+    <record id="wayfair_labels_view_tree" model="ir.ui.view">
+        <field name="name">wayfair.labels.view.tree</field>
+        <field name="model">wayfair.labels</field>
+        <field name="arch" type="xml">
+            <tree>
+                <!-- Add your fields here -->
+                <field name="name"/>                    
+                <field name="create_date"/>  
+            </tree>
+        </field>
+    </record>
+
+    <!-- wayfair.labels kanban view -->
+    <!-- <record id="wayfair_labels_view_kanban" model="ir.ui.view">
+        <field name="name">wayfair.labels.view.kanban</field>
+        <field name="model">wayfair.labels</field>
+        <field name="arch" type="xml">
+            <kanban string="Kanban Description">
+                <field name="name"/>                    
+                <field name="create_date"/>                    
+                <field name="label"/>       
+            </kanban>
+        </field>
+    </record> -->
+
+</odoo>

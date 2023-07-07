@@ -1,0 +1,27 @@
+{
+    'name': 'Inventory Management',
+    'version': '1.0.0',
+    # 'category': 'Inventory',
+    'sequence':-100,
+    'summary': 'Inventory Management system',
+    'description': """To manage the inventory for office""",
+    'depends': ["mail"],
+    'data': [
+                "security/ir.model.access.csv",
+                "views/product.xml", 
+                "views/product_variant.xml",
+                "views/purchase_view.xml",
+                "views/employee_view.xml",
+                "views/vendor_view.xml",
+                "views/data.xml",
+                "views/roq.xml",
+                "views/inno_stocks_views.xml",
+                "views/action.xml"
+            ],
+    'demo': [],
+    'installable': True,
+    'application':True,
+    'auto_install': False,
+    # 'assets': {},
+    'license': 'LGPL-3',
+}

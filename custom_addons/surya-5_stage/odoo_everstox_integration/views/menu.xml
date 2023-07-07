@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem
+        id="menu_fulfillment_management"
+        name="Fulfilments"
+        parent="odoo_mirakl_integration.menu_marketplace_configuration"
+        sequence="50"/>   
+
+    <menuitem
+        id="menu_everstox_shop"
+        name="Everstox"
+        parent="odoo_everstox_integration.menu_fulfillment_management"
+        action="odoo_everstox_integration.action_everstox_shop_action"
+        sequence="1"/>
+
+</odoo>

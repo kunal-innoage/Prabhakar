@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_wayfair_sku,access_wayfair_skuabc,model_wayfair_sku,,1,1,1,1
+
+access_amazon_sku,access_amazon_skuabc,model_amazon_sku,,1,1,1,1

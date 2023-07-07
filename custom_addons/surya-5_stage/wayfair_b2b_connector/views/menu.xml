@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem
+        id="wayfair_b2b_shop"
+        name="Wayfair B2B"
+        parent="odoo_mirakl_integration.menu_multiple_shops"
+        action="action_wayfair_b2b_shop_action"
+        sequence="100"/>   
+
+</odoo>

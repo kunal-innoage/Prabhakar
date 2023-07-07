@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="everstox_order_return_view_form" model="ir.ui.view">
+        <field name="name">Everstox Order Return Form View</field>
+        <field name="model">everstox.order.return</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="return_id"></field>
+                            <field name="order_number"></field>
+                            <field name="state"></field>
+                            <field name="return_date"></field>
+                            <field name="return_warehouse_name"></field>
+                        </group>
+                        <group> 
+                            <field name="shop_order_id"></field>
+                            <field name="everstox_shop_id"></field>
+                            <field name="return_warehouse_id"></field>
+                            <field name="sale_order_id"></field>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="return_items" string="Return Items">
+                        <field name="return_item_ids">
+                            <tree>
+                                <field name="return_item_id"></field>
+                                <field name="return_product_sku"></field>
+                                <field name="customer_service_state"></field>
+                                <field name="quantity"></field>
+                                <field name="return_reason"></field>
+                                <field name="return_reason_code"></field>
+                                <field name="stock_state"></field>
+                            </tree>
+                        </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="everstox_order_return_view_tree" model="ir.ui.view">
+        <field name="name">everstox_order_return.view.tree</field>
+        <field name="model">everstox.order.return</field>
+        <field name="arch" type="xml">
+            <tree string="Returns">
+                <field name="return_id"></field>
+                <field name="state"></field>
+                <field name="return_date"></field>
+                <field name="return_warehouse_name"></field>
+                <field name="order_number"></field>
+                <field name="shop_order_id"></field>
+            </tree>
+        </field>
+    </record>
+    
+</odoo>

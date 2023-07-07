@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sale_cdiscount_view_form" model="ir.ui.view">
+        <field name="name">sale_cdiscount.view.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"></field>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="cdiscount_order_id" attrs="{'invisible': [('cdiscount_order_id','=',False)]}"></field>
+            </field>
+            <xpath expr="//page[@name='other_information']"  position="after">
+                <page name="cdiscount_page" string="CDiscount" attrs="{'invisible': [('cdiscount_order_id','=',False)], 'readonly': 1}">
+                    <group>
+                        <group name="cd_group">
+                            <field name="cdiscount_order_id"></field>
+                            <!-- <field name="date_order"></field> -->
+                            <field name="date_order_sent"></field>
+                            <field name="civillity"></field>
+                            <field name="date_modify"></field>
+                            <field name="cdiscount_shop_id"/>
+                            <field name="fee"></field>
+                            <field name="date_modify"></field>
+                            <field name="order_status"></field>
+                            <field name="shipping_method"></field>
+                            <field name="shipping_zip"></field>
+                            <field name="delivery_city"></field>
+                            <field name="cdiscount_tracking_addded"/>
+
+                        </group>
+                        <group name="cd_group1">
+                            <field name="seller_remu"></field>
+                            <field name="phone_free2"></field>
+                            <field name="name_and_billing_address"></field>
+                            <field name="ean"></field>
+                            <!-- <field name="order_date"></field> -->
+                            <!-- <field name="ship_method_code"></field> -->
+                            <!-- <field name="shipping_address2"></field> -->
+                            <!-- <field name="shipping_address3"></field> -->
+                            <!-- <field name="shipping_state"></field> -->
+                            <!-- <field name="delivery_country"></field> -->
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+            <!-- <xpath expr="//header" position="inside">
+                <button name="update_shop_order" string="Update Order" type="object" class="btn btn-primary rounded shadow"/>
+            </xpath> -->
+
+        </field>
+        
+
+    </record>
+
+    <record id="sale_order_line_inh" model="ir.ui.view">
+        <field name="name">sale.order.line.inh</field>
+        <field name="model">sale.order.line</field>
+        <field name="inherit_id" ref="sale.view_order_line_tree"></field>
+        <field name="arch" type="xml">
+            <field name="qty_invoiced" position="after">
+                <field name="line_id"></field>
+            </field>
+        </field>
+    </record>
+
+
+</odoo>

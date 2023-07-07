@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="everstox_order_fulfillment_view_form" model="ir.ui.view">
+        <field name="name">Everstox Order Fulfillment Form View</field>
+        <field name="model">everstox.shop.order.fulfillment</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <button name="cancel_fulfillment" type="object" class="oe_stat_button btn btn-primary shadow mb8">
+                        <span>Cancel</span>
+                    </button>    
+                    <group>
+                        <group>
+                            <field name="fulfillment_id"></field>
+                            <field name="fulfillment_state"></field>
+                            <field name="fulfillment_item_id"></field>
+                            <field name="fulfillment_product_id"></field>
+                            <field name="fulfillment_product_name"></field>
+                            <field name="fulfillment_product_sku"></field>
+                            <field name="fulfillment_quantity"></field>
+                            <field name="fulfillment_order_item_id"></field>
+                        </group>
+                        <group> 
+                            <field name="shop_order_id"></field>
+                            <field name="fulfillment_hours_late"></field>
+                            <field name="fulfillment_cancellations"></field>
+                            <field name="fulfillment_errors"></field>
+                            <field name="fulfillment_item_error"></field>
+                            <field name="fulfillment_warehouse_id"></field>
+                            <field name="fulfillment_warehouse_name"></field>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page name="shipments" string="Shipments">
+                            <field name="shipment_ids">
+                                <tree>
+                                    <field name="shipment_id"></field>
+                                    <field name="shipment_date"></field>
+                                    <field name="carrier_name"></field>
+                                    <field name="tracking_codes"></field>
+                                    <field name="forwarded_to_shop"></field>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="everstox_order_fulfillment_view_tree" model="ir.ui.view">
+        <field name="name">everstox_order_fulfillment.view.tree</field>
+        <field name="model">everstox.shop.order.fulfillment</field>
+        <field name="arch" type="xml">
+            <tree string="Fulfillments">
+                <field name="fulfillment_id"></field>
+                <field name="fulfillment_state"></field>
+                <field name="fulfillment_item_id"></field>
+                <field name="fulfillment_product_id"></field>
+                <field name="fulfillment_product_name"></field>
+                <field name="fulfillment_product_sku"></field>
+                <field name="fulfillment_quantity"></field>
+                <field name="fulfillment_order_item_id"></field>
+                <button name="cancel_fulfillment" string="Cancel" type="object" class="btn btn-primary rounded shadow"/>
+            </tree>
+        </field>
+    </record>
+    
+<!--     
+    <record id="action_everstox_shop_order_fulfillment_cancelation" model="ir.actions.server">
+        <field name="name">Cancel Fulfillment</field>
+        <field name="model_id" ref="odoo_everstox_integration.model_everstox_shop_order_fulfillment"/>
+        <field name="binding_model_id" ref="odoo_everstox_integration.model_everstox_shop_order_fulfillment"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">action = records.cancel_fulfillment()</field>
+    </record> -->
+
+</odoo>

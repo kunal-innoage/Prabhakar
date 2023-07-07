@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_purchaseorder_document_surya_changes" name="Surya Purchase Order Changes" inherit_id="purchase.report_purchaseorder_document">
+        
+        <xpath expr="//div[hasclass('page')]/div[@id='informations']/div[@t-if='o.user_id']/p" position="replace">
+
+            <p class="m-0">Gulistan Polat</p>
+
+        </xpath>
+
+        <xpath expr="//table/thead/tr/th[@name='th_taxes']" position="replace">
+
+            <th name="th_upc_code"><strong>UPC code</strong></th>
+            <th name="th_vendor_ref"><strong>Vendor ID</strong></th>
+            <th name="th_per_pc_sqm"><strong>Per Piece SQM</strong></th>
+            <th name="th_total_sqm"><strong>Total SQM</strong></th>
+            
+        </xpath>
+
+        <xpath expr="//table/tbody//tr" position="replace">
+            <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
+                <t t-if="not line.display_type">
+                    <td id="product">
+                        <span t-field="line.product_id.default_code"/>
+                    </td>
+                    <td name="td_upc_code">
+                        <span t-esc="line.barcode"/>
+                    </td>
+                    <td name="td_vendor_ref">
+                        <span t-esc="line.vendor_ref_number"/>
+                    </td>
+                    <td name="td_per_piece_sqm">
+                        <span t-esc="round(line.per_piece_sqm, 2)"/>
+                    </td>
+                    <td name="td_total_sqm">
+                        <span t-esc="round(line.total_sqm, 2)"/>
+                    </td>
+                    <td class="text-right">
+                        <t t-set="product_qty" t-value="int(line.product_qty)"/>
+                        <span t-esc="product_qty"/>
+                        <!-- <span t-field="line.product_uom.name" groups="uom.group_uom"/> -->
+                    </td>
+                    <td class="text-right">
+                        <span t-field="line.price_unit"/>
+                    </td>
+                    <td class="text-right">
+                        <span t-field="line.price_subtotal"
+                            t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                    </td>
+                </t>
+                <t t-if="line.display_type == 'line_section'">
+                    <td colspan="99" id="section">
+                        <span t-field="line.name"/>
+                    </td>
+                    <t t-set="current_section" t-value="line"/>
+                    <t t-set="current_subtotal" t-value="0"/>
+                </t>
+                <t t-if="line.display_type == 'line_note'">
+                    <td colspan="99" id="note">
+                        <span t-field="line.name"/>
+                    </td>
+                </t>
+            </tr>
+        </xpath>
+
+        <xpath expr="//table/thead/tr/th[@name='th_date_req']" position="replace">
+
+        </xpath>
+
+        <xpath expr="//div[@id='total']" position="before">
+
+            <div id="total" class="row justify-content-end">
+                <div class="col-4">
+                    <table class="table table-sm">
+                        <tr class="is-total_sqm  w-100">
+                            <td colspan="99" id="total_sqm">
+                                <div class="row">
+                                    <div class="col-6 text-left">
+                                        <strong class="">Total SQM</strong>
+                                    </div>
+                                    <div class="col-6 text-right">
+                                        <span t-esc="o.total_sqm"/>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+
+        </xpath>
+
+        <xpath expr="//div[@t-field='o.partner_id']" position="before">
+            <div id="billing_address_" class="row justify-content-start">
+                <div class="col-12">
+                    <strong class="ml-16">Vendor address:</strong>
+                </div>
+            </div>
+        </xpath>
+        
+    </template>
+    
+
+</odoo>

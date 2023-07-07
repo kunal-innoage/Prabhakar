@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Filters -->
+        <record id="view_everstox_processed_order_filters" model="ir.ui.view">
+            <field name="name">everstox_processed_order_filters</field>
+            <field name="model">processed.order</field>
+            <field name="inherit_id" ref="odoo_mirakl_integration.view_processed_order_filters"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <xpath expr="//group/filter[@name='date']" position="after">
+                    <filter string="Mapped Status" name="everstox_mapped_state" domain="[ ]" context="{'group_by': 'everstox_mapped_state'}" />
+                </xpath>
+            </field>    
+        </record>
+        
+        <!-- Server Actions -->
+
+        <record id="model_processed_order_everstox_mapping" model="ir.actions.server">
+            <field name="name">Map Order</field>
+            <field name="model_id" ref="odoo_everstox_integration.model_processed_order"/>
+            <field name="binding_model_id" ref="odoo_everstox_integration.model_processed_order"/>
+            <field name="state">code</field>
+            <field name="code">action = records.map_order_with_everstox()</field>
+        </record>
+
+        <record id="model_processed_order_everstox_unmapping" model="ir.actions.server">
+            <field name="name">Unmap Order</field>
+            <field name="model_id" ref="odoo_everstox_integration.model_processed_order"/>
+            <field name="binding_model_id" ref="odoo_everstox_integration.model_processed_order"/>
+            <field name="state">code</field>
+            <field name="code">action = records.unmap_orders()</field>
+        </record>
+
+    </data>
+</odoo>

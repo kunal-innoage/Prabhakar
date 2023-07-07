@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Warehouse Inventory Tree -->
+        <record id="view_warehouse_inventory" model="ir.ui.view">
+            <field name="name">Warehouse Inventory Updation</field>
+            <field name="model">warehouse.inventory</field>
+            <field name="arch" type="xml">
+                <tree default_order = "create_date desc">
+                    <field name="warehouse_id"/>
+                    <field name="product_id"/>
+                    <field name="today_spent_stock_count"/>
+                    <field name="available_stock_count" readonly="1"/>
+                    <field name="onhand_stock_count"/>
+                    <button title="Invetory in odoo and mirakl are in Sync"  class="fa fa-check bg-primary rounded ml-2" name="pass_call" type="object" attrs="{'invisible': [('stock_in_sync','=', False)]}"/>
+                    <button title="Invetory in odoo and mirakl are not in Sync"  class="fa fa-times bg-danger rounded ml-2" name="pass_call" type="object" attrs="{'invisible': [('stock_in_sync','=', True)]}"/>
+                    <field name="purchase_order_id"/>
+                    <field name="stock_in_sync" invisible="1"></field>
+                    <field name="stock_matched"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Warehouse Inventory Form -->
+        <record id="view_warehouse_inventory_form" model="ir.ui.view">
+            <field name="name">Warehouse Product Inventory</field>
+            <field name="model">warehouse.inventory</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="warehouse_id" readonly="1"/>
+                                <field name="product_id" readonly="1"/>
+                                <field name="today_spent_stock_count"/>
+                                <field name="available_stock_count" readonly="1"/>
+                                <field name="last_updated_date" readonly="1"></field>
+                                <field name="uploaded_file" readonly="1"></field>
+                            </group>
+                            <group>
+                                <field name="odoo_product_id"/>
+                                <field name="onhand_stock_count"/>
+                                <field name="purchase_order_id"/>
+                                <field name="stock_matched"/>
+                            </group>
+                           
+                            <field name="shop_offer_ids" readonly="1">
+                            <tree>
+                                <field name="shop_id"/>
+                                <field name="offer_id"/>
+                                <field name="offer_update_date"/>
+                                <field name="quantity"/>
+                                <field name="stock_in_sync" invisible="1"></field>
+
+                                <button title="Invetory in odoo and mirakl are in Sync" name="pass_call" type="object"  class="fa fa-check bg-primary rounded  " attrs="{'invisible': [('stock_in_sync','=', False)]}"/>
+                                <button title="Invetory in odoo and mirakl are not in Sync" name="pass_call" type="object" class="fa fa-times bg-danger rounded"  attrs="{'invisible': [('stock_in_sync','=', True)]}"/>
+                            </tree>
+                        </field>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Server Actions -->
+        <record id="model_update_shops_inventory" model="ir.actions.server">
+            <field name="name">Update Shops Inventory</field>
+            <field name="model_id" ref="odoo_mirakl_integration.model_warehouse_inventory"/>
+            <field name="binding_model_id" ref="odoo_mirakl_integration.model_warehouse_inventory"/>
+            <field name="state">code</field>
+            <field name="code">action = records.update_shops_inventory()</field>
+        </record>
+
+        <!-- Server Actions -->
+        <record id="model_update_product_stock_quant" model="ir.actions.server">
+            <field name="name">Update Onhand Stock</field>
+            <field name="model_id" ref="odoo_mirakl_integration.model_warehouse_inventory"/>
+            <field name="binding_model_id" ref="odoo_mirakl_integration.model_warehouse_inventory"/>
+            <field name="state">code</field>
+            <field name="code">action = records.update_current_stock_count()</field>
+        </record>
+        
+        <!-- Server Actions -->
+        <record id="model_update_inventory_info" model="ir.actions.server">
+            <field name="name">Update Inventory Info</field>
+            <field name="model_id" ref="odoo_mirakl_integration.model_warehouse_inventory"/>
+            <field name="binding_model_id" ref="odoo_mirakl_integration.model_warehouse_inventory"/>
+            <field name="state">code</field>
+            <field name="code">action = records.update_inventory_info()</field>
+        </record>
+
+        
+
+    </data>
+</odoo>
+    

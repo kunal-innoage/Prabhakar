@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="product_pricing_list_view" model="ir.ui.view">
+        <field name="name">product.pricing.list.view</field>
+        <field name="model">product.pricing</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="product_name"/>
+                <field name="shop"/>
+                <field name="price"/>
+                <field name="status"/>
+                <field name="comments"/>
+                <field name="on_shop_quantity"/>
+                <field name="etl"/>
+                <field name="cdiscount"/>
+                <field name="ifulfillment"/>
+                <field name="cguk"/>
+                <field name="wayde"/>
+                <!-- <field name="record"/> -->
+                <!-- <field name="amazon_id"/>
+                <field name="wayfair_id"/>
+                <field name="cdiscount_id"/>
+                <field name="check_id"/>
+                <field name="mirakl_id"/>
+                <field name="manomano_id"/> -->
+            </tree>
+        </field>
+    </record>
+
+    <record id="product_pricing_form_view" model="ir.ui.view">
+        <field name="name">product.pricing.form.view</field>
+        <field name="model">product.pricing</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="product_name"/>
+                            <field name="shop"/>
+                            <field name="price"/>
+                            <field name="status"/>
+                            <field name="comments"/>
+                            <field name="on_shop_quantity"/>
+                            <field name="etl"/>
+                            <field name="cdiscount"/>
+                            <field name="ifulfillment"/>
+                            <field name="cguk"/>
+                            <field name="wayde"/>
+                        </group>
+                        <group>
+                            <!-- <field name="amazon_id"/>
+                            <field name="wayfair_id"/>
+                            <field name="cdiscount_id"/>
+                            <field name="check_id"/>
+                            <field name="mirakl_id"/>
+                            <field name="manomano_id"/> -->
+                        </group>
+                    </group>
+                    <notebook>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="product_pricing_search_view" model="ir.ui.view">
+        <field name="name">product.pricing.search.view</field>
+        <field name="model">product.pricing</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="product_name"/>
+                <field name="shop"/>
+                <field name="price"/>
+                <field name="status"/>
+                <field name="comments"/>
+                <field name="on_shop_quantity"/>
+                <field name="etl"/>
+                <field name="cdiscount"/>
+                <field name="ifulfillment"/>
+                <field name="cguk"/>
+                <field name="wayde"/>
+                <field name="amazon_id"/>
+                <field name="wayfair_id"/>
+                <field name="cdiscount_id"/>
+                <field name="check_id"/>
+                <field name="mirakl_id"/>
+                <field name="manomano_id"/>
+                <group expand="1" string="Group By">
+                    <filter name="group_by_date" string="By date" context="{'group_by': 'create_date:day'}"/>
+                    <filter name="group_by_product" string="By product" context="{'group_by': 'product_name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="product_pricing_action" model="ir.actions.act_window">
+        <field name="name">Stock Analysis</field>
+        <field name="res_model">product.pricing</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="product_pricing.product_pricing_search_view"/>
+        <field name="context">  {
+                                    'search_default_group_by_date': 1,
+                                    'search_default_group_by_product': 1,
+                                }</field>
+    </record>
+
+    <record id="mapping_on_hand_warehouse_quantity" model="ir.actions.server">
+        <field name="name">Mapping Stock Quantity</field>
+        <field name="model_id" ref="model_product_pricing"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.getting_on_hand_warehouse_quantity()
+        </field>
+        <field name="binding_model_id" ref="model_product_pricing"/>
+        <field name="binding_type">action</field>
+    </record>
+
+
+
+
+
+
+
+    <menuitem id="product_pricing_menu" name="Product Pricing" web_icon="product_pricing,static/description/MicrosoftTeams-image (3).png"/>
+
+
+    <menuitem id="analysis_submenuu" parent ='product_pricing_menu' name="Analysis" sequence= '-100'/>
+
+    <menuitem id="product_pricing_submenu" action="product_pricing_action" parent="analysis_submenuu" name="Stock Analysis"/>
+
+
+    <menuitem id="product_pricing_submenuu" parent="product_pricing_menu" name="Shops"/>
+
+    <menuitem id="competitor_submenuuu" parent="product_pricing_menu" name="Competitors"/>
+
+</odoo>
+<!-- <menuitem id="wayfair_submenu" parent="product_pricing_menu" name="Wayfair Product"/> -->

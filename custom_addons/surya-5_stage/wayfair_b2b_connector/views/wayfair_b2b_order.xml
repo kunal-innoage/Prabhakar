@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Tree -->
+        <record id="view_wayfair_b2b_sale_order_tree_view" model="ir.ui.view">
+            <field name="name">Wayfair B2b Sale Order</field>
+            <field name="model">wayfair.b2b.sale.order</field>
+            <field name="arch" type="xml">
+                <tree default_order="create_date desc">
+                    <field name="purchase_order"/>
+                    <field name="warehouse_name"/>
+                    <field name="must_ship_date"/>
+                    <field name="order_status"/>
+                    <field name="item_number"/>
+                    <field name="quantity"/>
+                    <field name="wholesale_price"/>
+                    <field name="carrier_name"/>
+                    <field name="b2b_order"/>
+                    <field name="sale_order_id"/>
+                </tree>
+            </field>
+        </record>
+        
+
+        <!-- Form -->
+        <record id="view_wayfair_b2b_sale_order_form_view" model="ir.ui.view">
+            <field name="name">Wayfair B2b Sale Order</field>
+            <field name="model">wayfair.b2b.sale.order</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="warehouse_name"/>
+                                <field name="store_name"/>
+                                <field name="purchase_order"/>
+                                <field name="purchase_date"/>
+                                <field name="must_ship_date"/>
+                                <field name="backorder_date"/>
+                                <field name="order_status"/>
+                                <field name="item_number"/>
+                                <field name="item_name"/>
+                                <field name="quantity"/>
+                                <field name="wholesale_price"/>
+                                <field name="ship_method"/>
+                                <field name="carrier_name"/>
+                                <field name="shipping_account_number"/>
+                                <field name="ship_to_name"/>
+                                <field name="ship_to_address"/>
+                                <field name="ship_to_address2"/>
+                                <field name="ship_to_city"/>
+                                <field name="ship_to_state"/>
+                                <field name="ship_to_zip"/>
+                                <field name="ship_to_phone"/>
+                                <field name="inventory_at_po_time"/>
+                                <field name="inventory_send_date"/>
+                                <field name="ship_speed"/>
+                                <field name="po_date_and_time"/>
+                            </group>
+                            <group>
+                                <field name="sale_order_id"/>
+                                <field name="product_id"/>
+                                <field name="wayfair_b2b_shop_id"/>
+                                <field name="registered_timestamp"/>
+                                <field name="customization_text"/>
+                                <field name="event_name"/>
+                                <field name="event_id"/>
+                                <field name="event_start_date"/>
+                                <field name="event_end_date"/>
+                                <field name="event_type"/>
+                                <field name="backorder_reason"/>
+                                <field name="original_product_id"/>
+                                <field name="original_prodcut_name"/>
+                                <field name="event_inventory_source"/>
+                                <field name="packing_ship_url"/>
+                                <field name="tracking_number"/>
+                                <field name="ready_for_pickup_date"/>
+                                <field name="sku"/>
+                                <field name="destination_country"/>
+                                <field name="depot_id"/>
+                                <field name="depot_name"/>
+                                <field name="wholesale_event_source"/>
+                                <field name="wholesale_event_store_source"/>
+                                <field name="b2b_order"/>
+                                <field name="composite_wood_product"/>
+                                <field name="sale_channel"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="wayfair_b2b_order_search_view_search" model="ir.ui.view">
+            <field name="name">wayfair_b2b_sale_order.view.search</field>
+            <field name="model">wayfair.b2b.sale.order</field>
+            <field name="arch" type="xml">
+                <search string="">
+                    <filter name="today" string="Today" icon="terp-partner" context="{'group_by': 'create_date:day'}"/> 
+                </search>
+            </field>
+        </record>
+
+        <!-- Server Actions -->
+
+        <record id="model_wayfair_b2b_sale_order_mapping" model="ir.actions.server">
+            <field name="name">Map Bulk Orders</field>
+            <field name="model_id" ref="wayfair_b2b_connector.model_wayfair_b2b_sale_order"/>
+            <field name="binding_model_id" ref="wayfair_b2b_connector.model_wayfair_b2b_sale_order"/>
+            <field name="binding_view_types">form,list</field>
+            <field name="state">code</field>
+            <field name="code">action = records.map_with_bulk_order()</field>
+        </record>
+        
+    </data>
+</odoo>
+    

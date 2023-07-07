@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- Filters -->
+        <record id="view_blade_processed_order_filters" model="ir.ui.view">
+            <field name="name">blade_processed_order_filters</field>
+            <field name="model">processed.order</field>
+            <field name="inherit_id" ref="odoo_mirakl_integration.view_processed_order_filters"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <xpath expr="//group/filter[@name='date']" position="after">
+                    <filter string="Mapped Status" name="blade_mapped_state" domain="[ ]" context="{'group_by': 'blade_mapped_state'}" />
+                </xpath>
+            </field>    
+        </record>
+</odoo>

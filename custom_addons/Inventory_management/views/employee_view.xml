@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="employee_list_view" model="ir.ui.view">
+        <field name="name">employee.list.view</field>
+        <field name="model">employee</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="employee_id"/>
+                <field name="employee_name"/>
+                <field name="work_mobile"/>
+                <field name="gender"/>
+                <field name="manager"/>
+                <!-- <field name="unit_price"/> -->
+
+            </tree>
+        </field>
+    </record>
+    <record id="purchase_form_view" model="ir.ui.view">
+        <field name="name">employee.form.view</field>
+        <field name="model">employee</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+
+                        <group>
+                            
+                                
+                                    <field name="employee_name" required='1'/>
+                                
+
+                                <field name="employee_id"/>
+                                <field name="job_position" required='1'/>
+                                <field name="domain"/>
+                                <field name="emaill"/>
+                                <field name="manager"/>
+                            
+
+
+                        </group>
+                        <group>
+
+                            <field name="image" widget="image"/>
+
+
+
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Employee's Personal Details">
+                            <group>
+                                <group>
+                                    <field name="address"/>
+                                    <field name="addresss"/>
+                                    <field name="email"/>
+                                    <field name="emergency_contact_number"/>
+                                </group>
+                                <group>
+                                    <field name="gender"/>
+                                    <field name="marital_status"/>
+
+                                </group>
+
+                            </group>
+                        </page>
+
+                        <page string="Description">
+                            <group>
+                                <group>
+                                    <field name="check_in_time"></field>
+                                    <field name="check_out_time"></field>
+
+
+                                </group>
+                                <group>
+                                    <field name="cab_location1"></field>
+                                    <field name="cab_location2"></field>
+                                </group>
+
+                            </group>
+
+                        </page>
+
+                        <page string="HR Setting"></page>
+
+                    </notebook>
+
+                </sheet>
+
+                <!-- chatter -->
+                <div class = "oe_chatter">
+                    <field name = "message_follower_ids" groups="base.group_user"/>
+                    <field name = "activity_ids"/>
+                    <field name = "message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="empolyee_search_view" model="ir.ui.view">
+        <field name="name">employee.search.view</field>
+        <field name="model">employee</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="employee_id"/>
+                <field name="employee_name"/>
+                <field name="work_mobile"/>
+                <field name="gender"/>
+                <field name="manager"/>
+
+
+            </search>
+        </field>
+    </record>
+
+    <record id="employee_action" model="ir.actions.act_window">
+        <field name="name">Employee</field>
+        <field name="res_model">employee</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem id="employee_submenu" action="employee_action" parent="employee_menu" name="Employee"/>
+</odoo>

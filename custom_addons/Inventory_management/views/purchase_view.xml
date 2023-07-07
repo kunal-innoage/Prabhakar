@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="purchasee_list_view" model="ir.ui.view">
+        <field name="name">purchasee.list.view</field>
+        <field name="model">purchasee</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="reference"/>
+                <field name="vendor"/>
+                <field name="company"/>
+                <field name="order_deadline"/>
+                <field name="product"/>
+                <field name="unit_price"/>
+
+            </tree>
+        </field>
+    </record>
+    <record id="purchasee_form_view" model="ir.ui.view">
+        <field name="name">purchasee.form.view</field>
+        <field name="model">purchasee</field>
+        <field name="arch" type="xml">
+            <form>
+                
+                <sheet>
+                    <!-- <div class="oe_title">
+                        <h1>
+                            <field name="purchase_seq" readonly="1"/>
+
+                        </h1>
+                    </div> -->
+                    <div class="oe_button_box" name="button_box">
+                        <button name="test"
+                            type="object" class="oe_stat_button"
+                            string="Test">  
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+
+                            <field name="vendor"/>
+                            <field name="vendor_reference"/>
+                            <field name="currency"/>
+                            <field name="vendor_id"/>
+                        </group>
+                        <group>
+                            <field name="order_deadline"/>
+                            <field name="receipt_date"/>
+                            <field name="product_ids"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Product">
+                            <group>
+                                <field name="product"/>
+                                <field name="description"/>
+                                <field name="quantity"/>
+                                <field name="unit_price"/>
+                                <field name="taxes"/>
+                                <field name="subtotal"/>
+                            </group>
+                        </page>
+
+                        <page string="Attributes Variants"></page>
+                        <page string="Sales"></page>
+
+                    </notebook>
+
+                </sheet>
+
+                <!-- chatter -->
+                <div class = "oe_chatter">
+                    <field name = "message_follower_ids" groups="base.group_user"/>
+                    <field name = "activity_ids"/>
+                    <field name = "message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="purchase_search_view" model="ir.ui.view">
+        <field name="name">purchasee.search.view</field>
+        <field name="model">purchasee</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="product"/>
+                <field name="description"/>
+                <field name="quantity"/>
+                <field name="unit_price"/>
+                <field name="taxes"/>
+                <field name="subtotal"/>
+                <field name="product_ids"/>
+
+
+            </search>
+        </field>
+    </record>
+
+    <record id="purchase_action" model="ir.actions.act_window">
+        <field name="name">purchasee</field>
+        <field name="res_model">purchasee</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <menuitem id = "purchasee_menu" parent ="inventory_product_menu" action = "purchase_action" name="Purchase"/>
+    <menuitem id="sub_purchasee_menu" name="Purchase" sequence="10" parent="purchasee_menu"/>
+</odoo>

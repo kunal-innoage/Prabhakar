@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="transfer_list_view" model="ir.ui.view">
+        <field name="name">transfer.list.view</field>
+        <field name="model">transfer</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="reference"/>
+                <field name="contact"/>
+                <field name="date"/>
+                <field name="sourceDocument"/>
+                <field name="company"/>
+            </tree>
+        </field>
+    </record>
+    <record id="transfer_form_view" model="ir.ui.view">
+        <field name="name">transfer.form.view</field>
+        <field name="model">transfer</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+
+                            <field name="reference"/>
+                            <field name="contact"/>
+                        </group>
+                        <group>
+                            <field name="date"/>
+                            <field name="sourceDocument"/>
+                            <field name="company"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Operations">
+                            <group>
+                                <group>
+                                    <field name="product"/>
+                                    <field name="demand"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string ="Additional Info">
+                            <group>
+                                <group>
+                                    <field name="shipping_policy"/>
+                                    <field name="responsible"/>
+                                    <field name="procurement_group"/>
+                                    <field name="company"/>
+                                </group>
+                            </group>
+
+                        </page>
+                        <page string="Note"></page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="transfer_action" model="ir.actions.act_window">
+        <field name="name">Transfer</field>
+        <field name="res_model">transfer</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="tranfer_submenu" action="transfer_action" parent="inventory_operations_menu_product_menu" name="Tranfer"/>
+
+</odoo>

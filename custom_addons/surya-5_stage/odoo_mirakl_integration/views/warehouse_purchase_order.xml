@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Mirakl Product Tree -->
+        <record id="view_warehouse_purchase_order" model="ir.ui.view">
+            <field name="name">Warehouse Purchase Order</field>
+            <field name="model">warehouse.purchase.order</field>
+            <field name="arch" type="xml">
+                <tree default_order="create_date desc">
+                    <field name="sku"/>
+                    <field name="vendor_id"/>
+                    <field name="quantity"/>
+                    <field name="per_piece_price"/>
+                    <field name="total_price"/>
+                    <field name="product_id"/>
+                    <field name="warehouse_id"/>
+                    <field name="purchase_order_id" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- Mirakl Product Form -->
+        <record id="view_warehouse_purchase_order_form" model="ir.ui.view">
+            <field name="name">Warehouse Purchase Order</field>
+            <field name="model">warehouse.purchase.order</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <!-- <button name="update_stock_quantity" string="Add Shop Qty" type="object" class="btn btn-primary rounded shadow"/> -->
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="sku"/>
+                                <field name="vendor_id"/>
+                                <field name="warehouse"/>
+                                <field name="upc"/>
+                                <field name="quantity"/>
+                                <field name="sqm"/>
+                                <field name="per_piece_price"/>
+                                <field name="total_price"/>
+                            </group>
+                            <group>
+                                <field name="product_id"/>
+                                <field name="warehouse_id"/>
+                                <field name="purchase_order_id"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+
+        <!-- Server Actions -->
+
+        <record id="model_warehouse_purchase_order_mapping" model="ir.actions.server">
+            <field name="name">Map Purchase Order</field>
+            <field name="model_id" ref="odoo_mirakl_integration.model_warehouse_purchase_order"/>
+            <field name="binding_model_id" ref="odoo_mirakl_integration.model_warehouse_purchase_order"/>
+            <field name="binding_view_types">form,list</field>
+            <field name="state">code</field>
+            <field name="code">action = records.map_with_purchase_order_lines()</field>
+        </record>
+        
+    </data>
+</odoo>
+    

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_list_view" model="ir.ui.view">
+        <field name="name">product.list.view</field>
+        <field name="model">inno.inventory.management</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="product"/>
+                <field name="quantity"/>
+                <field name="location"/>
+                <field name="date"/>
+                <field name="color"/>
+            </tree>
+        </field>
+    </record>
+    <record id="product_form_view" model="ir.ui.view">
+        <field name="name">product.form.view</field>
+        <field name="model">inno.inventory.management</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+
+                            <field name="date"/>
+                            <field name="color"/>
+                        </group>
+                        <group>
+                            <field name="product"/>
+                            <field name="quantity"/>
+                            <field name="location"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Genral Information"></page>
+                        <page string="Attributes Variants"></page>
+                        <page string="Sales"></page>
+                        <page string="Purchase"></page>
+                    </notebook>
+
+                </sheet>
+
+                <!-- chatter -->
+                <div class = "oe_chatter">
+                    <field name = "message_follower_ids" groups="base.group_user"/>
+                    <field name = "activity_ids"/>
+                    <field name = "message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="product_search_view" model="ir.ui.view">
+        <field name="name">product.search.view</field>
+        <field name="model">inno.inventory.management</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="product"/>
+                <field name="quantity"/>
+                <field name="location"/>
+                <field name="date"/>
+                <field name="color"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="product_action" model="ir.actions.act_window">
+        <field name="name">Product</field>
+        <field name="res_model">inno.inventory.management</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="inventory_product_menu" name="Innoage Inventory"/>
+
+    <menuitem id="inventory_operations_menu_product_menu" parent="inventory_product_menu" name="Operations"/>
+
+
+    <menuitem id="innoage_stocks_product_menu" parent="inventory_product_menu" name="Stocks"/>
+
+
+    <menuitem id="employee_menu" parent="inventory_product_menu" name="Employee"/>
+
+    <!-- <menuitem id="purchasee_inventory_menu" parent="inventory_product_menu" name="Purchase"/> -->
+
+    <menuitem id="inventory_menu_product_menu" parent="inventory_product_menu" name="Inventory" sequence='1'/>
+
+    <menuitem id="inventory_submenu" action="product_action" parent="inventory_menu_product_menu" name="Products" sequence='0'/>
+    <!--  <menuitem id="inventory_product_menu" action="product_action" parent="inventory_submenu"/>  -->
+</odoo>

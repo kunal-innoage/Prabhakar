@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- wayfair.api.config form view -->
+    <record id="wayfair_api_config_view_form" model="ir.ui.view">
+        <field name="name">wayfair.api.config.view.form</field>
+        <field name="model">wayfair.api.config</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="desc"/>
+                        <field name="is_prod" widget="bs_toggle"/>
+                        <field name="sb_client_id" attrs="{'invisible': [('is_prod','=',True)]}"/>
+                        <field name="sb_client_secret" attrs="{'invisible': [('is_prod','=',True)]}"/>
+                        <field name="sb_audience" attrs="{'invisible': [('is_prod','=',True)]}"/>
+                        <field name="prod_client_id" attrs="{'invisible': [('is_prod','=',False)]}"/>
+                        <field name="prod_client_secret" attrs="{'invisible': [('is_prod','=',False)]}"/>
+                        <field name="prod_audience" attrs="{'invisible': [('is_prod','=',False)]}"/>
+                    </group>
+
+                    <notebook>
+                        <page string="Dropship Orders Config" name="">
+                            <group>
+                                <field name="dropship_orders_ids">
+                                    <tree editable="top">
+                                        <field name="shop_id"/>
+                                        <field name="warehouse_id"/>
+                                        <field name="wayfair_api_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                        <page string="CastleGate Orders Config" name="">
+                            <group>
+                                <field name="castlegate_orders_ids">
+                                    <tree editable="top">
+                                        <field name="shop_id"/>
+                                        <field name="warehouse_id"/>
+                                        <field name="wayfair_api_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                        <page string="B2B Orders Config" name="">
+                            <group>
+                            </group>
+                        </page>
+                    </notebook>
+                    
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- wayfair.api.config tree view -->
+    <record id="model_name_view_tree" model="ir.ui.view">
+        <field name="name">wayfair.api.config.view.tree</field>
+        <field name="model">wayfair.api.config</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="sb_client_id"/>
+                <field name="create_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- model.name action window -->
+    <record id="wayfair_api_config_action" model="ir.actions.act_window">
+        <field name="name">Wayfair Api Configuration</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">wayfair.api.config</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem
+        id="wayfair_settings"
+        name="Wayfair"
+        parent="odoo_mirakl_integration.marketplace_settings"
+        sequence="103"
+        action="wayfair_api_config_action"
+        groups="base.group_system"
+        />
+
+</odoo>

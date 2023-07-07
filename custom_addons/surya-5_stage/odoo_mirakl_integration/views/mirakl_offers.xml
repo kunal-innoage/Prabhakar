@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Mirakl Offer Tree -->
+        <record id="view_mirakl_offers" model="ir.ui.view">
+            <field name="name">Shop Offers</field>
+            <field name="model">mirakl.offers</field>
+            <field name="arch" type="xml">
+                <tree create="false">
+                    <field name="offer_id"/>
+                    <field name="product_sku"/>
+                    <field name="product_id"/>
+                    <field name="offer_update_date"/>
+                    <field name="quantity"/>
+                    <field name="price"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Mirakl Offer Form -->
+        <record id="view_mirakl_offers_form" model="ir.ui.view">
+            <field name="name">Shop Offer</field>
+            <field name="model">mirakl.offers</field>
+            <field name="arch" type="xml">
+                <form create="false">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field  readonly='1' name="offer_id"/>
+                                <field  readonly='1' name="product_sku"/>
+                                <field  readonly='1' name="quantity"/>
+                                <field  readonly='1' name="price"/>
+                                <field  readonly='1' name="shop_id"/>
+                                <field name="inventory_id" invisible="1"></field>
+                            </group>
+                            <group>
+                                <field  readonly='1' name="active"/>
+                                <field  readonly='1' name="product_id"/>
+                                <field  readonly='1' name="offer_update_date"/>
+                                <field  readonly='1' name="shop_stock_ids"/>
+                                <field  readonly='1' name="description"/>
+                            </group>
+                            <group>
+                                <field  readonly='1' name="origin_price"/>
+                                <field  readonly='1' name="price_ranges"/>
+                                <field  readonly='1' name="total_price"/>
+                                <field  readonly='1' name="min_shipping_price"/>
+                                <field  readonly='1' name="min_shipping_price_additional"/>
+                            </group>
+                            <group>
+                                <field  readonly='1' name="discount_price"/>
+                                <field  readonly='1' name="discount_ranges"/>
+                                <field  readonly='1' name="offer_update_date"/>
+                                <field  readonly='1' name="min_shipping_zone"/>
+                                <field  readonly='1' name="min_shipping_type"/>
+                            </group>
+                            <group>
+                                <field  readonly='1' name="shop_name"/>
+                                <field  readonly='1' name="state_code"/>
+                                <field  readonly='1' name="channels"/>
+                                <field  readonly='1' name="leadtime_to_ship"/>
+                                <field  readonly='1' name="logistic_class"/>
+                                <field  readonly='1' name="origin"/>
+                                <field name="last_updated_import_id" readonly='1'></field>
+                            </group>
+                            <group>
+                                <field  readonly='1' name="fulfillment_center_code"/>
+                                <field  readonly='1' name="professional"/>
+                                <field  readonly='1' name="premium"/>
+                                <field  readonly='1' name="allow_quote_requests"/>
+                                <field  readonly='1' name="favorite_rank"/>
+                                <field  readonly='1' name="deleted"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+    </data>
+</odoo>
+    

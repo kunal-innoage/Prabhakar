@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- bulk.inventory.update inherit form view -->
+    <record id="bulk_inventory_update_view_form_wayfair_inh" model="ir.ui.view">
+        <field name="name">bulk.inventory.update.wayfair.inherit.view.form</field>
+        <field name="model">bulk.inventory.update</field>
+        <field name="inherit_id" ref="odoo_mirakl_integration.bulk_inventory_update_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//footer" position="before">
+                <group>
+                    <field name="wayafair_shops" widget="many2many_tags" options="{'no_create': True}"/>
+                </group>                
+            </xpath>            
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+     
+
+         <!-- Share Button in action menu -->
+        <record id="model_manomano_offer_action_update" model="ir.actions.server">
+            <field name="name">Update</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_manomano_offers"/>
+            <field name="binding_model_id" ref="model_manomano_offers"/>
+            <field name="binding_view_types">list,form</field>
+            <field name="state">code</field>
+            <field name="code">action = records.update_manomano_offer()</field>
+        </record>       
+
+
+        <record id="model_manomano_offer_action_unfreeze" model="ir.actions.server">
+            <field name="name">Unfreeze</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_manomano_offers"/>
+            <field name="binding_model_id" ref="model_manomano_offers"/>
+            <field name="binding_view_types">list,form</field>
+            <field name="state">code</field>
+            <field name="code">action = records.unfreeze_manomano_offer()</field>
+        </record>  
+
+        <!-- Manomano Offer Tree -->
+        <record id="view_manomano_offers" model="ir.ui.view">
+            <field name="name">Shop Offers</field>
+            <field name="model">manomano.offers</field>
+            <field name="arch" type="xml">
+                <tree create="false">
+                    <field name="offer_id"/>
+                    <!-- <field name="product_id"/> -->
+                    <field name="shop_id"/>
+                    <field name="product_sku"/>
+                    <field name="quantity"/>
+                    <field name="price"/>
+                </tree>
+            </field>
+        </record>
+       
+        
+        <!-- Manomano Offer Form -->
+        <record id="view__manomano_offers_form" model="ir.ui.view">
+            <field name="name">Shop Offer</field>
+            <field name="model">manomano.offers</field>
+            <field name="arch" type="xml">
+                <form create="false">
+                    <sheet>
+                        <group>
+                            <group>
+                                 <field name="offer_id"/>
+                                 <!-- <field name="product_id"/> -->
+                                 <field name="shop_id"/>
+                                 <field name="product_sku"/>
+                                 <field name="quantity"/>
+                                 <field name="price"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>
+    

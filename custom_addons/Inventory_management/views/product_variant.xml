@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_variant_list_view" model="ir.ui.view">
+        <field name="name">product.variant.list.view</field>
+        <field name="model">product.variant</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="website"/>
+                <field name="salesPrice"/>
+                <field name="cost"/>
+                <field name="quantity"/>
+            </tree>
+        </field>
+    </record>
+    <record id="product_variant_form_view" model="ir.ui.view">
+        <field name="name">product.variant.form.view</field>
+        <field name="model">product.variant</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+
+                        <group>
+
+                            <field name="reference"/>
+                            <field name="name"/>
+                            <field name="website"/>
+                        </group>
+                        <group>
+                            <field name="salesPrice"/>
+                            <field name="cost"/>
+                            <field name="quantity"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Product Description">
+                            <group>
+                                <group>
+                                    <field name="producttype"/>
+                                    <field name="dimensions"/>
+                                </group>
+                                <group>
+                                    <field name="color"/>
+                                    <field name="cost"/>
+                                </group>
+                            </group>
+
+
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class = "oe_chatter">
+                    <field name = "message_follower_ids" groups="base.group_user"/>
+                    <field name = "activity_ids"/>
+                    <field name = "message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="product_variant_action" model="ir.actions.act_window">
+        <field name="name">Product</field>
+        <field name="res_model">product.variant</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="product_variant_submenu" action="product_variant_action" parent="inventory_menu_product_menu" name="Product Variants"/>
+    <!--  <menuitem id="inventory_product_menu" action="product_action" parent="inventory_submenu"/>  -->
+</odoo>

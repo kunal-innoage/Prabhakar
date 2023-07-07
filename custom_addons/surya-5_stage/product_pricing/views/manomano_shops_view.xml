@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id ="manomano_shop_kanban_view" model ="ir.ui.view">
+        <field name = "name">manomano.shops.kanban.view</field>
+        <field name = "model">manomano.shops</field>
+        <field name = "arch" type = "xml">
+            <kanban class="o_kanban_mobile">
+                <field name = "shop_name"/>
+                <!-- <field name = "url"/> -->
+                <field name = "total_no_of_products"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click shadow rounded border-light mb-3">
+                            <div class="row">
+                                <div class="col-12">
+                                    <strong class="o_kanban_record_title">
+                                        <span style="font-size: 20px;">
+                                            <t t-esc="record.shop_name.value"/>
+                                        </span>
+                                    </strong>
+                                </div>
+                            </div>
+
+                            <div class="row mt8">
+                                <!-- <div class="col-6 text-muted mb-2 text-center">
+                                    <span class="text-warning">URL : <t t-esc="record.url.value"/>
+                                    </span>
+                                </div> -->
+                                <div class="col-6 text-muted mb-2">
+                                    <span class="text-warning">Products : <t t-esc="record.total_no_of_products.value"/>
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="manomano_shop_list_view" model="ir.ui.view">
+        <field name="name">manomano.shops.list.view</field>
+        <field name="model">manomano.shops</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name = "shop_name"/>
+                <field name = "url"/>
+                <field name = "total_no_of_products"/>
+                <field name = "manomano_shop_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="manomano_shop_form_view" model="ir.ui.view">
+        <field name="name">manomano.shops.form.view</field>
+        <field name="model">manomano.shops</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    
+                    <button name="product_shop_pricing" type="object" class = 'btn-primary' string="Map Pricing"/>
+                    
+                    <button name="mapping_manomano_products_stock" type="object" class = 'btn-primary' string="Map Stock"/>
+
+                    <button name="manomano_product_listing" type="object" class = 'btn-primary' string="Map Product Listing"/>
+
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+
+                        <button name="mano_product_action" type="object" class="oe_stat_button" icon="fa-cubes" string="Product Listing"/>
+
+                        <button name = "returning_method_for_stock" type = "object" icon="fa-usd" string = "Stock" class = 'btn-primary'/>
+                    </div>
+                    <group>
+                        <group>
+                            <field name = "shop_name"/>
+                            <field name = "url"/>
+                            <field name = "manomano_shop_id"/>
+                            <field name = "total_no_of_products"/>
+
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="manomano_shop_search_view" model="ir.ui.view">
+        <field name="name">manomano.shops.search.view</field>
+        <field name="model">manomano.shops</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name = "shop_name"/>
+                <field name = "url"/>
+                <field name = "total_no_of_products"/>
+                <field name = "manomano_shop_id"/>
+
+            </search>
+        </field>
+    </record>
+
+    <record id="manomano_shop_action" model="ir.actions.act_window">
+        <field name="name">Manomano shops</field>
+        <field name="res_model">manomano.shops</field>
+        <field name="view_mode">kanban,tree,form</field>
+
+    </record>
+
+    <!-- PRODUCT LISTING SERVER ACTION -->
+    <record id="mapping_mano_product_listing_server_action" model="ir.actions.server">
+        <field name="name">Mapping Product Listing</field>
+        <field name="model_id" ref="model_manomano_shops"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.manomano_product_listing()
+        </field>
+        <field name="binding_model_id" ref="model_manomano_shops"/>
+        <field name="binding_type">action</field>
+    </record>
+
+    <!-- PRODUCT STOCK SERVER ACTION -->
+
+    <record id="mapping_mano_product_stock_server_action" model="ir.actions.server">
+        <field name="name">Mapping Stock</field>
+        <field name="model_id" ref="model_manomano_shops"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.mapping_manomano_products_stock()
+        </field>
+        <field name="binding_model_id" ref="model_manomano_shops"/>
+        <field name="binding_type">action</field>
+    </record>
+
+    <!-- PRODUCT PRICING SERVER ACTION -->
+
+    <record id="mapping_mano_product_pricing_server_action" model="ir.actions.server">
+        <field name="name">Mapping Product Pricing</field>
+        <field name="model_id" ref="model_manomano_shops"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.product_shop_pricing()
+        </field>
+        <field name="binding_model_id" ref="model_manomano_shops"/>
+        <field name="binding_type">action</field>
+    </record>
+    
+    <menuitem id="manomano_menu" parent="product_pricing_submenuu" 
+    
+    action="manomano_shop_action" name="Mano Mano"/>
+
+</odoo>

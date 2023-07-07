@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Tree View -->
+    <record id="wayfair_orders_tree_view" model="ir.ui.view">
+        <field name="name">wayfair.orders.tree.view</field>
+        <field name="model">wayfair.orders</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="wayfair_order_id"></field>
+                <field name="sku"></field>
+                <field name="order_status"></field>
+                <field name="order_id"></field>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="wayfair_view_search" model="ir.ui.view">
+        <field name="name">wayfair_search.view.search</field>
+        <field name="model">wayfair.orders</field>
+        <field name="arch" type="xml">
+            <search string="">
+                <!-- <filter string="Shipped" name="filter_shipped" domain="[('order_status', '=', 'Shipped')]"/> -->
+                <filter name="group_status" string="Status" icon="terp-partner" context="{'group_by':'order_status'}"/>
+                <filter name="today" string="Today" icon="terp-partner" context="{'group_by': 'create_date:day'}"/> 
+                <filter name="shop" string="shop" icon="terp-partner" context="{'group_by': 'shop_id'}"/> 
+                <filter name="group_order_id" string="Wayfair Order Id" icon="terp-partner" context="{'group_by':'wayfair_order_id'}"/> 
+                <filter name="filter_so_id" string="Sale Order" icon="terp-partner" domain="[('order_id', '=', False)]"/> 
+            </search>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="wayfair_orders_view_form" model="ir.ui.view">
+        <field name="name">wayfair.orders.form.view</field>
+        <field name="model">wayfair.orders</field>
+        <field name="arch" type="xml">
+            <form string="" create="false" edit="false">
+                <sheet>
+                    <group>
+                        <group>
+                                    <field name="product_ref"></field>
+                                    <field name="sku"></field>
+                                    <field name="inventory_send_date"></field>
+                                    <field name="order_id"></field>
+                                    <field name="warehouse"></field>
+                                    <field name="quantity"></field>
+                                    <field name="full_name"></field>
+                                    <field name="order_date"></field>
+                                    <field name="total_price"></field>
+                                    <field name="delivery_cost"></field>
+                                    <field name="back_order_date"></field>
+                                    
+                                    <field name="delivery_country"></field>
+                                    <field name="dispatch_date"></field>
+                                    <field name="back_order_date"></field>
+                                    <field name="carrier_name"></field>
+                                    <field name="street2"></field>
+                                    <field name="province"></field>
+                                    <field name="qty_at_po"></field>
+                                    <field name="po_date_time"></field>
+                                    <field name="time_stamp"></field>
+                                    <field name="prickup_date"></field>
+                                    <field name="dept_id"></field>
+                                    <field name="dept_name"></field>
+                                    <field name="warehouse_id"></field>
+                                    <field name="shop_id"></field>
+                                    
+                        </group>
+                        <group>
+                            <field name="name"></field>
+                            <field name="wayfair_order_id"></field>
+                            <field name="order_status"></field>
+                            <field name="phone"></field>
+                            <!-- <field name="line_id"></field> -->
+                            <field name="shipping_address"></field>
+                            <field name="shipping_method"></field>
+                            <field name="shipping_zip"></field>
+                            <field name="delivery_city"></field>
+                            <field name="tracking_number"></field>
+                            <field name="custom_text"></field>
+
+                            <field name="event_id"></field>
+                            <field name="event_start_date"></field>
+                            <field name="event_end_date"></field>
+                            <field name="event_type"></field>
+                            <field name="back_order_reason"></field>
+                            <field name="wholesale_event_store"></field>
+                            <field name="org_product_id"></field>
+                            <field name="org_product_name"></field>
+                            <field name="ev_inventory_source"></field>
+                            <field name="ship_url"></field>
+                            <field name="wholesale_event"></field>
+                            <field name="b2b_order"></field>
+                            <field name="composit_wood_product"></field>
+                            <field name="sale_channel"></field>
+                        </group>
+                           
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.server" id="action_create_sale_oreders">
+       <field name="name">Map Sale Orders</field>
+       <field name="model_id" ref="model_wayfair_orders"/>
+        <field name="binding_view_types">form,list</field>
+       <field name="binding_model_id" ref="model_wayfair_orders"/>
+       <field name="state">code</field>
+       <field name="code">
+           action = records.map_sale_orders()
+       </field>
+   </record>
+
+</odoo>
