@@ -1545,3 +1545,4 @@ class ShopIntegrator(models.Model):
             
             return True 
         return False       
+# Basic MmRjMGVlZDctZDhhYy00YjgyLTlhZmItMjNhOWRhMjRmNzJiOm9ZQmpwP2lBWEdZME9PVSlGclJTVjZpSHJVZUI3Vlh2VFgrNE9BWDV5UWthPyE3b1pMTXFZdUcwZTc4ZT82KzE=

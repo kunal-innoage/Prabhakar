@@ -28,10 +28,24 @@
                         </group>
                     </group>
                     <notebook>
-                        <page name="config" string="Configuration" groups="base.group_system">
+
+                        <page name="config" string="Configuration" attrs="{'invisible': [('activate', '=',False)]}">
                             <group>
-                                <field name="api_key"/>
-                                <field name="bol_url"/>
+                                <group>
+                                    <field name="bol_client_id"/>
+                                </group>
+                                <group>
+                                    <field name="bol_client_secret"/>
+                                </group>
+                                <group>
+                                    <group>
+                                        <button name="get_token" type="object" class = 'btn-primary' string="Get Token"/>
+                                    </group>
+                                    <group>
+    <!--                                    <field name = "token_id"/>-->
+<!--                                        <field name = "token" class="width"/>-->
+                                    </group>
+                                </group>
                             </group>
                         </page>
                         <page name = "orders" string= "Order Management" attrs="{'invisible': [('activate', '=',False)]}">
