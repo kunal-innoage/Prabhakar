@@ -1,4 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_wayfair_api_config,wayfiar_api_configuration.wayfair.api.config,model_wayfair_api_config,base.group_user,1,1,1,1
-access_wayfair_b2c_orders,wayfiar_api_configuration.wayfair.b2c.orders,model_wayfair_b2c_orders,base.group_user,1,1,1,1
-access_wayfair_b2b_orders,wayfiar_api_configuration.wayfair.b2b.orders,model_wayfair_b2b_orders,base.group_user,1,1,1,1

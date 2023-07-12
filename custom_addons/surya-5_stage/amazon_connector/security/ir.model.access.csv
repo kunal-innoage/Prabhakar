@@ -1,7 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_seller_amazon,amazon_connector.amazon.seller,model_amazon_seller,base.group_user,1,1,1,1
-access_seller_amazon_orders,amazon_connector.amazon.orders,model_amazon_orders,base.group_user,1,1,1,1
-access_seller_amazon_wizard,amazon_connector.amazon.wizard,model_amazon_wizard,base.group_user,1,1,1,1
-access_seller_amazon_labels,amazon_connector.amazon.labels,model_amazon_labels,base.group_user,1,1,1,1
-access_seller_amazon_split_labels,amazon_connector.split.labels,model_split_labels,base.group_user,1,1,1,1
-

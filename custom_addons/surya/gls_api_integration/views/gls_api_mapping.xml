@@ -2,16 +2,40 @@
 <odoo>
     <record id="gls_mapping_tree_view_xpath" model="ir.ui.view">
         <field name="name">gls.mapping.tree.view.xpath</field>
-        <field name="model">product.template</field>
-        <field name="inherit_id" ref="point_of_sale.product_template_form_view"/>
+        <field name="model">marketplace.order.tracking</field>
+        <field name="inherit_id" ref="odoo_mirakl_integration.view_marketplace_order_tracking_tree_view"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='to_weight']" position="after">
-                <!-- Added your field -->
-                <field name="my_field" attrs="{'invisible': [('available_in_pos', '=', False)]}"/>
+            <xpath expr="//field[@name='carrier']" position="after">
+                <field name="packet_number"/>
+                <field name="status"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="gls_mapping_form_view_xpath" model="ir.ui.view">
+        <field name="name">gls.mapping.form.view.xpath</field>
+        <field name="model">marketplace.order.tracking</field>
+        <field name="inherit_id" ref="odoo_mirakl_integration.view_marketplace_order_tracking_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='carrier']" position="after">
+                <field name="packet_number"/>
+                <field name = "status"/>
             </xpath>
         </field>
     </record>
 
+<!--    SERVER ACTION TO HIT PACKET NUMBER API-->
+
+    <record id="action_server_packet_number" model="ir.actions.server">
+        <field name="name">Update Packet Info</field>
+        <field name="model_id" ref="model_marketplace_order_tracking"/>
+        <field name="binding_model_id" ref="model_marketplace_order_tracking"/>
+        <!-- <field name="binding_view_types">list</field> -->
+        <field name="state">code</field>
+        <field name="code">action = records.get_tracking_status()</field>
+    </record>
+
+
 
 
 </odoo>
+

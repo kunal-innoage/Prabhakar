@@ -22,27 +22,27 @@ class GlsApiConfig(models.Model):
     prod_audience = fields.Char("Production Audience")
     token_id = fields.Char("Token ID")
     
-    def get_token(self):
-        for rec in self:
-
-
-            url = "https://api-sandbox.gls-group.net/oauth2/v2/token"
-            # url = "https://shipit-wbm-de03.gls-group.eu:8443"
-
-
-
-            payload = 'grant_type=client_credentials&client_id='+rec.sb_client_id+'&client_secret='+rec.sb_client_secret
-            headers = {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': 'application/json'
-            }
-            # _logger.info("GLS~~~~~~~~~%r~~~~~~~",payload)
-
-            response = requests.request("POST", url, headers=headers, data=payload).json()
-            _logger.info("RESPONSE~~~~~~~~~%r~~~~~~~",response)
-            rec.token_id = response['access_token']
-
-            print(response['access_token'])
+    # def get_token(self):
+    #     for rec in self:
+    #
+    #
+    #         url = "https://api-sandbox.gls-group.net/oauth2/v2/token"
+    #         # url = "https://shipit-wbm-de03.gls-group.eu:8443"
+    #
+    #
+    #
+    #         payload = 'grant_type=client_credentials&client_id='+rec.sb_client_id+'&client_secret='+rec.sb_client_secret
+    #         headers = {
+    #         'Content-Type': 'application/x-www-form-urlencoded',
+    #         'Accept': 'application/json'
+    #         }
+    #         # _logger.info("GLS~~~~~~~~~%r~~~~~~~",payload)
+    #
+    #         response = requests.request("POST", url, headers=headers, data=payload).json()
+    #         _logger.info("RESPONSE~~~~~~~~~%r~~~~~~~",response)
+    #         rec.token_id = response['access_token']
+    #
+    #         print(response['access_token'])
             
     # def get_token(self):
     #     for rec in self:

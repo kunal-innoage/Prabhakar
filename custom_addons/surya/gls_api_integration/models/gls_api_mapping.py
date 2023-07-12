@@ -16,4 +16,3 @@ class GlsApiMapping(models.Model):
     #     self.write({'seller_token': data['string']['#text']})
     #     print(data)
     
-    
